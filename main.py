@@ -3,15 +3,16 @@ __author__ = '606'
 import torch
 import torch.optim as optim
 import numpy as np
-import sys
+import sys,os
+import time
 from get_args import get_args
 from trainer import train, validate, test
 
 from numpy import arange
 from numpy.random import mtrand
 
-from encoder import ENC as ENC
-from decoder import DEC_LargeRNN_rate2 as DEC
+from encoder import ENC
+from decoder import DEC
 
 # utils for logger
 class Logger(object):
@@ -32,9 +33,16 @@ if __name__ == '__main__':
     #################################################
 
     # put all printed things to log file
-    timestamp = time.strftime('%Y%m%d_%H%M%S', time.localtime())
-    logfile = open('./logs/log'+timestamp+'.txt', 'a')
-    sys.stdout = Logger('./logs/log'+timestamp+'.txt', sys.stdout)
+    # timestamp = time.strftime('%Y%m%d_%H%M%S', time.localtime())
+    # filename = './logs/log'+timestamp+'.txt'
+    # if not os.path.isfile(filename):
+    #     os.system(r"touch {}".format(filename))#调用系统命令行来创建文件
+    # logfile = open('./logs/log'+timestamp+'.txt', 'a')
+    # sys.stdout = Logger('./logs/log'+timestamp+'.txt', sys.stdout)
+    identity = str(np.random.random())[2:8]
+    print('[ID]', identity)
+    logfile = open('./logs/'+identity+'_log.txt', 'a')
+    sys.stdout = Logger('./logs/'+identity+'_log.txt', sys.stdout)
 
     args = get_args()
     print(args)
@@ -123,8 +131,10 @@ if __name__ == '__main__':
     # Testing Processes
     #################################################
 
-    torch.save(model.state_dict(), './tmp/torch_model_'+timestamp+'.pt')
-    print('saved model', './tmp/torch_model_'+timestamp+'.pt')
+    # torch.save(model.state_dict(), './tmp/torch_model_'+timestamp+'.pt')
+    # print('saved model', './tmp/torch_model_'+timestamp+'.pt')
+    torch.save(model.state_dict(), './tmp/torch_model_'+identity+'.pt')
+    print('saved model', './tmp/torch_model_'+identity+'.pt')
 
     if args.is_variable_block_len:
         print('testing block length',args.block_len_low )

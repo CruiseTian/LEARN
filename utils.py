@@ -2,6 +2,7 @@ __author__ = '606'
 import torch
 import numpy as np
 import math
+import torch.nn.functional as F
 
 def errors_ber(y_true, y_pred, positions = 'default'):
     y_true = y_true.view(y_true.shape[0], -1, 1)
@@ -184,3 +185,123 @@ def generate_noise(noise_shape, args, test_sigma = 'default', snr_low = 0.0, snr
         fwd_noise  = this_sigma * torch.randn(noise_shape, dtype=torch.float)
 
     return fwd_noise
+
+def customized_loss(output, X_train, args, size_average = True, noise = None, code = None):
+    
+    if args.loss == 'bce':
+        output = torch.clamp(output, 0.0, 1.0)
+        if size_average == True:
+            loss = F.binary_cross_entropy(output, X_train)
+        else:
+            return [F.binary_cross_entropy(item1, item2) for item1, item2 in zip(output, X_train)]
+
+    ##########################################################################################
+    # The result are all experimental, nothing works..... BCE works well.
+    ##########################################################################################
+    elif args.loss == 'soft_ber':
+        output = torch.clamp(output, 0.0, 1.0)
+        loss = torch.mean(((1.0 - output)**X_train )* ((output) ** (1.0-X_train)))
+        #print(loss)
+
+    elif args.loss == 'bce_rl':
+        output = torch.clamp(output, 0.0, 1.0)
+
+        bce_loss = F.binary_cross_entropy(output, X_train, reduction='none')
+
+        # support different sparcoty of feedback noise.... for future....
+        ber_loss      = torch.ne(torch.round(output), torch.round(X_train)).float()
+        baseline      = torch.mean(ber_loss)
+        ber_loss      = ber_loss - baseline
+
+        loss = args.ber_lambda * torch.mean(ber_loss*bce_loss) + args.bce_lambda * bce_loss.mean()
+
+    elif args.loss == 'enc_rl':  # binary info about if decoding is wrong or not.
+        output = torch.clamp(output, 0.0, 1.0).detach()
+        ber_loss      = torch.ne(torch.round(output), torch.round(X_train)).float().detach()
+
+        # baseline      = torch.mean(ber_loss)
+        # ber_loss      = ber_loss - baseline
+        item = ber_loss*torch.abs(code)
+        loss          = torch.mean(ber_loss*torch.abs(code))
+
+    elif args.loss == 'bce_block':
+        output = torch.clamp(output, 0.0, 1.0)
+        BCE_loss_tmp = F.binary_cross_entropy(output, X_train, reduction='none')
+        tmp, _ = torch.max(BCE_loss_tmp, dim=1, keepdim=False)
+        max_loss     = torch.mean(tmp)
+        loss = max_loss
+
+    elif args.loss == 'focal':
+        output = torch.clamp(output, 0.0, 1.0)
+        loss = FocalLoss(alpha=args.focal_alpha, gamma=args.focal_gamma)(output, X_train)
+
+    elif args.loss == 'mse':
+        output = torch.clamp(output, 0.0, 1.0)
+        output_logit = torch.log(output/(1.0 - output+1e-10))
+        loss = F.mse_loss(output_logit, X_train)
+
+    elif args.loss == 'maxBCE':
+        output = torch.clamp(output, 0.0, 1.0)
+        BCE_loss_tmp = F.binary_cross_entropy(output, X_train, reduce=False)
+
+        bce_loss = torch.mean(BCE_loss_tmp)
+        pos_loss = torch.mean(BCE_loss_tmp, dim=0)
+
+        tmp, _ = torch.max(pos_loss, dim=0)
+        max_loss     = torch.mean(tmp)
+
+        loss = bce_loss + args.lambda_maxBCE * max_loss
+
+    elif args.loss == 'sortBCE':
+        output = torch.clamp(output, 0.0, 1.0)
+        BCE_loss_tmp = F.binary_cross_entropy(output, X_train, reduce=False)
+
+        bce_loss = torch.mean(BCE_loss_tmp)
+        pos_loss = torch.mean(BCE_loss_tmp, dim=0)
+
+        tmp, _ = torch.sort(pos_loss, dim=-1, descending=True, out=None)
+
+        sort_loss     = torch.sum(tmp[:5, :])
+
+        loss = bce_loss + args.lambda_maxBCE * sort_loss
+
+    return loss
+
+class STEQuantize(torch.autograd.Function):
+    @staticmethod
+    def forward(ctx, inputs, args):
+
+        ctx.save_for_backward(inputs)
+        ctx.args = args
+
+        x_lim_abs  = args.enc_value_limit
+        x_lim_range = 2.0 * x_lim_abs
+        x_input_norm =  torch.clamp(inputs, -x_lim_abs, x_lim_abs)
+
+        if args.enc_quantize_level == 2:
+            outputs_int = torch.sign(x_input_norm)
+        else:
+            outputs_int  = torch.round((x_input_norm +x_lim_abs) * ((args.enc_quantize_level - 1.0)/x_lim_range)) * x_lim_range/(args.enc_quantize_level - 1.0) - x_lim_abs
+
+        return outputs_int
+
+    @staticmethod
+    def backward(ctx, grad_output):
+        if ctx.args.enc_clipping in ['inputs', 'both']:
+            input, = ctx.saved_tensors
+            grad_output[input>ctx.args.enc_value_limit]=0
+            grad_output[input<-ctx.args.enc_value_limit]=0
+
+        if ctx.args.enc_clipping in ['gradient', 'both']:
+            grad_output = torch.clamp(grad_output, -ctx.args.enc_grad_limit, ctx.args.enc_grad_limit)
+
+        if ctx.args.train_channel_mode not in ['group_norm_noisy', 'group_norm_noisy_quantize']:
+            grad_input = grad_output.clone()
+        else:
+            # Experimental pass gradient noise to encoder.
+            grad_noise = snr_db2sigma(ctx.args.fb_noise_snr) * torch.randn(grad_output[0].shape, dtype=torch.float)
+            ave_temp   = grad_output.mean(dim=0) + grad_noise
+            ave_grad   = torch.stack([ave_temp for _ in range(ctx.args.batch_size)], dim=2).permute(2,0,1)
+            grad_input = ave_grad + grad_noise
+
+        return grad_input, None

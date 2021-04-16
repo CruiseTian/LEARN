@@ -5,6 +5,7 @@ from numpy import arange
 from numpy.random import mtrand
 import math
 import numpy as np
+from utils import STEQuantize 
     
 class ENC(torch.nn.Module):
     def __init__(self, args):
@@ -28,9 +29,9 @@ class ENC(torch.nn.Module):
 
         self.enc_rnn       = RNN_MODEL(1, args.enc_num_unit,
                                            num_layers=args.enc_num_layer, bias=True, batch_first=True,
-                                           dropout=0, bidirectional=True)
+                                           dropout=0)
 
-        self.enc_linear    = torch.nn.Linear(2*args.enc_num_unit, 1)
+        self.enc_linear    = torch.nn.Linear(args.enc_num_unit, int(args.code_rate_n/args.code_rate_k))
 
     def set_precomp(self, mean_scalar, std_scalar):
         self.mean_scalar = mean_scalar.to(self.this_device)

@@ -5,8 +5,7 @@ import torch.nn.functional as F
 
 eps  = 1e-6
 
-from utils import snr_sigma2db, snr_db2sigma, code_power, errors_ber_pos, errors_ber, errors_bler, generate_noise
-from loss import customized_loss
+from utils import snr_sigma2db, snr_db2sigma, code_power, errors_ber_pos, errors_ber, errors_bler, generate_noise, customized_loss
 
 import numpy as np
 from numpy import arange
@@ -39,17 +38,18 @@ def train(epoch, model, optimizer, args, use_cuda = False, verbose = True, mode 
 
         optimizer.zero_grad()
 
-        if args.is_k_same_code and mode == 'encoder':
-            if batch_idx == 0:
-                k_same_code_counter += 1
-                X_train    = torch.randint(0, 2, (args.batch_size, block_len, args.code_rate_k), dtype=torch.float)
-            elif k_same_code_counter == args.k_same_code:
-                k_same_code_counter = 1
-                X_train    = torch.randint(0, 2, (args.batch_size, block_len, args.code_rate_k), dtype=torch.float)
-            else:
-                k_same_code_counter += 1
-        else:
-            X_train    = torch.randint(0, 2, (args.batch_size, block_len, args.code_rate_k), dtype=torch.float)
+        # if args.is_k_same_code and mode == 'encoder':
+        #     if batch_idx == 0:
+        #         k_same_code_counter += 1
+        #         X_train    = torch.randint(0, 2, (args.batch_size, block_len, args.code_rate_k), dtype=torch.float)
+        #     elif k_same_code_counter == args.k_same_code:
+        #         k_same_code_counter = 1
+        #         X_train    = torch.randint(0, 2, (args.batch_size, block_len, args.code_rate_k), dtype=torch.float)
+        #     else:
+        #         k_same_code_counter += 1
+        # else:
+        #     X_train    = torch.randint(0, 2, (args.batch_size, block_len, args.code_rate_k), dtype=torch.float)
+        X_train    = torch.randint(0, 2, (args.batch_size, block_len, args.code_rate_k), dtype=torch.float)
 
         noise_shape = (args.batch_size, args.block_len, args.code_rate_n)
         # train encoder/decoder with different SNR... seems to be a good practice.
