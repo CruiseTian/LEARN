@@ -89,7 +89,7 @@ def validate(model, optimizer, args, use_cuda = False, verbose = True):
     device = torch.device("cuda" if use_cuda else "cpu")
 
     model.eval()
-    test_bce_loss, test_custom_loss, test_ber= 0.0, 0.0, 0.0
+    test_bce_loss, test_custom_loss, test_ber, test_bler = 0.0, 0.0, 0.0, 0.0
 
     with torch.no_grad():
         num_test_batch = int(args.num_block/args.batch_size * args.test_ratio)
@@ -113,22 +113,26 @@ def validate(model, optimizer, args, use_cuda = False, verbose = True):
             test_bce_loss += F.binary_cross_entropy(output, X_test)
             test_custom_loss += customized_loss(output, X_test, noise = fwd_noise, args = args, code = codes)
             test_ber  += errors_ber(output,X_test)
+            test_bler += errors_bler(output,X_test)
 
 
     test_bce_loss /= num_test_batch
     test_custom_loss /= num_test_batch
     test_ber  /= num_test_batch
+    test_bler /= num_test_batch
 
     if verbose:
         print('====> Test set BCE loss', float(test_bce_loss),
               'Custom Loss',float(test_custom_loss),
               'with ber ', float(test_ber),
+              'with bler ', float(test_bler),
         )
 
     report_loss = float(test_bce_loss)
     report_ber  = float(test_ber)
+    report_bler  = float(test_bler)
 
-    return report_loss, report_ber
+    return report_loss, report_ber, report_bler
 
 
 def test(model, args, block_len = 'default',use_cuda = False):
@@ -152,7 +156,6 @@ def test(model, args, block_len = 'default',use_cuda = False):
             print('Pre-computed norm statistics mean ',model.enc.mean_scalar, 'std ', model.enc.std_scalar)
 
     ber_res, bler_res = [], []
-    ber_res_punc, bler_res_punc = [], []
     snr_interval = (args.snr_test_end - args.snr_test_start)* 1.0 /  (args.snr_points-1)
     snrs = [snr_interval* item + args.snr_test_start for item in range(args.snr_points)]
     print('SNRS', snrs)
@@ -164,7 +167,9 @@ def test(model, args, block_len = 'default',use_cuda = False):
             num_test_batch = int(args.num_block/(args.batch_size))
             for batch_idx in range(num_test_batch):
                 X_test     = torch.randint(0, 2, (args.batch_size, block_len, args.code_rate_k), dtype=torch.float)
-                fwd_noise  = generate_noise(X_test.shape, args, test_sigma=sigma)
+                noise_shape = (args.batch_size, args.block_len, args.code_rate_n)
+                # fwd_noise  = generate_noise(X_test.shape, args, test_sigma=sigma)
+                fwd_noise  = generate_noise(noise_shape, args, test_sigma=sigma)
 
                 X_test, fwd_noise= X_test.to(device), fwd_noise.to(device)
 

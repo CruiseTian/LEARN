@@ -102,7 +102,7 @@ if __name__ == '__main__':
     #################################################
     # Training Processes
     #################################################
-    report_loss, report_ber = [], []
+    report_loss, report_ber, report_bler = [], [], []
 
     for epoch in range(1, args.num_epoch + 1):
 
@@ -119,13 +119,15 @@ if __name__ == '__main__':
                 for idx in range(args.num_train_dec):
                     train(epoch, model, dec_optimizer, args, use_cuda = use_cuda, mode ='decoder')
 
-        this_loss, this_ber  = validate(model, general_optimizer, args, use_cuda = use_cuda)
+        this_loss, this_ber, this_bler = validate(model, general_optimizer, args, use_cuda = use_cuda)
         report_loss.append(this_loss)
         report_ber.append(this_ber)
+        report_bler.append(this_bler)
 
     if args.print_test_traj == True:
         print('test loss trajectory', report_loss)
         print('test ber trajectory', report_ber)
+        print('test bler trajectory', report_bler)
         print('total epoch', args.num_epoch)
 
     #################################################
