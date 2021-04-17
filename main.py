@@ -33,21 +33,22 @@ if __name__ == '__main__':
     #################################################
 
     # put all printed things to log file
-    # timestamp = time.strftime('%Y%m%d_%H%M%S', time.localtime())
-    # filename = './logs/log'+timestamp+'.txt'
+    timestamp = time.strftime('%Y%m%d_%H%M%S', time.localtime())
+    filename = './logs/log'+timestamp+'.txt'
     # if not os.path.isfile(filename):
     #     os.system(r"touch {}".format(filename))#调用系统命令行来创建文件
-    # logfile = open('./logs/log'+timestamp+'.txt', 'a')
-    # sys.stdout = Logger('./logs/log'+timestamp+'.txt', sys.stdout)
-    identity = str(np.random.random())[2:8]
-    print('[ID]', identity)
-    logfile = open('./logs/'+identity+'_log.txt', 'a')
-    sys.stdout = Logger('./logs/'+identity+'_log.txt', sys.stdout)
+    logfile = open('./logs/log'+timestamp+'.txt', 'a')
+    sys.stdout = Logger('./logs/log'+timestamp+'.txt', sys.stdout)
+    # identity = str(np.random.random())[2:8]
+    # print('[ID]', identity)
+    # logfile = open('./logs/'+identity+'_log.txt', 'a')
+    # sys.stdout = Logger('./logs/'+identity+'_log.txt', sys.stdout)
 
     args = get_args()
     print(args)
 
     use_cuda = not args.no_cuda and torch.cuda.is_available()
+    print("use_cuda: ",use_cuda)
     device = torch.device("cuda" if use_cuda else "cpu")
 
     #################################################
@@ -131,10 +132,10 @@ if __name__ == '__main__':
     # Testing Processes
     #################################################
 
-    # torch.save(model.state_dict(), './tmp/torch_model_'+timestamp+'.pt')
-    # print('saved model', './tmp/torch_model_'+timestamp+'.pt')
-    torch.save(model.state_dict(), './tmp/torch_model_'+identity+'.pt')
-    print('saved model', './tmp/torch_model_'+identity+'.pt')
+    torch.save(model.state_dict(), './tmp/torch_model_'+timestamp+'.pt')
+    print('saved model', './tmp/torch_model_'+timestamp+'.pt')
+    # torch.save(model.state_dict(), './tmp/torch_model_'+identity+'.pt')
+    # print('saved model', './tmp/torch_model_'+identity+'.pt')
 
     if args.is_variable_block_len:
         print('testing block length',args.block_len_low )

@@ -170,7 +170,6 @@ def test(model, args, block_len = 'default',use_cuda = False):
 
                 X_hat_test, the_codes = model(X_test, fwd_noise)
 
-
                 test_ber  += errors_ber(X_hat_test,X_test)
                 test_bler += errors_bler(X_hat_test,X_test)
 
@@ -189,26 +188,6 @@ def test(model, args, block_len = 'default',use_cuda = False):
                 res_pos_arg = res_pos_arg.tolist()
                 print('positional ber', res_pos)
                 print('positional argmax',res_pos_arg)
-            try:
-                test_ber_punc, test_bler_punc = .0, .0
-                for batch_idx in range(num_test_batch):
-                    X_test     = torch.randint(0, 2, (args.batch_size, block_len, args.code_rate_k), dtype=torch.float)
-                    fwd_noise  = generate_noise(X_test.shape, args, test_sigma=sigma)
-                    X_test, fwd_noise= X_test.to(device), fwd_noise.to(device)
-
-                    X_hat_test, the_codes = model(X_test, fwd_noise)
-
-                    test_ber_punc  += errors_ber(X_hat_test,X_test, positions = res_pos_arg[:args.num_ber_puncture])
-                    test_bler_punc += errors_bler(X_hat_test,X_test, positions = res_pos_arg[:args.num_ber_puncture])
-
-                    if batch_idx == 0:
-                        test_pos_ber = errors_ber_pos(X_hat_test,X_test)
-                        codes_power  = code_power(the_codes)
-                    else:
-                        test_pos_ber += errors_ber_pos(X_hat_test,X_test)
-                        codes_power  += code_power(the_codes)
-            except:
-                print('no pos BER specified.')
 
         test_ber  /= num_test_batch
         test_bler /= num_test_batch
@@ -216,21 +195,9 @@ def test(model, args, block_len = 'default',use_cuda = False):
         ber_res.append(float(test_ber))
         bler_res.append( float(test_bler))
 
-        try:
-            test_ber_punc  /= num_test_batch
-            test_bler_punc /= num_test_batch
-            print('Punctured Test SNR',this_snr ,'with ber ', float(test_ber_punc), 'with bler', float(test_bler_punc))
-            ber_res_punc.append(float(test_ber_punc))
-            bler_res_punc.append( float(test_bler_punc))
-        except:
-            print('No puncturation is there.')
-
     print('final results on SNRs ', snrs)
     print('BER', ber_res)
     print('BLER', bler_res)
-    print('final results on punctured SNRs ', snrs)
-    print('BER', ber_res_punc)
-    print('BLER', bler_res_punc)
 
     # compute adjusted SNR. (some quantization might make power!=1.0)
     enc_power = 0.0
@@ -241,6 +208,6 @@ def test(model, args, block_len = 'default',use_cuda = False):
             X_code     = model.enc(X_test)
             enc_power +=  torch.std(X_code)
     enc_power /= float(num_test_batch)
-    print('encoder power is',enc_power)
+    print('encoder power is',enc_power.item())
     adj_snrs = [snr_sigma2db(snr_db2sigma(item)/enc_power) for item in snrs]
     print('adjusted SNR should be',adj_snrs)

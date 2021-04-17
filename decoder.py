@@ -56,8 +56,23 @@ class DEC(torch.nn.Module):
         rnn_out1,_ = self.dec1_rnns(received)
         rnn_out2,_ = self.dec2_rnns(received)
 
-        rnn_out = torch.cat([rnn_out1, rnn_out2], dim = 2)
+        for i in range(self.args.block_len):
+            if (i>=self.args.block_len-self.args.D-1):
+                rt_d = rnn_out2[:,self.args.block_len-1:self.args.block_len,:]
+            else:
+                rt_d = rnn_out2[:,i+self.args.D:i+self.args.D+1,:]
+            rt = rnn_out1[:,i:i+1,:]
+            rnn_out = torch.cat((rt, rt_d), dim=2)
+            dec_out = self.dec_outputs(rnn_out)
+            if i==0:
+                final = dec_out
+            else:
+                final = torch.cat((final,dec_out),dim=1)
+        final = torch.sigmoid(final)
 
-        dec_out = torch.sigmoid(self.dec_outputs(rnn_out))
 
-        return dec_out
+        # rnn_out = torch.cat([rnn_out1, rnn_out2], dim = 2)
+
+        # dec_out = torch.sigmoid(self.dec_outputs(rnn_out))
+
+        return final
