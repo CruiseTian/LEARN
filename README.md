@@ -6,6 +6,15 @@
 
 ```bash
 git clone https://github.com/CruiseTian/LEARN.git && cd LEARN
+
+# 设置环境(以下两种选择一种即可)
+conda env create -f environment.yaml
+# or 
+conda create -n pytorch python=3.8.3   # 创建新的虚拟环境
+source activate pytorch      # 激活新建的虚拟环境
+pip install -r requirements.txt  # 安装对应依赖
+
+# 执行主程序
 python main.py -num_epoch 120
 ```
 

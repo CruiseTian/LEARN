@@ -105,19 +105,13 @@ if __name__ == '__main__':
     report_loss, report_ber, report_bler = [], [], []
 
     for epoch in range(1, args.num_epoch + 1):
+        if args.num_train_enc > 0:
+            for idx in range(args.num_train_enc):
+                train(epoch, model, enc_optimizer, args, use_cuda = use_cuda, mode ='encoder')
 
-        if args.joint_train == 1:
-            for idx in range(args.num_train_enc+args.num_train_dec):
-                train(epoch, model, general_optimizer, args, use_cuda = use_cuda, mode ='encoder')
-
-        else:
-            if args.num_train_enc > 0:
-                for idx in range(args.num_train_enc):
-                    train(epoch, model, enc_optimizer, args, use_cuda = use_cuda, mode ='encoder')
-
-            if args.num_train_dec > 0:
-                for idx in range(args.num_train_dec):
-                    train(epoch, model, dec_optimizer, args, use_cuda = use_cuda, mode ='decoder')
+        if args.num_train_dec > 0:
+            for idx in range(args.num_train_dec):
+                train(epoch, model, dec_optimizer, args, use_cuda = use_cuda, mode ='decoder')
 
         this_loss, this_ber, this_bler = validate(model, general_optimizer, args, use_cuda = use_cuda)
         report_loss.append(this_loss)
