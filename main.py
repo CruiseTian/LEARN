@@ -32,20 +32,22 @@ if __name__ == '__main__':
     # load args & setup logger
     #################################################
 
-    # put all printed things to log file
-    timestamp = time.strftime('%Y%m%d_%H%M%S', time.localtime())
-    filename = './logs/log'+timestamp+'.txt'
-    # if not os.path.isfile(filename):
-    #     os.system(r"touch {}".format(filename))#调用系统命令行来创建文件
-    logfile = open('./logs/log'+timestamp+'.txt', 'a')
-    sys.stdout = Logger('./logs/log'+timestamp+'.txt', sys.stdout)
-    # identity = str(np.random.random())[2:8]
-    # print('[ID]', identity)
-    # logfile = open('./logs/'+identity+'_log.txt', 'a')
-    # sys.stdout = Logger('./logs/'+identity+'_log.txt', sys.stdout)
-
     args = get_args()
     print(args)
+
+    # put all printed things to log file
+    if args.init_nw_weight == 'default':
+        start_epoch = 1
+        timestamp = time.strftime('%Y%m%d-%H%M%S', time.localtime())
+    else:
+        start_epoch = int(args.init_nw_weight.split('_')[1])+1
+        timestamp = args.init_nw_weight.split('_')[2].split('.')[0]
+
+    filename = './logs/save_data_'+timestamp+'.txt'
+
+    logfile = open('./logs/log'+timestamp+'.txt', 'a')
+    sys.stdout = Logger('./logs/log'+timestamp+'.txt', sys.stdout)
+
 
     use_cuda = not args.no_cuda and torch.cuda.is_available()
     print("use_cuda: ",use_cuda)
@@ -54,9 +56,6 @@ if __name__ == '__main__':
     #################################################
     # Setup Channel AE: Encoder, Decoder, Channel
     #################################################
-    # choose encoder and decoder.
-    # ENC = import_enc(args)
-    # DEC = import_dec(args)
 
     encoder = ENC(args)
     decoder = DEC(args)
@@ -86,7 +85,7 @@ if __name__ == '__main__':
 
 
     ##################################################################
-    # Setup Optimizers, only Adam and Lookahead for now.
+    # Setup Optimizers
     ##################################################################
 
     OPT = optim.Adam
@@ -104,7 +103,7 @@ if __name__ == '__main__':
     #################################################
     report_loss, report_ber, report_bler = [], [], []
 
-    for epoch in range(1, args.num_epoch + 1):
+    for epoch in range(start_epoch, args.num_epoch + 1):
         if args.num_train_enc > 0:
             for idx in range(args.num_train_enc):
                 train(epoch, model, enc_optimizer, args, use_cuda = use_cuda, mode ='encoder')
@@ -114,9 +113,24 @@ if __name__ == '__main__':
                 train(epoch, model, dec_optimizer, args, use_cuda = use_cuda, mode ='decoder')
 
         this_loss, this_ber, this_bler = validate(model, general_optimizer, args, use_cuda = use_cuda)
+
         report_loss.append(this_loss)
         report_ber.append(this_ber)
         report_bler.append(this_bler)
+
+        data_file = open(filename, 'a')
+        data_file.write(str(epoch) + ' ' + str(this_loss) + ' ' + str(this_ber) + ' ' + str(this_bler) + "\n")
+        data_file.close()
+
+        # save model per epoch
+        modelpath = './tmp/model_'+str(epoch)+'_'+timestamp+'.pt'
+        torch.save(model.state_dict(), modelpath)
+        try:
+            pre_modelpath = './tmp/model_'+str(epoch-1)+'_'+timestamp+'.pt'
+            os.system(r"rm -f {}".format(pre_modelpath))#调用系统命令行来创建文件
+        except:
+            pass
+        print('saved model', modelpath)
 
     if args.print_test_traj == True:
         print('test loss trajectory', report_loss)
@@ -128,8 +142,8 @@ if __name__ == '__main__':
     # Testing Processes
     #################################################
 
-    torch.save(model.state_dict(), './tmp/torch_model_'+timestamp+'.pt')
-    print('saved model', './tmp/torch_model_'+timestamp+'.pt')
+    torch.save(model.state_dict(), './tmp/model_'+timestamp+'.pt')
+    print('saved model', './tmp/model_'+timestamp+'.pt')
     # torch.save(model.state_dict(), './tmp/torch_model_'+identity+'.pt')
     # print('saved model', './tmp/torch_model_'+identity+'.pt')
 

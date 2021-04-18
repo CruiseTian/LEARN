@@ -53,7 +53,7 @@ def get_args():
     ################################################################
     # Training ALgorithm related parameters
     ################################################################
-    parser.add_argument('-num_train_dec', type=int, default=1, help ='')
+    parser.add_argument('-num_train_dec', type=int, default=5, help ='')
     parser.add_argument('-num_train_enc', type=int, default=1, help ='')
 
     parser.add_argument('-dropout',type=float, default=0.0)
