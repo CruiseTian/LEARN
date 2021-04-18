@@ -25,3 +25,5 @@ python main.py -num_epoch 120
 logs -- log文件夹
 
 tmp -- 模型文件夹
+
+data -- 数据文件夹
