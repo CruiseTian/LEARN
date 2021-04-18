@@ -43,7 +43,7 @@ if __name__ == '__main__':
         start_epoch = int(args.init_nw_weight.split('_')[1])+1
         timestamp = args.init_nw_weight.split('_')[2].split('.')[0]
 
-    filename = './logs/save_data_'+timestamp+'.txt'
+    filename = './data/save_data_'+timestamp+'.txt'
 
     logfile = open('./logs/log'+timestamp+'.txt', 'a')
     sys.stdout = Logger('./logs/log'+timestamp+'.txt', sys.stdout)
