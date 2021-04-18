@@ -75,9 +75,9 @@ def get_args():
 
     parser.add_argument('-num_block', type=int, default=1000)
 
-    parser.add_argument('-test_channel_mode',
-                        choices=['block_norm','block_norm_ste'],
-                        default='block_norm')
+    # parser.add_argument('-test_channel_mode',
+    #                     choices=['block_norm','block_norm_ste'],
+    #                     default='block_norm')
     parser.add_argument('-train_channel_mode',
                         choices=['block_norm','block_norm_ste'],
                         default='block_norm')
@@ -103,25 +103,6 @@ def get_args():
     parser.add_argument('-optimizer', choices=['adam', 'lookahead', 'sgd'], default='adam', help = '....:)')
     parser.add_argument('-dec_lr', type = float, default=0.001, help='decoder leanring rate')
     parser.add_argument('-enc_lr', type = float, default=0.001, help='encoder leanring rate')
-    # parser.add_argument('-momentum', type = float, default=0.9)
-
-    ################################################################
-    # Loss related parameters
-    ################################################################
-
-    parser.add_argument('-loss', choices=['bce', 'mse','focal', 'bce_block', 'maxBCE', 'bce_rl', 'enc_rl', 'soft_ber', 'sortBCE'],
-                        default='bce', help='only BCE works')
-
-    parser.add_argument('-ber_lambda', type = float, default=1.0, help = 'default 0.0, the more emphasis on BER loss, only for bce_rl')
-    parser.add_argument('-bce_lambda', type = float, default=1.0, help = 'default 1.0, the more emphasis on BCE loss, only for bce_rl')
-
-
-    # focal loss related things
-    parser.add_argument('-focal_gamma', type = float, default=0.0, help = 'default gamma=0,BCE; 5 is to emphasis wrongly decoded cases.')
-    parser.add_argument('-focal_alpha', type = float, default=1.0, help = 'default alpha=1.0, adjust the loss term')
-
-    # mixture term
-    parser.add_argument('-lambda_maxBCE', type = float, default=0.01, help = 'add term to maxBCE loss, only wokr with maxBCE loss')
 
     ################################################################
     # MISC
@@ -141,15 +122,7 @@ def get_args():
     parser.add_argument('--precompute_norm_stats', action='store_true', default=False,
                         help='Use pre-computed mean/std statistics')
 
-    ################################################################
-    # Experimental
-    ################################################################
-    parser.add_argument('--is_k_same_code', action='store_true', default=False,
-                        help='train with same code for multiple times')
-    parser.add_argument('-k_same_code', type = int, default=2, help = 'add term to maxBCE loss, only wokr with maxBCE loss')
-
     parser.add_argument('-D', type = int, default=1, help = 'delay')
-
 
     args = parser.parse_args()
 

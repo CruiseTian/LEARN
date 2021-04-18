@@ -70,9 +70,4 @@ class DEC(torch.nn.Module):
                 final = torch.cat((final,dec_out),dim=1)
         final = torch.sigmoid(final)
 
-
-        # rnn_out = torch.cat([rnn_out1, rnn_out2], dim = 2)
-
-        # dec_out = torch.sigmoid(self.dec_outputs(rnn_out))
-
         return final
