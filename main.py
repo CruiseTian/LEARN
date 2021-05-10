@@ -31,6 +31,7 @@ if __name__ == '__main__':
     #################################################
     # load args & setup logger
     #################################################
+    start_time = time.time()
 
     args = get_args()
 
@@ -105,6 +106,7 @@ if __name__ == '__main__':
     report_loss, report_ber, report_bler = [], [], []
 
     for epoch in range(start_epoch, args.num_epoch + 1):
+        epoch_start_time = time.time()
         if args.num_train_enc > 0:
             for idx in range(args.num_train_enc):
                 train(epoch, model, enc_optimizer, args, use_cuda = use_cuda, mode ='encoder')
@@ -132,6 +134,7 @@ if __name__ == '__main__':
         except:
             pass
         print('saved model', modelpath)
+        print("each epoch training time: {}s".format(time.time()-epoch_start_time))
 
     if args.print_test_traj == True:
         print('test loss trajectory', report_loss)
@@ -159,3 +162,5 @@ if __name__ == '__main__':
 
     else:
         test(model, args, use_cuda = use_cuda)
+
+    print("Training Time: {}s".format(time.time()-start_time))
