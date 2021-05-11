@@ -27,3 +27,9 @@ logs -- log文件夹
 tmp -- 模型文件夹
 
 data -- 数据文件夹
+
+## Plan
+- [ ] decoder输出不舍弃，输入使用$C_i$，hidden 正常传递
+- [ ] $C_i$和decoder的h合并输出并作为下一层输入。[参考链接](https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/)
+- [ ] 输入使用encoder出来的结果，输出使用h和$C_i$合并结果
+- [ ] pytorch官方实现。[链接](https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html?highlight=attention)
