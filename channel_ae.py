@@ -28,6 +28,6 @@ class Channel_AE(torch.nn.Module):
             myquantize = MyQuantize.apply
             received_codes = myquantize(received_codes, self.args)
 
-        x_dec = self.dec(input, s, output)
+        x_dec = self.dec(received_codes, s, output)
 
         return x_dec, codes

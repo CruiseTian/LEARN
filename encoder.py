@@ -87,7 +87,7 @@ class ENC(torch.nn.Module):
 
     def forward(self, inputs):
         output, hidden = self.enc_rnn(inputs)
-        s = torch.tanh(self.fc(hidden[-1,:,:], dim = 1))
-        code      = self.enc_act(self.enc_linear(code))
+        s = torch.tanh(self.fc(hidden[-1,:,:]))
+        code = self.enc_act(self.enc_linear(output))
         codes = self.power_constraint(code)
         return codes, s, output

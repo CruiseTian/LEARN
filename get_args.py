@@ -45,7 +45,7 @@ def get_args():
 
 
     parser.add_argument('-dec_num_unit', type=int, default=100, help = 'This is CNN number of filters, and RNN units')
-    parser.add_argument('-enc_num_unit', type=int, default=100, help = 'This is CNN number of filters, and RNN units')
+    parser.add_argument('-enc_num_unit', type=int, default=25, help = 'This is CNN number of filters, and RNN units')
 
     parser.add_argument('-enc_act', choices=['tanh', 'selu', 'relu', 'elu', 'sigmoid', 'linear'], default='elu', help='only elu works')
     parser.add_argument('-dec_act', choices=['tanh', 'selu', 'relu', 'elu', 'sigmoid', 'linear'], default='linear')
@@ -62,7 +62,7 @@ def get_args():
     parser.add_argument('-snr_test_end', type=float, default=4.0)
     parser.add_argument('-snr_points', type=int, default=12)
 
-    parser.add_argument('-batch_size', type=int, default=50)
+    parser.add_argument('-batch_size', type=int, default=100)
     parser.add_argument('-num_epoch', type=int, default=1)
     parser.add_argument('-test_ratio', type=int, default=1,help = 'only for high SNR testing')
     # block length related
