@@ -1,0 +1,873 @@
+Namespace(D=1, batch_size=1000, bce_lambda=1.0, ber_lambda=1.0, block_len=100, block_len_high=200, block_len_low=10, channel='awgn', code_rate_k=1, code_rate_n=3, dec_act='linear', dec_lr=0.01, dec_num_layer=5, dec_num_unit=100, dec_rnn='gru', dropout=0.0, enc_act='elu', enc_clipping='both', enc_grad_limit=0.01, enc_lr=0.01, enc_num_layer=2, enc_num_unit=25, enc_quantize_level=2, enc_rnn='gru', enc_truncate_limit=0, enc_value_limit=1.0, focal_alpha=1.0, focal_gamma=0.0, init_nw_weight='default', is_k_same_code=False, is_variable_block_len=False, joint_train=0, k_same_code=2, lambda_maxBCE=0.01, loss='bce', no_code_norm=False, no_cuda=False, num_block=10000, num_epoch=120, num_train_dec=5, num_train_enc=1, optimizer='adam', precompute_norm_stats=False, print_pos_ber=False, print_pos_power=False, print_test_traj=False, radar_power=5.0, radar_prob=0.05, rec_quantize=False, snr_points=12, snr_test_end=4.0, snr_test_start=-1.5, test_channel_mode='block_norm', test_ratio=1, train_channel_mode='block_norm', train_dec_channel_high=2.0, train_dec_channel_low=-1.5, train_enc_channel_high=1.0, train_enc_channel_low=1.0, vv=5)
+use_cuda:  True
+Channel_AE(
+  (enc): ENC(
+    (enc_rnn): GRU(1, 25, num_layers=2, batch_first=True)
+    (enc_linear): Linear(in_features=25, out_features=3, bias=True)
+  )
+  (dec): DEC(
+    (dropout): Dropout(p=0.0, inplace=False)
+    (dec1_rnns): GRU(3, 100, num_layers=2, batch_first=True)
+    (dec2_rnns): GRU(3, 100, num_layers=2, batch_first=True)
+    (dec_outputs): Linear(in_features=200, out_features=1, bias=True)
+  )
+)
+====> Epoch: 1 Average loss: 0.69368344  running time 3.5262835025787354
+====> Epoch: 1 Average loss: 0.44106674  running time 3.3801639080047607
+====> Epoch: 1 Average loss: 0.26555493  running time 3.3840434551239014
+====> Epoch: 1 Average loss: 0.25129380  running time 3.378851890563965
+====> Epoch: 1 Average loss: 0.24570289  running time 3.3937361240386963
+====> Epoch: 1 Average loss: 0.24184812  running time 3.3815104961395264
+====> Test set BCE loss 0.19646644592285156 Custom Loss 0.19646644592285156 with ber  0.0777909979224205 with bler  0.999
+====> Epoch: 2 Average loss: 0.22965420  running time 3.383394718170166
+====> Epoch: 2 Average loss: 0.16426719  running time 3.41109037399292
+====> Epoch: 2 Average loss: 0.14895445  running time 3.4011001586914062
+====> Epoch: 2 Average loss: 0.14598189  running time 3.4018516540527344
+====> Epoch: 2 Average loss: 0.14454708  running time 3.4073147773742676
+====> Epoch: 2 Average loss: 0.14272438  running time 3.408719778060913
+====> Test set BCE loss 0.10116566717624664 Custom Loss 0.10116566717624664 with ber  0.037629999220371246 with bler  0.9715
+====> Epoch: 3 Average loss: 0.10742218  running time 3.3948376178741455
+====> Epoch: 3 Average loss: 0.12884488  running time 3.4079504013061523
+====> Epoch: 3 Average loss: 0.12323643  running time 3.4060800075531006
+====> Epoch: 3 Average loss: 0.12120678  running time 3.403400421142578
+====> Epoch: 3 Average loss: 0.12036326  running time 3.415011167526245
+====> Epoch: 3 Average loss: 0.11997880  running time 3.419234275817871
+====> Test set BCE loss 0.08194402605295181 Custom Loss 0.08194402605295181 with ber  0.030125996097922325 with bler  0.9480999999999999
+====> Epoch: 4 Average loss: 0.08272425  running time 3.38506817817688
+====> Epoch: 4 Average loss: 0.11413307  running time 3.4019644260406494
+====> Epoch: 4 Average loss: 0.11265434  running time 3.4044792652130127
+====> Epoch: 4 Average loss: 0.11226726  running time 3.410417079925537
+====> Epoch: 4 Average loss: 0.11276092  running time 3.411665201187134
+====> Epoch: 4 Average loss: 0.11273487  running time 3.4140310287475586
+====> Test set BCE loss 0.07604040950536728 Custom Loss 0.07604040950536728 with ber  0.027814997360110283 with bler  0.9385000000000001
+====> Epoch: 5 Average loss: 0.07543049  running time 3.403036117553711
+====> Epoch: 5 Average loss: 0.11027291  running time 3.4169139862060547
+====> Epoch: 5 Average loss: 0.10976413  running time 3.4205784797668457
+====> Epoch: 5 Average loss: 0.11011586  running time 3.428743839263916
+====> Epoch: 5 Average loss: 0.11014512  running time 3.444601058959961
+====> Epoch: 5 Average loss: 0.10982036  running time 3.448296308517456
+====> Test set BCE loss 0.07342590391635895 Custom Loss 0.07342590391635895 with ber  0.02679700031876564 with bler  0.9326000000000001
+====> Epoch: 6 Average loss: 0.07332426  running time 3.429898500442505
+====> Epoch: 6 Average loss: 0.10893957  running time 3.4502387046813965
+====> Epoch: 6 Average loss: 0.10898720  running time 3.453519344329834
+====> Epoch: 6 Average loss: 0.10847396  running time 3.462052583694458
+====> Epoch: 6 Average loss: 0.10937764  running time 3.460028648376465
+====> Epoch: 6 Average loss: 0.10803979  running time 3.461074113845825
+====> Test set BCE loss 0.07270893454551697 Custom Loss 0.07270893454551697 with ber  0.026662996038794518 with bler  0.9328999999999998
+====> Epoch: 7 Average loss: 0.07176418  running time 3.4692506790161133
+====> Epoch: 7 Average loss: 0.10772167  running time 3.493335247039795
+====> Epoch: 7 Average loss: 0.10880890  running time 3.4975550174713135
+====> Epoch: 7 Average loss: 0.10837146  running time 3.475954294204712
+====> Epoch: 7 Average loss: 0.10826434  running time 3.4901373386383057
+====> Epoch: 7 Average loss: 0.10769859  running time 3.482753276824951
+====> Test set BCE loss 0.07212311029434204 Custom Loss 0.07212311029434204 with ber  0.026316998526453972 with bler  0.9279000000000002
+====> Epoch: 8 Average loss: 0.07107163  running time 3.47320294380188
+====> Epoch: 8 Average loss: 0.10774897  running time 3.4891245365142822
+====> Epoch: 8 Average loss: 0.10785426  running time 3.496985673904419
+====> Epoch: 8 Average loss: 0.10834348  running time 3.500533103942871
+====> Epoch: 8 Average loss: 0.10880263  running time 3.5101301670074463
+====> Epoch: 8 Average loss: 0.10832794  running time 3.50134015083313
+====> Test set BCE loss 0.07108713686466217 Custom Loss 0.07108713686466217 with ber  0.025800997391343117 with bler  0.9268000000000001
+====> Epoch: 9 Average loss: 0.07215718  running time 3.50468111038208
+====> Epoch: 9 Average loss: 0.10777947  running time 3.5157971382141113
+====> Epoch: 9 Average loss: 0.10769677  running time 3.5155508518218994
+====> Epoch: 9 Average loss: 0.10846625  running time 3.5115582942962646
+====> Epoch: 9 Average loss: 0.10729682  running time 3.50627064704895
+====> Epoch: 9 Average loss: 0.10750461  running time 3.5104851722717285
+====> Test set BCE loss 0.07096457481384277 Custom Loss 0.07096457481384277 with ber  0.025946998968720436 with bler  0.9316000000000001
+====> Epoch: 10 Average loss: 0.07117365  running time 3.4977540969848633
+====> Epoch: 10 Average loss: 0.10737300  running time 3.5146472454071045
+====> Epoch: 10 Average loss: 0.10758574  running time 3.5141782760620117
+====> Epoch: 10 Average loss: 0.10750147  running time 3.516954183578491
+====> Epoch: 10 Average loss: 0.10671011  running time 3.5076863765716553
+====> Epoch: 10 Average loss: 0.10804878  running time 3.516162872314453
+====> Test set BCE loss 0.07121767848730087 Custom Loss 0.07121767848730087 with ber  0.02604299783706665 with bler  0.9267
+====> Epoch: 11 Average loss: 0.07141558  running time 3.481715202331543
+====> Epoch: 11 Average loss: 0.10746436  running time 3.4952709674835205
+====> Epoch: 11 Average loss: 0.10781624  running time 3.507305860519409
+====> Epoch: 11 Average loss: 0.10735280  running time 3.501500129699707
+====> Epoch: 11 Average loss: 0.10810719  running time 3.5082976818084717
+====> Epoch: 11 Average loss: 0.10651561  running time 3.5162854194641113
+====> Test set BCE loss 0.07096319645643234 Custom Loss 0.07096319645643234 with ber  0.025762995705008507 with bler  0.9280000000000002
+====> Epoch: 12 Average loss: 0.07116962  running time 3.4782469272613525
+====> Epoch: 12 Average loss: 0.10618595  running time 3.491579294204712
+====> Epoch: 12 Average loss: 0.10701538  running time 3.4909770488739014
+====> Epoch: 12 Average loss: 0.10688516  running time 3.491391897201538
+====> Epoch: 12 Average loss: 0.10669719  running time 3.4856719970703125
+====> Epoch: 12 Average loss: 0.10717370  running time 3.4985907077789307
+====> Test set BCE loss 0.07105465978384018 Custom Loss 0.07105465978384018 with ber  0.02594100311398506 with bler  0.9229
+====> Epoch: 13 Average loss: 0.07054335  running time 3.46647310256958
+====> Epoch: 13 Average loss: 0.10562881  running time 3.4968318939208984
+====> Epoch: 13 Average loss: 0.10539242  running time 3.481515645980835
+====> Epoch: 13 Average loss: 0.10526287  running time 3.476717472076416
+====> Epoch: 13 Average loss: 0.10591151  running time 3.486125946044922
+====> Epoch: 13 Average loss: 0.10592939  running time 3.480438470840454
+====> Test set BCE loss 0.07032763957977295 Custom Loss 0.07032763957977295 with ber  0.025523999705910683 with bler  0.9206000000000001
+====> Epoch: 14 Average loss: 0.06923061  running time 3.477182149887085
+====> Epoch: 14 Average loss: 0.10416863  running time 3.5014150142669678
+====> Epoch: 14 Average loss: 0.10366428  running time 3.495516300201416
+====> Epoch: 14 Average loss: 0.10325589  running time 3.5007636547088623
+====> Epoch: 14 Average loss: 0.10336688  running time 3.501319169998169
+====> Epoch: 14 Average loss: 0.10368452  running time 3.5052711963653564
+====> Test set BCE loss 0.06822595000267029 Custom Loss 0.06822595000267029 with ber  0.024841999635100365 with bler  0.9195
+====> Epoch: 15 Average loss: 0.06717544  running time 3.4929211139678955
+====> Epoch: 15 Average loss: 0.10137791  running time 3.504288673400879
+====> Epoch: 15 Average loss: 0.09919639  running time 3.5097639560699463
+====> Epoch: 15 Average loss: 0.09964527  running time 3.5057435035705566
+====> Epoch: 15 Average loss: 0.09997884  running time 3.5078341960906982
+====> Epoch: 15 Average loss: 0.09927407  running time 3.5110597610473633
+====> Test set BCE loss 0.06494811922311783 Custom Loss 0.06494811922311783 with ber  0.023594999685883522 with bler  0.9003999999999998
+====> Epoch: 16 Average loss: 0.06301379  running time 3.502612352371216
+====> Epoch: 16 Average loss: 0.09415073  running time 3.5133988857269287
+====> Epoch: 16 Average loss: 0.09321023  running time 3.518299102783203
+====> Epoch: 16 Average loss: 0.09240342  running time 3.5128366947174072
+====> Epoch: 16 Average loss: 0.09201804  running time 3.523298501968384
+====> Epoch: 16 Average loss: 0.09216064  running time 3.5180113315582275
+====> Test set BCE loss 0.05756932497024536 Custom Loss 0.05756932497024536 with ber  0.020649999380111694 with bler  0.8664999999999999
+====> Epoch: 17 Average loss: 0.05518123  running time 3.500133514404297
+====> Epoch: 17 Average loss: 0.08838103  running time 3.5209622383117676
+====> Epoch: 17 Average loss: 0.08677286  running time 3.5104074478149414
+====> Epoch: 17 Average loss: 0.08672981  running time 3.512199878692627
+====> Epoch: 17 Average loss: 0.08602157  running time 3.5216927528381348
+====> Epoch: 17 Average loss: 0.08693867  running time 3.512963056564331
+====> Test set BCE loss 0.05080112814903259 Custom Loss 0.05080112814903259 with ber  0.018135998398065567 with bler  0.8137000000000001
+====> Epoch: 18 Average loss: 0.05026150  running time 3.496596574783325
+====> Epoch: 18 Average loss: 0.08580115  running time 3.506650447845459
+====> Epoch: 18 Average loss: 0.08554348  running time 3.5096189975738525
+====> Epoch: 18 Average loss: 0.08505490  running time 3.510836601257324
+====> Epoch: 18 Average loss: 0.08469560  running time 3.5022590160369873
+====> Epoch: 18 Average loss: 0.08405336  running time 3.502047538757324
+====> Test set BCE loss 0.049074310809373856 Custom Loss 0.049074310809373856 with ber  0.017433999106287956 with bler  0.792
+====> Epoch: 19 Average loss: 0.04898174  running time 3.474189281463623
+====> Epoch: 19 Average loss: 0.08528867  running time 3.483016014099121
+====> Epoch: 19 Average loss: 0.08538384  running time 3.49359393119812
+====> Epoch: 19 Average loss: 0.08514792  running time 3.4848151206970215
+====> Epoch: 19 Average loss: 0.08462301  running time 3.498627185821533
+====> Epoch: 19 Average loss: 0.08467329  running time 3.49139404296875
+====> Test set BCE loss 0.049367643892765045 Custom Loss 0.049367643892765045 with ber  0.017479998990893364 with bler  0.7867
+====> Epoch: 20 Average loss: 0.04898369  running time 3.4671218395233154
+====> Epoch: 20 Average loss: 0.08370501  running time 3.4833896160125732
+====> Epoch: 20 Average loss: 0.08495993  running time 3.489933490753174
+====> Epoch: 20 Average loss: 0.08415370  running time 3.4846837520599365
+====> Epoch: 20 Average loss: 0.08363994  running time 3.491537094116211
+====> Epoch: 20 Average loss: 0.08418849  running time 3.482185125350952
+====> Test set BCE loss 0.04815446957945824 Custom Loss 0.04815446957945824 with ber  0.017323998734354973 with bler  0.7849999999999999
+====> Epoch: 21 Average loss: 0.04845733  running time 3.484645366668701
+====> Epoch: 21 Average loss: 0.08427669  running time 3.497011184692383
+====> Epoch: 21 Average loss: 0.08454413  running time 3.5015623569488525
+====> Epoch: 21 Average loss: 0.08449998  running time 3.502779245376587
+====> Epoch: 21 Average loss: 0.08425006  running time 3.5058109760284424
+====> Epoch: 21 Average loss: 0.08486477  running time 3.5097453594207764
+====> Test set BCE loss 0.04807233065366745 Custom Loss 0.04807233065366745 with ber  0.01710200123488903 with bler  0.7801000000000001
+====> Epoch: 22 Average loss: 0.04828455  running time 3.4926490783691406
+====> Epoch: 22 Average loss: 0.08364647  running time 3.5051674842834473
+====> Epoch: 22 Average loss: 0.08409248  running time 3.5125837326049805
+====> Epoch: 22 Average loss: 0.08425412  running time 3.5080182552337646
+====> Epoch: 22 Average loss: 0.08358993  running time 3.502957820892334
+====> Epoch: 22 Average loss: 0.08453370  running time 3.501866102218628
+====> Test set BCE loss 0.04842917248606682 Custom Loss 0.04842917248606682 with ber  0.017176998779177666 with bler  0.7819
+====> Epoch: 23 Average loss: 0.04821404  running time 3.5042974948883057
+====> Epoch: 23 Average loss: 0.08513109  running time 3.5162158012390137
+====> Epoch: 23 Average loss: 0.08381431  running time 3.518080472946167
+====> Epoch: 23 Average loss: 0.08456209  running time 3.5196726322174072
+====> Epoch: 23 Average loss: 0.08399187  running time 3.5224785804748535
+====> Epoch: 23 Average loss: 0.08551438  running time 3.519681453704834
+====> Test set BCE loss 0.04888712987303734 Custom Loss 0.04888712987303734 with ber  0.01741800084710121 with bler  0.7888999999999999
+====> Epoch: 24 Average loss: 0.04839271  running time 3.4974284172058105
+====> Epoch: 24 Average loss: 0.08402591  running time 3.5176141262054443
+====> Epoch: 24 Average loss: 0.08449226  running time 3.5131661891937256
+====> Epoch: 24 Average loss: 0.08415220  running time 3.5160975456237793
+====> Epoch: 24 Average loss: 0.08410477  running time 3.50985050201416
+====> Epoch: 24 Average loss: 0.08403590  running time 3.512108564376831
+====> Test set BCE loss 0.048067398369312286 Custom Loss 0.048067398369312286 with ber  0.01692199893295765 with bler  0.7761000000000001
+====> Epoch: 25 Average loss: 0.04803554  running time 3.490994691848755
+====> Epoch: 25 Average loss: 0.08411267  running time 3.5073633193969727
+====> Epoch: 25 Average loss: 0.08304290  running time 3.5094707012176514
+====> Epoch: 25 Average loss: 0.08342978  running time 3.506474733352661
+====> Epoch: 25 Average loss: 0.08406018  running time 3.5112500190734863
+====> Epoch: 25 Average loss: 0.08397338  running time 3.5046467781066895
+====> Test set BCE loss 0.048955269157886505 Custom Loss 0.048955269157886505 with ber  0.01740800030529499 with bler  0.783
+====> Epoch: 26 Average loss: 0.04849664  running time 3.47756290435791
+====> Epoch: 26 Average loss: 0.08444958  running time 3.4972708225250244
+====> Epoch: 26 Average loss: 0.08414584  running time 3.490483045578003
+====> Epoch: 26 Average loss: 0.08435644  running time 3.4895272254943848
+====> Epoch: 26 Average loss: 0.08358748  running time 3.4955153465270996
+====> Epoch: 26 Average loss: 0.08541788  running time 3.498260498046875
+====> Test set BCE loss 0.04870905354619026 Custom Loss 0.04870905354619026 with ber  0.01738799922168255 with bler  0.7865
+====> Epoch: 27 Average loss: 0.04805252  running time 3.4892849922180176
+====> Epoch: 27 Average loss: 0.08412246  running time 3.487765312194824
+====> Epoch: 27 Average loss: 0.08423792  running time 3.494372844696045
+====> Epoch: 27 Average loss: 0.08460345  running time 3.4889304637908936
+====> Epoch: 27 Average loss: 0.08492626  running time 3.484071969985962
+====> Epoch: 27 Average loss: 0.08380896  running time 3.496006488800049
+====> Test set BCE loss 0.04829663783311844 Custom Loss 0.04829663783311844 with ber  0.017180001363158226 with bler  0.7858
+====> Epoch: 28 Average loss: 0.04812443  running time 3.4910080432891846
+====> Epoch: 28 Average loss: 0.08351028  running time 3.506394147872925
+====> Epoch: 28 Average loss: 0.08397477  running time 3.49725079536438
+====> Epoch: 28 Average loss: 0.08314371  running time 3.493424892425537
+====> Epoch: 28 Average loss: 0.08405285  running time 3.499579906463623
+====> Epoch: 28 Average loss: 0.08451362  running time 3.500415086746216
+====> Test set BCE loss 0.047907356172800064 Custom Loss 0.047907356172800064 with ber  0.017086999490857124 with bler  0.7823
+====> Epoch: 29 Average loss: 0.04783022  running time 3.4866220951080322
+====> Epoch: 29 Average loss: 0.08367357  running time 3.498919725418091
+====> Epoch: 29 Average loss: 0.08346455  running time 3.5118305683135986
+====> Epoch: 29 Average loss: 0.08417030  running time 3.5102555751800537
+====> Epoch: 29 Average loss: 0.08385501  running time 3.5074586868286133
+====> Epoch: 29 Average loss: 0.08362888  running time 3.511361598968506
+====> Test set BCE loss 0.047852154821157455 Custom Loss 0.047852154821157455 with ber  0.016858000308275223 with bler  0.7804000000000001
+====> Epoch: 30 Average loss: 0.04805372  running time 3.4938478469848633
+====> Epoch: 30 Average loss: 0.08419655  running time 3.52117919921875
+====> Epoch: 30 Average loss: 0.08477588  running time 3.5131025314331055
+====> Epoch: 30 Average loss: 0.08361350  running time 3.5210208892822266
+====> Epoch: 30 Average loss: 0.08315912  running time 3.517453193664551
+====> Epoch: 30 Average loss: 0.08361880  running time 3.5176925659179688
+====> Test set BCE loss 0.048341985791921616 Custom Loss 0.048341985791921616 with ber  0.01715100184082985 with bler  0.7816
+====> Epoch: 31 Average loss: 0.04890726  running time 3.496763229370117
+====> Epoch: 31 Average loss: 0.08475244  running time 3.518583059310913
+====> Epoch: 31 Average loss: 0.08432270  running time 3.5183868408203125
+====> Epoch: 31 Average loss: 0.08371996  running time 3.507993459701538
+====> Epoch: 31 Average loss: 0.08384897  running time 3.514789581298828
+====> Epoch: 31 Average loss: 0.08368723  running time 3.5166900157928467
+====> Test set BCE loss 0.04787629097700119 Custom Loss 0.04787629097700119 with ber  0.017156001180410385 with bler  0.7738
+====> Epoch: 32 Average loss: 0.04772459  running time 3.4909873008728027
+====> Epoch: 32 Average loss: 0.08441444  running time 3.5038633346557617
+====> Epoch: 32 Average loss: 0.08316072  running time 3.5073158740997314
+====> Epoch: 32 Average loss: 0.08404074  running time 3.507662534713745
+====> Epoch: 32 Average loss: 0.08404673  running time 3.5142340660095215
+====> Epoch: 32 Average loss: 0.08391412  running time 3.513491630554199
+====> Test set BCE loss 0.047972358763217926 Custom Loss 0.047972358763217926 with ber  0.017268000170588493 with bler  0.7792
+====> Epoch: 33 Average loss: 0.04797635  running time 3.476902961730957
+====> Epoch: 33 Average loss: 0.08335530  running time 3.5009233951568604
+====> Epoch: 33 Average loss: 0.08366104  running time 3.4925949573516846
+====> Epoch: 33 Average loss: 0.08415342  running time 3.4953479766845703
+====> Epoch: 33 Average loss: 0.08383104  running time 3.49672532081604
+====> Epoch: 33 Average loss: 0.08418462  running time 3.491647958755493
+====> Test set BCE loss 0.04805121198296547 Custom Loss 0.04805121198296547 with ber  0.016940999776124954 with bler  0.7797999999999998
+====> Epoch: 34 Average loss: 0.04836664  running time 3.478950262069702
+====> Epoch: 34 Average loss: 0.08424475  running time 3.486945152282715
+====> Epoch: 34 Average loss: 0.08370592  running time 3.4938161373138428
+====> Epoch: 34 Average loss: 0.08353264  running time 3.4862008094787598
+====> Epoch: 34 Average loss: 0.08344131  running time 3.4879889488220215
+====> Epoch: 34 Average loss: 0.08338340  running time 3.4882497787475586
+====> Test set BCE loss 0.048087235540151596 Custom Loss 0.048087235540151596 with ber  0.017299000173807144 with bler  0.7834000000000001
+====> Epoch: 35 Average loss: 0.04814308  running time 3.482715606689453
+====> Epoch: 35 Average loss: 0.08365451  running time 3.5053110122680664
+====> Epoch: 35 Average loss: 0.08421487  running time 3.5031490325927734
+====> Epoch: 35 Average loss: 0.08371702  running time 3.4994091987609863
+====> Epoch: 35 Average loss: 0.08351603  running time 3.5035924911499023
+====> Epoch: 35 Average loss: 0.08365184  running time 3.5022082328796387
+====> Test set BCE loss 0.04798176884651184 Custom Loss 0.04798176884651184 with ber  0.01706400141119957 with bler  0.7844000000000001
+====> Epoch: 36 Average loss: 0.04773321  running time 3.49442195892334
+====> Epoch: 36 Average loss: 0.08281734  running time 3.5095231533050537
+====> Epoch: 36 Average loss: 0.08351463  running time 3.512596368789673
+====> Epoch: 36 Average loss: 0.08482260  running time 3.505201816558838
+====> Epoch: 36 Average loss: 0.08339748  running time 3.507713556289673
+====> Epoch: 36 Average loss: 0.08466782  running time 3.5075106620788574
+====> Test set BCE loss 0.048058200627565384 Custom Loss 0.048058200627565384 with ber  0.017061999067664146 with bler  0.7821999999999999
+====> Epoch: 37 Average loss: 0.04829474  running time 3.4964540004730225
+====> Epoch: 37 Average loss: 0.08450807  running time 3.520498752593994
+====> Epoch: 37 Average loss: 0.08411585  running time 3.52401065826416
+====> Epoch: 37 Average loss: 0.08419542  running time 3.520033597946167
+====> Epoch: 37 Average loss: 0.08440131  running time 3.5223114490509033
+====> Epoch: 37 Average loss: 0.08323692  running time 3.514967679977417
+====> Test set BCE loss 0.047968700528144836 Custom Loss 0.047968700528144836 with ber  0.017079999670386314 with bler  0.7824
+====> Epoch: 38 Average loss: 0.04799771  running time 3.4977879524230957
+====> Epoch: 38 Average loss: 0.08406768  running time 3.5122323036193848
+====> Epoch: 38 Average loss: 0.08361689  running time 3.52298903465271
+====> Epoch: 38 Average loss: 0.08434323  running time 3.5142669677734375
+====> Epoch: 38 Average loss: 0.08357546  running time 3.5151638984680176
+====> Epoch: 38 Average loss: 0.08524979  running time 3.5201220512390137
+====> Test set BCE loss 0.04850481450557709 Custom Loss 0.04850481450557709 with ber  0.01729399897158146 with bler  0.7806
+====> Epoch: 39 Average loss: 0.04827135  running time 3.4846537113189697
+====> Epoch: 39 Average loss: 0.08430321  running time 3.501962661743164
+====> Epoch: 39 Average loss: 0.08408280  running time 3.5033581256866455
+====> Epoch: 39 Average loss: 0.08359622  running time 3.5155413150787354
+====> Epoch: 39 Average loss: 0.08387052  running time 3.502923011779785
+====> Epoch: 39 Average loss: 0.08453802  running time 3.514052629470825
+====> Test set BCE loss 0.048160310834646225 Custom Loss 0.048160310834646225 with ber  0.017199000343680382 with bler  0.7832000000000001
+====> Epoch: 40 Average loss: 0.04813026  running time 3.4735960960388184
+====> Epoch: 40 Average loss: 0.08344942  running time 3.498000144958496
+====> Epoch: 40 Average loss: 0.08425296  running time 3.4925434589385986
+====> Epoch: 40 Average loss: 0.08359087  running time 3.489957094192505
+====> Epoch: 40 Average loss: 0.08367157  running time 3.500014305114746
+====> Epoch: 40 Average loss: 0.08448279  running time 3.491682291030884
+====> Test set BCE loss 0.04756193235516548 Custom Loss 0.04756193235516548 with ber  0.016777999699115753 with bler  0.7748
+====> Epoch: 41 Average loss: 0.04810384  running time 3.4760968685150146
+====> Epoch: 41 Average loss: 0.08341780  running time 3.4841694831848145
+====> Epoch: 41 Average loss: 0.08370890  running time 3.4899721145629883
+====> Epoch: 41 Average loss: 0.08441636  running time 3.487267017364502
+====> Epoch: 41 Average loss: 0.08373278  running time 3.499821901321411
+====> Epoch: 41 Average loss: 0.08462282  running time 3.4846251010894775
+====> Test set BCE loss 0.04808302968740463 Custom Loss 0.04808302968740463 with ber  0.01706400141119957 with bler  0.7778
+====> Epoch: 42 Average loss: 0.04797211  running time 3.4842159748077393
+====> Epoch: 42 Average loss: 0.08371574  running time 3.4934699535369873
+====> Epoch: 42 Average loss: 0.08361232  running time 3.496962308883667
+====> Epoch: 42 Average loss: 0.08325307  running time 3.5006353855133057
+====> Epoch: 42 Average loss: 0.08334513  running time 3.5034406185150146
+====> Epoch: 42 Average loss: 0.08357227  running time 3.50199556350708
+====> Test set BCE loss 0.04813108220696449 Custom Loss 0.04813108220696449 with ber  0.01682800054550171 with bler  0.7744
+====> Epoch: 43 Average loss: 0.04839656  running time 3.4839696884155273
+====> Epoch: 43 Average loss: 0.08400183  running time 3.50728702545166
+====> Epoch: 43 Average loss: 0.08390607  running time 3.5080909729003906
+====> Epoch: 43 Average loss: 0.08359794  running time 3.501739025115967
+====> Epoch: 43 Average loss: 0.08398285  running time 3.50715970993042
+====> Epoch: 43 Average loss: 0.08347549  running time 3.5048935413360596
+====> Test set BCE loss 0.047711361199617386 Custom Loss 0.047711361199617386 with ber  0.017149999737739563 with bler  0.7788
+====> Epoch: 44 Average loss: 0.04802674  running time 3.501575469970703
+====> Epoch: 44 Average loss: 0.08336030  running time 3.5091168880462646
+====> Epoch: 44 Average loss: 0.08263367  running time 3.514326572418213
+====> Epoch: 44 Average loss: 0.08306134  running time 3.5101535320281982
+====> Epoch: 44 Average loss: 0.08327743  running time 3.5166335105895996
+====> Epoch: 44 Average loss: 0.08391524  running time 3.5142431259155273
+====> Test set BCE loss 0.048155829310417175 Custom Loss 0.048155829310417175 with ber  0.017057999968528748 with bler  0.7767000000000001
+====> Epoch: 45 Average loss: 0.04863717  running time 3.496983766555786
+====> Epoch: 45 Average loss: 0.08376454  running time 3.5199272632598877
+====> Epoch: 45 Average loss: 0.08388957  running time 3.517709255218506
+====> Epoch: 45 Average loss: 0.08388426  running time 3.517986536026001
+====> Epoch: 45 Average loss: 0.08363394  running time 3.5181639194488525
+====> Epoch: 45 Average loss: 0.08307304  running time 3.5179619789123535
+====> Test set BCE loss 0.04765820503234863 Custom Loss 0.04765820503234863 with ber  0.017052998766303062 with bler  0.7773000000000001
+====> Epoch: 46 Average loss: 0.04781694  running time 3.5004231929779053
+====> Epoch: 46 Average loss: 0.08411158  running time 3.5010604858398438
+====> Epoch: 46 Average loss: 0.08369405  running time 3.5067198276519775
+====> Epoch: 46 Average loss: 0.08341952  running time 3.5079705715179443
+====> Epoch: 46 Average loss: 0.08318096  running time 3.4980406761169434
+====> Epoch: 46 Average loss: 0.08360658  running time 3.5027687549591064
+====> Test set BCE loss 0.047909438610076904 Custom Loss 0.047909438610076904 with ber  0.017367998138070107 with bler  0.7926
+====> Epoch: 47 Average loss: 0.04743636  running time 3.4794087409973145
+====> Epoch: 47 Average loss: 0.08420979  running time 3.501469612121582
+====> Epoch: 47 Average loss: 0.08326227  running time 3.490081787109375
+====> Epoch: 47 Average loss: 0.08458541  running time 3.492816686630249
+====> Epoch: 47 Average loss: 0.08339163  running time 3.490203619003296
+====> Epoch: 47 Average loss: 0.08460963  running time 3.4901323318481445
+====> Test set BCE loss 0.04827142879366875 Custom Loss 0.04827142879366875 with ber  0.017114000394940376 with bler  0.7846
+====> Epoch: 48 Average loss: 0.04828456  running time 3.4761745929718018
+====> Epoch: 48 Average loss: 0.08334845  running time 3.4921650886535645
+====> Epoch: 48 Average loss: 0.08354236  running time 3.485260009765625
+====> Epoch: 48 Average loss: 0.08331851  running time 3.481501817703247
+====> Epoch: 48 Average loss: 0.08284345  running time 3.4852969646453857
+====> Epoch: 48 Average loss: 0.08298928  running time 3.482334852218628
+====> Test set BCE loss 0.04752540588378906 Custom Loss 0.04752540588378906 with ber  0.01707500033080578 with bler  0.7827
+====> Epoch: 49 Average loss: 0.04748883  running time 3.4903669357299805
+====> Epoch: 49 Average loss: 0.08422667  running time 3.501436471939087
+====> Epoch: 49 Average loss: 0.08395748  running time 3.5000228881835938
+====> Epoch: 49 Average loss: 0.08330493  running time 3.5022358894348145
+====> Epoch: 49 Average loss: 0.08405799  running time 3.5024261474609375
+====> Epoch: 49 Average loss: 0.08421759  running time 3.5027456283569336
+====> Test set BCE loss 0.04821005091071129 Custom Loss 0.04821005091071129 with ber  0.017249999567866325 with bler  0.7823
+====> Epoch: 50 Average loss: 0.04774368  running time 3.483252763748169
+====> Epoch: 50 Average loss: 0.08392121  running time 3.5039801597595215
+====> Epoch: 50 Average loss: 0.08470973  running time 3.501008987426758
+====> Epoch: 50 Average loss: 0.08349708  running time 3.509821891784668
+====> Epoch: 50 Average loss: 0.08307663  running time 3.504120349884033
+====> Epoch: 50 Average loss: 0.08343804  running time 3.512892484664917
+====> Test set BCE loss 0.04814056679606438 Custom Loss 0.04814056679606438 with ber  0.017339998856186867 with bler  0.7816000000000001
+====> Epoch: 51 Average loss: 0.04839569  running time 3.4974658489227295
+====> Epoch: 51 Average loss: 0.08333226  running time 3.5075690746307373
+====> Epoch: 51 Average loss: 0.08299152  running time 3.5174953937530518
+====> Epoch: 51 Average loss: 0.08318740  running time 3.513976812362671
+====> Epoch: 51 Average loss: 0.08400613  running time 3.525398015975952
+====> Epoch: 51 Average loss: 0.08354002  running time 3.512769937515259
+====> Test set BCE loss 0.048203419893980026 Custom Loss 0.048203419893980026 with ber  0.017187997698783875 with bler  0.7813
+====> Epoch: 52 Average loss: 0.04833080  running time 3.5150644779205322
+====> Epoch: 52 Average loss: 0.08338891  running time 3.516378164291382
+====> Epoch: 52 Average loss: 0.08425533  running time 3.5174994468688965
+====> Epoch: 52 Average loss: 0.08302094  running time 3.5157647132873535
+====> Epoch: 52 Average loss: 0.08394961  running time 3.5172817707061768
+====> Epoch: 52 Average loss: 0.08407150  running time 3.517066717147827
+====> Test set BCE loss 0.04777718707919121 Custom Loss 0.04777718707919121 with ber  0.016858002170920372 with bler  0.7747999999999999
+====> Epoch: 53 Average loss: 0.04795726  running time 3.4924185276031494
+====> Epoch: 53 Average loss: 0.08358876  running time 3.5066514015197754
+====> Epoch: 53 Average loss: 0.08342951  running time 3.500540256500244
+====> Epoch: 53 Average loss: 0.08417421  running time 3.5037827491760254
+====> Epoch: 53 Average loss: 0.08272543  running time 3.506558418273926
+====> Epoch: 53 Average loss: 0.08350899  running time 3.506046772003174
+====> Test set BCE loss 0.0481448769569397 Custom Loss 0.0481448769569397 with ber  0.01717199943959713 with bler  0.787
+====> Epoch: 54 Average loss: 0.04766968  running time 3.4816150665283203
+====> Epoch: 54 Average loss: 0.08366745  running time 3.4833338260650635
+====> Epoch: 54 Average loss: 0.08314744  running time 3.492419958114624
+====> Epoch: 54 Average loss: 0.08385690  running time 3.4900994300842285
+====> Epoch: 54 Average loss: 0.08453224  running time 3.48624587059021
+====> Epoch: 54 Average loss: 0.08389382  running time 3.489570379257202
+====> Test set BCE loss 0.04781746491789818 Custom Loss 0.04781746491789818 with ber  0.01691100001335144 with bler  0.7788
+====> Epoch: 55 Average loss: 0.04829401  running time 3.4825761318206787
+====> Epoch: 55 Average loss: 0.08368051  running time 3.49251389503479
+====> Epoch: 55 Average loss: 0.08377496  running time 3.4852793216705322
+====> Epoch: 55 Average loss: 0.08436104  running time 3.4933764934539795
+====> Epoch: 55 Average loss: 0.08338388  running time 3.494117021560669
+====> Epoch: 55 Average loss: 0.08341104  running time 3.482841730117798
+====> Test set BCE loss 0.04786878824234009 Custom Loss 0.04786878824234009 with ber  0.017024999484419823 with bler  0.7830000000000001
+====> Epoch: 56 Average loss: 0.04766368  running time 3.487100601196289
+====> Epoch: 56 Average loss: 0.08371855  running time 3.497704267501831
+====> Epoch: 56 Average loss: 0.08367767  running time 3.509315252304077
+====> Epoch: 56 Average loss: 0.08337958  running time 3.505962371826172
+====> Epoch: 56 Average loss: 0.08345577  running time 3.505929946899414
+====> Epoch: 56 Average loss: 0.08349972  running time 3.4996938705444336
+====> Test set BCE loss 0.04768854379653931 Custom Loss 0.04768854379653931 with ber  0.016929998993873596 with bler  0.7719000000000001
+====> Epoch: 57 Average loss: 0.04804149  running time 3.493861198425293
+====> Epoch: 57 Average loss: 0.08310399  running time 3.497982978820801
+====> Epoch: 57 Average loss: 0.08320797  running time 3.5111594200134277
+====> Epoch: 57 Average loss: 0.08434058  running time 3.5067193508148193
+====> Epoch: 57 Average loss: 0.08361610  running time 3.50264310836792
+====> Epoch: 57 Average loss: 0.08353025  running time 3.506160259246826
+====> Test set BCE loss 0.04758195951581001 Custom Loss 0.04758195951581001 with ber  0.017069000750780106 with bler  0.7831
+====> Epoch: 58 Average loss: 0.04773243  running time 3.506899118423462
+====> Epoch: 58 Average loss: 0.08380665  running time 3.5247268676757812
+====> Epoch: 58 Average loss: 0.08372921  running time 3.51651668548584
+====> Epoch: 58 Average loss: 0.08300103  running time 3.5243756771087646
+====> Epoch: 58 Average loss: 0.08368322  running time 3.5129783153533936
+====> Epoch: 58 Average loss: 0.08359088  running time 3.5191667079925537
+====> Test set BCE loss 0.04742758721113205 Custom Loss 0.04742758721113205 with ber  0.01694200001657009 with bler  0.781
+====> Epoch: 59 Average loss: 0.04790749  running time 3.498513698577881
+====> Epoch: 59 Average loss: 0.08337427  running time 3.5162434577941895
+====> Epoch: 59 Average loss: 0.08260362  running time 3.5131564140319824
+====> Epoch: 59 Average loss: 0.08412071  running time 3.5170645713806152
+====> Epoch: 59 Average loss: 0.08323515  running time 3.514484405517578
+====> Epoch: 59 Average loss: 0.08233791  running time 3.5168097019195557
+====> Test set BCE loss 0.04761776700615883 Custom Loss 0.04761776700615883 with ber  0.016873998567461967 with bler  0.7714
+====> Epoch: 60 Average loss: 0.04772727  running time 3.4889590740203857
+====> Epoch: 60 Average loss: 0.08320772  running time 3.504142999649048
+====> Epoch: 60 Average loss: 0.08424287  running time 3.508509635925293
+====> Epoch: 60 Average loss: 0.08411955  running time 3.5022506713867188
+====> Epoch: 60 Average loss: 0.08397858  running time 3.4984350204467773
+====> Epoch: 60 Average loss: 0.08329401  running time 3.497875213623047
+====> Test set BCE loss 0.04775125905871391 Custom Loss 0.04775125905871391 with ber  0.016925999894738197 with bler  0.7788999999999999
+====> Epoch: 61 Average loss: 0.04793086  running time 3.473971128463745
+====> Epoch: 61 Average loss: 0.08377472  running time 3.4883055686950684
+====> Epoch: 61 Average loss: 0.08328736  running time 3.484706401824951
+====> Epoch: 61 Average loss: 0.08400700  running time 3.4890260696411133
+====> Epoch: 61 Average loss: 0.08388031  running time 3.495222806930542
+====> Epoch: 61 Average loss: 0.08364482  running time 3.4882352352142334
+====> Test set BCE loss 0.047496795654296875 Custom Loss 0.047496795654296875 with ber  0.01679300144314766 with bler  0.7737
+====> Epoch: 62 Average loss: 0.04795249  running time 3.4764273166656494
+====> Epoch: 62 Average loss: 0.08295371  running time 3.4879872798919678
+====> Epoch: 62 Average loss: 0.08372397  running time 3.4873697757720947
+====> Epoch: 62 Average loss: 0.08404680  running time 3.491863965988159
+====> Epoch: 62 Average loss: 0.08373009  running time 3.4891574382781982
+====> Epoch: 62 Average loss: 0.08387510  running time 3.488332748413086
+====> Test set BCE loss 0.048150163143873215 Custom Loss 0.048150163143873215 with ber  0.017042001709342003 with bler  0.7777999999999999
+====> Epoch: 63 Average loss: 0.04772221  running time 3.4842209815979004
+====> Epoch: 63 Average loss: 0.08373469  running time 3.5066428184509277
+====> Epoch: 63 Average loss: 0.08436711  running time 3.501349687576294
+====> Epoch: 63 Average loss: 0.08358187  running time 3.502955675125122
+====> Epoch: 63 Average loss: 0.08290932  running time 3.496553897857666
+====> Epoch: 63 Average loss: 0.08314745  running time 3.4988720417022705
+====> Test set BCE loss 0.047403570264577866 Custom Loss 0.047403570264577866 with ber  0.01692100055515766 with bler  0.7748
+====> Epoch: 64 Average loss: 0.04764944  running time 3.491403102874756
+====> Epoch: 64 Average loss: 0.08323177  running time 3.5038821697235107
+====> Epoch: 64 Average loss: 0.08301129  running time 3.510305166244507
+====> Epoch: 64 Average loss: 0.08346425  running time 3.5011088848114014
+====> Epoch: 64 Average loss: 0.08368199  running time 3.510510206222534
+====> Epoch: 64 Average loss: 0.08322478  running time 3.5081911087036133
+====> Test set BCE loss 0.047916341572999954 Custom Loss 0.047916341572999954 with ber  0.0172520000487566 with bler  0.7797000000000001
+====> Epoch: 65 Average loss: 0.04810540  running time 3.500838279724121
+====> Epoch: 65 Average loss: 0.08384414  running time 3.5162839889526367
+====> Epoch: 65 Average loss: 0.08275413  running time 3.5232954025268555
+====> Epoch: 65 Average loss: 0.08333615  running time 3.5145950317382812
+====> Epoch: 65 Average loss: 0.08356522  running time 3.5169050693511963
+====> Epoch: 65 Average loss: 0.08328903  running time 3.521190643310547
+====> Test set BCE loss 0.04816114529967308 Custom Loss 0.04816114529967308 with ber  0.017186997458338737 with bler  0.7827
+====> Epoch: 66 Average loss: 0.04792646  running time 3.500136613845825
+====> Epoch: 66 Average loss: 0.08391421  running time 3.5183048248291016
+====> Epoch: 66 Average loss: 0.08377623  running time 3.5142173767089844
+====> Epoch: 66 Average loss: 0.08390457  running time 3.5194051265716553
+====> Epoch: 66 Average loss: 0.08517013  running time 3.507521390914917
+====> Epoch: 66 Average loss: 0.08360492  running time 3.5194263458251953
+====> Test set BCE loss 0.04791116714477539 Custom Loss 0.04791116714477539 with ber  0.01721699722111225 with bler  0.7799
+====> Epoch: 67 Average loss: 0.04818274  running time 3.4883389472961426
+====> Epoch: 67 Average loss: 0.08362812  running time 3.4998252391815186
+====> Epoch: 67 Average loss: 0.08409526  running time 3.5056068897247314
+====> Epoch: 67 Average loss: 0.08367038  running time 3.4988601207733154
+====> Epoch: 67 Average loss: 0.08338289  running time 3.50850772857666
+====> Epoch: 67 Average loss: 0.08422092  running time 3.50462007522583
+====> Test set BCE loss 0.048085566610097885 Custom Loss 0.048085566610097885 with ber  0.017118999734520912 with bler  0.7791
+====> Epoch: 68 Average loss: 0.04794990  running time 3.475977659225464
+====> Epoch: 68 Average loss: 0.08421525  running time 3.4887752532958984
+====> Epoch: 68 Average loss: 0.08309560  running time 3.4930193424224854
+====> Epoch: 68 Average loss: 0.08393701  running time 3.4946792125701904
+====> Epoch: 68 Average loss: 0.08346769  running time 3.4900333881378174
+====> Epoch: 68 Average loss: 0.08375335  running time 3.485553026199341
+====> Test set BCE loss 0.04725094512104988 Custom Loss 0.04725094512104988 with ber  0.0169879999011755 with bler  0.7761
+====> Epoch: 69 Average loss: 0.04733085  running time 3.4777567386627197
+====> Epoch: 69 Average loss: 0.08388557  running time 3.483109712600708
+====> Epoch: 69 Average loss: 0.08322468  running time 3.492703676223755
+====> Epoch: 69 Average loss: 0.08414695  running time 3.4812538623809814
+====> Epoch: 69 Average loss: 0.08387696  running time 3.4850151538848877
+====> Epoch: 69 Average loss: 0.08364145  running time 3.4878876209259033
+====> Test set BCE loss 0.04800260439515114 Custom Loss 0.04800260439515114 with ber  0.017201000824570656 with bler  0.7847000000000002
+====> Epoch: 70 Average loss: 0.04759428  running time 3.4925434589385986
+====> Epoch: 70 Average loss: 0.08345446  running time 3.5056934356689453
+====> Epoch: 70 Average loss: 0.08333068  running time 3.5045456886291504
+====> Epoch: 70 Average loss: 0.08296347  running time 3.5034894943237305
+====> Epoch: 70 Average loss: 0.08279460  running time 3.5026051998138428
+====> Epoch: 70 Average loss: 0.08315981  running time 3.5136544704437256
+====> Test set BCE loss 0.04803456366062164 Custom Loss 0.04803456366062164 with ber  0.017162999138236046 with bler  0.7796000000000002
+====> Epoch: 71 Average loss: 0.04800694  running time 3.489997386932373
+====> Epoch: 71 Average loss: 0.08342115  running time 3.505608320236206
+====> Epoch: 71 Average loss: 0.08319229  running time 3.512134313583374
+====> Epoch: 71 Average loss: 0.08373438  running time 3.507967948913574
+====> Epoch: 71 Average loss: 0.08371623  running time 3.5106983184814453
+====> Epoch: 71 Average loss: 0.08373936  running time 3.505371332168579
+====> Test set BCE loss 0.04817698523402214 Custom Loss 0.04817698523402214 with ber  0.017221001908183098 with bler  0.7822
+====> Epoch: 72 Average loss: 0.04822443  running time 3.496899127960205
+====> Epoch: 72 Average loss: 0.08358972  running time 3.524723529815674
+====> Epoch: 72 Average loss: 0.08366962  running time 3.5170485973358154
+====> Epoch: 72 Average loss: 0.08467407  running time 3.524038076400757
+====> Epoch: 72 Average loss: 0.08353533  running time 3.517343044281006
+====> Epoch: 72 Average loss: 0.08292616  running time 3.5161185264587402
+====> Test set BCE loss 0.04790130630135536 Custom Loss 0.04790130630135536 with ber  0.017072999849915504 with bler  0.7862
+====> Epoch: 73 Average loss: 0.04790544  running time 3.500938892364502
+====> Epoch: 73 Average loss: 0.08393803  running time 3.518710136413574
+====> Epoch: 73 Average loss: 0.08307424  running time 3.511568069458008
+====> Epoch: 73 Average loss: 0.08332649  running time 3.518921136856079
+====> Epoch: 73 Average loss: 0.08355239  running time 3.522097587585449
+====> Epoch: 73 Average loss: 0.08296444  running time 3.5146257877349854
+====> Test set BCE loss 0.04793063551187515 Custom Loss 0.04793063551187515 with ber  0.017232999205589294 with bler  0.7805000000000001
+====> Epoch: 74 Average loss: 0.04774379  running time 3.4842686653137207
+====> Epoch: 74 Average loss: 0.08343008  running time 3.5053625106811523
+====> Epoch: 74 Average loss: 0.08361594  running time 3.499300479888916
+====> Epoch: 74 Average loss: 0.08372132  running time 3.5024585723876953
+====> Epoch: 74 Average loss: 0.08375417  running time 3.5041120052337646
+====> Epoch: 74 Average loss: 0.08368136  running time 3.5074667930603027
+====> Test set BCE loss 0.047783736139535904 Custom Loss 0.047783736139535904 with ber  0.017016999423503876 with bler  0.7716000000000001
+====> Epoch: 75 Average loss: 0.04755850  running time 3.480764865875244
+====> Epoch: 75 Average loss: 0.08377057  running time 3.488771438598633
+====> Epoch: 75 Average loss: 0.08272044  running time 3.491246223449707
+====> Epoch: 75 Average loss: 0.08390480  running time 3.488029718399048
+====> Epoch: 75 Average loss: 0.08277772  running time 3.4885969161987305
+====> Epoch: 75 Average loss: 0.08335067  running time 3.486872434616089
+====> Test set BCE loss 0.04891020804643631 Custom Loss 0.04891020804643631 with ber  0.017297999933362007 with bler  0.7817999999999999
+====> Epoch: 76 Average loss: 0.04844801  running time 3.4744184017181396
+====> Epoch: 76 Average loss: 0.08462517  running time 3.4857852458953857
+====> Epoch: 76 Average loss: 0.08311203  running time 3.4862382411956787
+====> Epoch: 76 Average loss: 0.08386694  running time 3.4960713386535645
+====> Epoch: 76 Average loss: 0.08353811  running time 3.4900684356689453
+====> Epoch: 76 Average loss: 0.08386803  running time 3.483922004699707
+====> Test set BCE loss 0.047775592654943466 Custom Loss 0.047775592654943466 with ber  0.016850998625159264 with bler  0.7740000000000001
+====> Epoch: 77 Average loss: 0.04774864  running time 3.4853696823120117
+====> Epoch: 77 Average loss: 0.08344228  running time 3.5033462047576904
+====> Epoch: 77 Average loss: 0.08384801  running time 3.5042636394500732
+====> Epoch: 77 Average loss: 0.08392875  running time 3.5028226375579834
+====> Epoch: 77 Average loss: 0.08324205  running time 3.4985196590423584
+====> Epoch: 77 Average loss: 0.08326767  running time 3.5025227069854736
+====> Test set BCE loss 0.047401364892721176 Custom Loss 0.047401364892721176 with ber  0.01694600097835064 with bler  0.7811000000000001
+====> Epoch: 78 Average loss: 0.04740720  running time 3.4950485229492188
+====> Epoch: 78 Average loss: 0.08324060  running time 3.5065805912017822
+====> Epoch: 78 Average loss: 0.08316331  running time 3.5067074298858643
+====> Epoch: 78 Average loss: 0.08323097  running time 3.5077147483825684
+====> Epoch: 78 Average loss: 0.08316481  running time 3.5087461471557617
+====> Epoch: 78 Average loss: 0.08358638  running time 3.505526065826416
+====> Test set BCE loss 0.04857310280203819 Custom Loss 0.04857310280203819 with ber  0.01720600202679634 with bler  0.7825000000000001
+====> Epoch: 79 Average loss: 0.04823423  running time 3.503096580505371
+====> Epoch: 79 Average loss: 0.08296584  running time 3.5222394466400146
+====> Epoch: 79 Average loss: 0.08306524  running time 3.5120925903320312
+====> Epoch: 79 Average loss: 0.08333625  running time 3.5290367603302
+====> Epoch: 79 Average loss: 0.08345959  running time 3.5137314796447754
+====> Epoch: 79 Average loss: 0.08442283  running time 3.512324810028076
+====> Test set BCE loss 0.04860023409128189 Custom Loss 0.04860023409128189 with ber  0.017203999683260918 with bler  0.7856
+====> Epoch: 80 Average loss: 0.04791523  running time 3.499724864959717
+====> Epoch: 80 Average loss: 0.08372753  running time 3.512115716934204
+====> Epoch: 80 Average loss: 0.08419518  running time 3.51992130279541
+====> Epoch: 80 Average loss: 0.08388086  running time 3.5176119804382324
+====> Epoch: 80 Average loss: 0.08313530  running time 3.509929895401001
+====> Epoch: 80 Average loss: 0.08421923  running time 3.516409397125244
+====> Test set BCE loss 0.04789641126990318 Custom Loss 0.04789641126990318 with ber  0.017212999984622 with bler  0.7871
+====> Epoch: 81 Average loss: 0.04785714  running time 3.4859564304351807
+====> Epoch: 81 Average loss: 0.08286950  running time 3.4998013973236084
+====> Epoch: 81 Average loss: 0.08284587  running time 3.504633665084839
+====> Epoch: 81 Average loss: 0.08347210  running time 3.509460687637329
+====> Epoch: 81 Average loss: 0.08354310  running time 3.4982776641845703
+====> Epoch: 81 Average loss: 0.08396217  running time 3.497539758682251
+====> Test set BCE loss 0.04748236760497093 Custom Loss 0.04748236760497093 with ber  0.016913000494241714 with bler  0.775
+====> Epoch: 82 Average loss: 0.04777158  running time 3.486551284790039
+====> Epoch: 82 Average loss: 0.08344019  running time 3.49102520942688
+====> Epoch: 82 Average loss: 0.08389901  running time 3.490067481994629
+====> Epoch: 82 Average loss: 0.08380361  running time 3.4934189319610596
+====> Epoch: 82 Average loss: 0.08351699  running time 3.482485055923462
+====> Epoch: 82 Average loss: 0.08345511  running time 3.4990921020507812
+====> Test set BCE loss 0.04799696430563927 Custom Loss 0.04799696430563927 with ber  0.017062997445464134 with bler  0.7797000000000001
+====> Epoch: 83 Average loss: 0.04813578  running time 3.474351644515991
+====> Epoch: 83 Average loss: 0.08240175  running time 3.4842958450317383
+====> Epoch: 83 Average loss: 0.08434053  running time 3.4824366569519043
+====> Epoch: 83 Average loss: 0.08325883  running time 3.492128849029541
+====> Epoch: 83 Average loss: 0.08406336  running time 3.490305185317993
+====> Epoch: 83 Average loss: 0.08444677  running time 3.483557939529419
+====> Test set BCE loss 0.047777872532606125 Custom Loss 0.047777872532606125 with ber  0.01700899936258793 with bler  0.776
+====> Epoch: 84 Average loss: 0.04839803  running time 3.4907546043395996
+====> Epoch: 84 Average loss: 0.08425284  running time 3.49649977684021
+====> Epoch: 84 Average loss: 0.08382300  running time 3.4990110397338867
+====> Epoch: 84 Average loss: 0.08383656  running time 3.504290819168091
+====> Epoch: 84 Average loss: 0.08405748  running time 3.497974157333374
+====> Epoch: 84 Average loss: 0.08377670  running time 3.505505084991455
+====> Test set BCE loss 0.047400277107954025 Custom Loss 0.047400277107954025 with ber  0.017102999612689018 with bler  0.7809999999999999
+====> Epoch: 85 Average loss: 0.04754398  running time 3.487400770187378
+====> Epoch: 85 Average loss: 0.08411107  running time 3.507783889770508
+====> Epoch: 85 Average loss: 0.08450895  running time 3.506185293197632
+====> Epoch: 85 Average loss: 0.08388887  running time 3.5051565170288086
+====> Epoch: 85 Average loss: 0.08338655  running time 3.5073070526123047
+====> Epoch: 85 Average loss: 0.08362444  running time 3.509676218032837
+====> Test set BCE loss 0.048133429139852524 Custom Loss 0.048133429139852524 with ber  0.017085000872612 with bler  0.7764000000000001
+====> Epoch: 86 Average loss: 0.04809654  running time 3.5022974014282227
+====> Epoch: 86 Average loss: 0.08385592  running time 3.5224664211273193
+====> Epoch: 86 Average loss: 0.08420550  running time 3.5134246349334717
+====> Epoch: 86 Average loss: 0.08377661  running time 3.5188474655151367
+====> Epoch: 86 Average loss: 0.08342855  running time 3.5179240703582764
+====> Epoch: 86 Average loss: 0.08332081  running time 3.516850233078003
+====> Test set BCE loss 0.048663850873708725 Custom Loss 0.048663850873708725 with ber  0.01738700084388256 with bler  0.7887000000000001
+====> Epoch: 87 Average loss: 0.04784296  running time 3.502607822418213
+====> Epoch: 87 Average loss: 0.08421878  running time 3.517301321029663
+====> Epoch: 87 Average loss: 0.08385457  running time 3.5139458179473877
+====> Epoch: 87 Average loss: 0.08325530  running time 3.5146167278289795
+====> Epoch: 87 Average loss: 0.08337812  running time 3.5130927562713623
+====> Epoch: 87 Average loss: 0.08411515  running time 3.51472544670105
+====> Test set BCE loss 0.04904035106301308 Custom Loss 0.04904035106301308 with ber  0.017290998250246048 with bler  0.7802
+====> Epoch: 88 Average loss: 0.04807739  running time 3.492244005203247
+====> Epoch: 88 Average loss: 0.08420836  running time 3.5023605823516846
+====> Epoch: 88 Average loss: 0.08384202  running time 3.501289129257202
+====> Epoch: 88 Average loss: 0.08347798  running time 3.5093233585357666
+====> Epoch: 88 Average loss: 0.08321237  running time 3.5036613941192627
+====> Epoch: 88 Average loss: 0.08270935  running time 3.493675470352173
+====> Test set BCE loss 0.04767606779932976 Custom Loss 0.04767606779932976 with ber  0.016952000558376312 with bler  0.7751
+====> Epoch: 89 Average loss: 0.04794124  running time 3.4732329845428467
+====> Epoch: 89 Average loss: 0.08321719  running time 3.4865176677703857
+====> Epoch: 89 Average loss: 0.08335402  running time 3.4889822006225586
+====> Epoch: 89 Average loss: 0.08327750  running time 3.487269878387451
+====> Epoch: 89 Average loss: 0.08322464  running time 3.4951095581054688
+====> Epoch: 89 Average loss: 0.08292774  running time 3.492309331893921
+====> Test set BCE loss 0.04768163710832596 Custom Loss 0.04768163710832596 with ber  0.017033999785780907 with bler  0.7795
+====> Epoch: 90 Average loss: 0.04761963  running time 3.477637529373169
+====> Epoch: 90 Average loss: 0.08324233  running time 3.484485149383545
+====> Epoch: 90 Average loss: 0.08406924  running time 3.490994453430176
+====> Epoch: 90 Average loss: 0.08332764  running time 3.4905593395233154
+====> Epoch: 90 Average loss: 0.08381916  running time 3.4864799976348877
+====> Epoch: 90 Average loss: 0.08365686  running time 3.491152763366699
+====> Test set BCE loss 0.048331595957279205 Custom Loss 0.048331595957279205 with ber  0.017162000760436058 with bler  0.7814
+====> Epoch: 91 Average loss: 0.04761033  running time 3.4818172454833984
+====> Epoch: 91 Average loss: 0.08375721  running time 3.5009772777557373
+====> Epoch: 91 Average loss: 0.08313616  running time 3.501330852508545
+====> Epoch: 91 Average loss: 0.08347650  running time 3.4987857341766357
+====> Epoch: 91 Average loss: 0.08290080  running time 3.504622220993042
+====> Epoch: 91 Average loss: 0.08403754  running time 3.5041520595550537
+====> Test set BCE loss 0.04738043621182442 Custom Loss 0.04738043621182442 with ber  0.01682399958372116 with bler  0.777
+====> Epoch: 92 Average loss: 0.04781045  running time 3.489272356033325
+====> Epoch: 92 Average loss: 0.08334873  running time 3.4993321895599365
+====> Epoch: 92 Average loss: 0.08353942  running time 3.5117833614349365
+====> Epoch: 92 Average loss: 0.08366768  running time 3.506044387817383
+====> Epoch: 92 Average loss: 0.08404305  running time 3.509138822555542
+====> Epoch: 92 Average loss: 0.08282901  running time 3.512425184249878
+====> Test set BCE loss 0.04721371456980705 Custom Loss 0.04721371456980705 with ber  0.016726000234484673 with bler  0.773
+====> Epoch: 93 Average loss: 0.04741428  running time 3.5007412433624268
+====> Epoch: 93 Average loss: 0.08334575  running time 3.5177834033966064
+====> Epoch: 93 Average loss: 0.08367261  running time 3.518953323364258
+====> Epoch: 93 Average loss: 0.08363899  running time 3.524529457092285
+====> Epoch: 93 Average loss: 0.08288340  running time 3.5168375968933105
+====> Epoch: 93 Average loss: 0.08343052  running time 3.5163185596466064
+====> Test set BCE loss 0.04729988053441048 Custom Loss 0.04729988053441048 with ber  0.016947999596595764 with bler  0.7776000000000001
+====> Epoch: 94 Average loss: 0.04738334  running time 3.499758005142212
+====> Epoch: 94 Average loss: 0.08378825  running time 3.5164971351623535
+====> Epoch: 94 Average loss: 0.08361399  running time 3.518810272216797
+====> Epoch: 94 Average loss: 0.08392581  running time 3.519651412963867
+====> Epoch: 94 Average loss: 0.08300359  running time 3.510585308074951
+====> Epoch: 94 Average loss: 0.08304218  running time 3.51133394241333
+====> Test set BCE loss 0.04800044372677803 Custom Loss 0.04800044372677803 with ber  0.016999999061226845 with bler  0.7796000000000001
+====> Epoch: 95 Average loss: 0.04837684  running time 3.4869656562805176
+====> Epoch: 95 Average loss: 0.08376837  running time 3.503626585006714
+====> Epoch: 95 Average loss: 0.08333835  running time 3.5013463497161865
+====> Epoch: 95 Average loss: 0.08308739  running time 3.5090320110321045
+====> Epoch: 95 Average loss: 0.08390887  running time 3.502156972885132
+====> Epoch: 95 Average loss: 0.08391555  running time 3.503016948699951
+====> Test set BCE loss 0.04822937771677971 Custom Loss 0.04822937771677971 with ber  0.0170889999717474 with bler  0.7784
+====> Epoch: 96 Average loss: 0.04822145  running time 3.470684766769409
+====> Epoch: 96 Average loss: 0.08277847  running time 3.487839698791504
+====> Epoch: 96 Average loss: 0.08321944  running time 3.4980123043060303
+====> Epoch: 96 Average loss: 0.08289634  running time 3.494593620300293
+====> Epoch: 96 Average loss: 0.08312744  running time 3.4994146823883057
+====> Epoch: 96 Average loss: 0.08360944  running time 3.4848012924194336
+====> Test set BCE loss 0.047385234385728836 Custom Loss 0.047385234385728836 with ber  0.016839001327753067 with bler  0.7779
+====> Epoch: 97 Average loss: 0.04789329  running time 3.4753777980804443
+====> Epoch: 97 Average loss: 0.08345587  running time 3.4887259006500244
+====> Epoch: 97 Average loss: 0.08252210  running time 3.4919538497924805
+====> Epoch: 97 Average loss: 0.08382188  running time 3.4917101860046387
+====> Epoch: 97 Average loss: 0.08357858  running time 3.4875006675720215
+====> Epoch: 97 Average loss: 0.08341593  running time 3.483872652053833
+====> Test set BCE loss 0.047692280262708664 Custom Loss 0.047692280262708664 with ber  0.016850000247359276 with bler  0.7753
+====> Epoch: 98 Average loss: 0.04845460  running time 3.4850361347198486
+====> Epoch: 98 Average loss: 0.08371305  running time 3.5034708976745605
+====> Epoch: 98 Average loss: 0.08394397  running time 3.4987335205078125
+====> Epoch: 98 Average loss: 0.08314771  running time 3.502833127975464
+====> Epoch: 98 Average loss: 0.08348218  running time 3.5026445388793945
+====> Epoch: 98 Average loss: 0.08313782  running time 3.501023292541504
+====> Test set BCE loss 0.04739351198077202 Custom Loss 0.04739351198077202 with ber  0.016997000202536583 with bler  0.7779
+====> Epoch: 99 Average loss: 0.04777469  running time 3.4870803356170654
+====> Epoch: 99 Average loss: 0.08376398  running time 3.5081822872161865
+====> Epoch: 99 Average loss: 0.08328627  running time 3.511162519454956
+====> Epoch: 99 Average loss: 0.08317013  running time 3.5083601474761963
+====> Epoch: 99 Average loss: 0.08320776  running time 3.5104475021362305
+====> Epoch: 99 Average loss: 0.08372546  running time 3.5069525241851807
+====> Test set BCE loss 0.047928038984537125 Custom Loss 0.047928038984537125 with ber  0.017167000100016594 with bler  0.776
+====> Epoch: 100 Average loss: 0.04747264  running time 3.5042006969451904
+====> Epoch: 100 Average loss: 0.08346049  running time 3.5175766944885254
+====> Epoch: 100 Average loss: 0.08368512  running time 3.5163559913635254
+====> Epoch: 100 Average loss: 0.08340226  running time 3.5246641635894775
+====> Epoch: 100 Average loss: 0.08324797  running time 3.5190398693084717
+====> Epoch: 100 Average loss: 0.08361883  running time 3.515911817550659
+====> Test set BCE loss 0.04815524443984032 Custom Loss 0.04815524443984032 with ber  0.017079999670386314 with bler  0.7826000000000001
+====> Epoch: 101 Average loss: 0.04833214  running time 3.493651866912842
+====> Epoch: 101 Average loss: 0.08367967  running time 3.518707275390625
+====> Epoch: 101 Average loss: 0.08306363  running time 3.518662691116333
+====> Epoch: 101 Average loss: 0.08413792  running time 3.5127434730529785
+====> Epoch: 101 Average loss: 0.08318262  running time 3.5153467655181885
+====> Epoch: 101 Average loss: 0.08325681  running time 3.5142767429351807
+====> Test set BCE loss 0.04801931977272034 Custom Loss 0.04801931977272034 with ber  0.01688000001013279 with bler  0.7805000000000001
+====> Epoch: 102 Average loss: 0.04872935  running time 3.490082025527954
+====> Epoch: 102 Average loss: 0.08280066  running time 3.507237434387207
+====> Epoch: 102 Average loss: 0.08338480  running time 3.5007429122924805
+====> Epoch: 102 Average loss: 0.08371876  running time 3.503969192504883
+====> Epoch: 102 Average loss: 0.08332955  running time 3.5019283294677734
+====> Epoch: 102 Average loss: 0.08373581  running time 3.5086448192596436
+====> Test set BCE loss 0.047604262828826904 Custom Loss 0.047604262828826904 with ber  0.01686199940741062 with bler  0.7751
+====> Epoch: 103 Average loss: 0.04795253  running time 3.4698753356933594
+====> Epoch: 103 Average loss: 0.08421125  running time 3.4912033081054688
+====> Epoch: 103 Average loss: 0.08411101  running time 3.491767168045044
+====> Epoch: 103 Average loss: 0.08395360  running time 3.4918792247772217
+====> Epoch: 103 Average loss: 0.08424349  running time 3.4931178092956543
+====> Epoch: 103 Average loss: 0.08332281  running time 3.4916462898254395
+====> Test set BCE loss 0.04827749356627464 Custom Loss 0.04827749356627464 with ber  0.01723799854516983 with bler  0.7817999999999999
+====> Epoch: 104 Average loss: 0.04778443  running time 3.474137544631958
+====> Epoch: 104 Average loss: 0.08343813  running time 3.4869465827941895
+====> Epoch: 104 Average loss: 0.08404001  running time 3.4867618083953857
+====> Epoch: 104 Average loss: 0.08367822  running time 3.4858105182647705
+====> Epoch: 104 Average loss: 0.08380727  running time 3.489546537399292
+====> Epoch: 104 Average loss: 0.08286362  running time 3.484426498413086
+====> Test set BCE loss 0.04777606204152107 Custom Loss 0.04777606204152107 with ber  0.017045998945832253 with bler  0.7751
+====> Epoch: 105 Average loss: 0.04729694  running time 3.490131378173828
+====> Epoch: 105 Average loss: 0.08341709  running time 3.502734899520874
+====> Epoch: 105 Average loss: 0.08370920  running time 3.5136501789093018
+====> Epoch: 105 Average loss: 0.08361965  running time 3.502819061279297
+====> Epoch: 105 Average loss: 0.08281746  running time 3.499969720840454
+====> Epoch: 105 Average loss: 0.08357577  running time 3.5031518936157227
+====> Test set BCE loss 0.047251198440790176 Custom Loss 0.047251198440790176 with ber  0.016932999715209007 with bler  0.7811000000000001
+====> Epoch: 106 Average loss: 0.04720519  running time 3.486030340194702
+====> Epoch: 106 Average loss: 0.08434586  running time 3.5060596466064453
+====> Epoch: 106 Average loss: 0.08313620  running time 3.505215644836426
+====> Epoch: 106 Average loss: 0.08272691  running time 3.509345531463623
+====> Epoch: 106 Average loss: 0.08350421  running time 3.5096547603607178
+====> Epoch: 106 Average loss: 0.08353534  running time 3.4983651638031006
+====> Test set BCE loss 0.04743543267250061 Custom Loss 0.04743543267250061 with ber  0.016912998631596565 with bler  0.7803
+====> Epoch: 107 Average loss: 0.04728236  running time 3.503248453140259
+====> Epoch: 107 Average loss: 0.08360367  running time 3.5145628452301025
+====> Epoch: 107 Average loss: 0.08357794  running time 3.5132033824920654
+====> Epoch: 107 Average loss: 0.08353655  running time 3.51766037940979
+====> Epoch: 107 Average loss: 0.08323118  running time 3.5174179077148438
+====> Epoch: 107 Average loss: 0.08412777  running time 3.5165152549743652
+====> Test set BCE loss 0.047664009034633636 Custom Loss 0.047664009034633636 with ber  0.01702299900352955 with bler  0.7848999999999999
+====> Epoch: 108 Average loss: 0.04798073  running time 3.5028417110443115
+====> Epoch: 108 Average loss: 0.08336864  running time 3.5268874168395996
+====> Epoch: 108 Average loss: 0.08353647  running time 3.5183980464935303
+====> Epoch: 108 Average loss: 0.08335933  running time 3.5161867141723633
+====> Epoch: 108 Average loss: 0.08321227  running time 3.512399911880493
+====> Epoch: 108 Average loss: 0.08346194  running time 3.5142712593078613
+====> Test set BCE loss 0.04795737937092781 Custom Loss 0.04795737937092781 with ber  0.017237000167369843 with bler  0.7802999999999999
+====> Epoch: 109 Average loss: 0.04715031  running time 3.4983325004577637
+====> Epoch: 109 Average loss: 0.08428168  running time 3.4962682723999023
+====> Epoch: 109 Average loss: 0.08266000  running time 3.5026044845581055
+====> Epoch: 109 Average loss: 0.08427145  running time 3.511749267578125
+====> Epoch: 109 Average loss: 0.08324212  running time 3.5045173168182373
+====> Epoch: 109 Average loss: 0.08372151  running time 3.5041451454162598
+====> Test set BCE loss 0.047827791422605515 Custom Loss 0.047827791422605515 with ber  0.016899000853300095 with bler  0.7743
+====> Epoch: 110 Average loss: 0.04853372  running time 3.472701072692871
+====> Epoch: 110 Average loss: 0.08288830  running time 3.4944324493408203
+====> Epoch: 110 Average loss: 0.08307405  running time 3.493065118789673
+====> Epoch: 110 Average loss: 0.08267342  running time 3.492164373397827
+====> Epoch: 110 Average loss: 0.08229975  running time 3.484837770462036
+====> Epoch: 110 Average loss: 0.08351322  running time 3.488696575164795
+====> Test set BCE loss 0.04805546626448631 Custom Loss 0.04805546626448631 with ber  0.017211999744176865 with bler  0.784
+====> Epoch: 111 Average loss: 0.04780109  running time 3.4616854190826416
+====> Epoch: 111 Average loss: 0.08328192  running time 3.4883248805999756
+====> Epoch: 111 Average loss: 0.08386602  running time 3.489780902862549
+====> Epoch: 111 Average loss: 0.08259000  running time 3.491358757019043
+====> Epoch: 111 Average loss: 0.08292893  running time 3.4901773929595947
+====> Epoch: 111 Average loss: 0.08288456  running time 3.4828684329986572
+====> Test set BCE loss 0.0479547418653965 Custom Loss 0.0479547418653965 with ber  0.01706700026988983 with bler  0.7798
+====> Epoch: 112 Average loss: 0.04768414  running time 3.4892284870147705
+====> Epoch: 112 Average loss: 0.08336709  running time 3.5025100708007812
+====> Epoch: 112 Average loss: 0.08367280  running time 3.5034875869750977
+====> Epoch: 112 Average loss: 0.08350444  running time 3.5007474422454834
+====> Epoch: 112 Average loss: 0.08366986  running time 3.5055413246154785
+====> Epoch: 112 Average loss: 0.08367510  running time 3.498351573944092
+====> Test set BCE loss 0.04806585609912872 Custom Loss 0.04806585609912872 with ber  0.01714099943637848 with bler  0.782
+====> Epoch: 113 Average loss: 0.04728277  running time 3.485170841217041
+====> Epoch: 113 Average loss: 0.08421502  running time 3.51116681098938
+====> Epoch: 113 Average loss: 0.08283359  running time 3.5059046745300293
+====> Epoch: 113 Average loss: 0.08351647  running time 3.5067126750946045
+====> Epoch: 113 Average loss: 0.08380019  running time 3.503716468811035
+====> Epoch: 113 Average loss: 0.08377606  running time 3.5001070499420166
+====> Test set BCE loss 0.04807816073298454 Custom Loss 0.04807816073298454 with ber  0.01681399904191494 with bler  0.7731000000000001
+====> Epoch: 114 Average loss: 0.04872850  running time 3.4982736110687256
+====> Epoch: 114 Average loss: 0.08445064  running time 3.5192654132843018
+====> Epoch: 114 Average loss: 0.08400092  running time 3.511817693710327
+====> Epoch: 114 Average loss: 0.08400747  running time 3.5149307250976562
+====> Epoch: 114 Average loss: 0.08368101  running time 3.5117013454437256
+====> Epoch: 114 Average loss: 0.08388645  running time 3.522691249847412
+====> Test set BCE loss 0.04811853915452957 Custom Loss 0.04811853915452957 with ber  0.01725199818611145 with bler  0.7767
+====> Epoch: 115 Average loss: 0.04801748  running time 3.5059099197387695
+====> Epoch: 115 Average loss: 0.08352610  running time 3.518986940383911
+====> Epoch: 115 Average loss: 0.08320249  running time 3.515315294265747
+====> Epoch: 115 Average loss: 0.08332392  running time 3.5170674324035645
+====> Epoch: 115 Average loss: 0.08419657  running time 3.5144236087799072
+====> Epoch: 115 Average loss: 0.08407140  running time 3.5101404190063477
+====> Test set BCE loss 0.047103580087423325 Custom Loss 0.047103580087423325 with ber  0.016802001744508743 with bler  0.7709999999999999
+====> Epoch: 116 Average loss: 0.04825474  running time 3.4877350330352783
+====> Epoch: 116 Average loss: 0.08340658  running time 3.5042061805725098
+====> Epoch: 116 Average loss: 0.08332349  running time 3.506444215774536
+====> Epoch: 116 Average loss: 0.08359498  running time 3.5002620220184326
+====> Epoch: 116 Average loss: 0.08299747  running time 3.5049283504486084
+====> Epoch: 116 Average loss: 0.08354990  running time 3.5065793991088867
+====> Test set BCE loss 0.047719504684209824 Custom Loss 0.047719504684209824 with ber  0.01713300123810768 with bler  0.7794
+====> Epoch: 117 Average loss: 0.04721701  running time 3.4801251888275146
+====> Epoch: 117 Average loss: 0.08305132  running time 3.489251136779785
+====> Epoch: 117 Average loss: 0.08379991  running time 3.4891793727874756
+====> Epoch: 117 Average loss: 0.08305262  running time 3.492114305496216
+====> Epoch: 117 Average loss: 0.08377436  running time 3.495126962661743
+====> Epoch: 117 Average loss: 0.08394247  running time 3.488584518432617
+====> Test set BCE loss 0.047603901475667953 Custom Loss 0.047603901475667953 with ber  0.016840999945998192 with bler  0.7730000000000001
+====> Epoch: 118 Average loss: 0.04770315  running time 3.4675724506378174
+====> Epoch: 118 Average loss: 0.08423239  running time 3.4802021980285645
+====> Epoch: 118 Average loss: 0.08445892  running time 3.4930639266967773
+====> Epoch: 118 Average loss: 0.08281347  running time 3.4891111850738525
+====> Epoch: 118 Average loss: 0.08299577  running time 3.4908719062805176
+====> Epoch: 118 Average loss: 0.08354964  running time 3.4864561557769775
+====> Test set BCE loss 0.04794147610664368 Custom Loss 0.04794147610664368 with ber  0.01685900054872036 with bler  0.7738
+====> Epoch: 119 Average loss: 0.04823277  running time 3.4837331771850586
+====> Epoch: 119 Average loss: 0.08333921  running time 3.507079839706421
+====> Epoch: 119 Average loss: 0.08315802  running time 3.5055110454559326
+====> Epoch: 119 Average loss: 0.08408416  running time 3.502668857574463
+====> Epoch: 119 Average loss: 0.08309989  running time 3.4986677169799805
+====> Epoch: 119 Average loss: 0.08345204  running time 3.5067298412323
+====> Test set BCE loss 0.04745174199342728 Custom Loss 0.04745174199342728 with ber  0.01680700108408928 with bler  0.7755
+====> Epoch: 120 Average loss: 0.04749613  running time 3.498669385910034
+====> Epoch: 120 Average loss: 0.08348099  running time 3.5135576725006104
+====> Epoch: 120 Average loss: 0.08368973  running time 3.5141923427581787
+====> Epoch: 120 Average loss: 0.08320097  running time 3.4956650733947754
+====> Epoch: 120 Average loss: 0.08336106  running time 3.508373975753784
+====> Epoch: 120 Average loss: 0.08339364  running time 3.5119271278381348
+====> Test set BCE loss 0.04772179573774338 Custom Loss 0.04772179573774338 with ber  0.016933999955654144 with bler  0.7744
+saved model ./tmp/torch_model_20210418_040540.pt
+SNRS [-1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0]
+Test SNR -1.5 with ber  0.06709899753332138 with bler 0.9965999999999999
+Test SNR -1.0 with ber  0.05392099544405937 with bler 0.9901
+Test SNR -0.5 with ber  0.04199599847197533 with bler 0.9742000000000001
+Test SNR 0.0 with ber  0.03163500130176544 with bler 0.9348000000000001
+Test SNR 0.5 with ber  0.024059999734163284 with bler 0.8756
+Test SNR 1.0 with ber  0.01704299822449684 with bler 0.7732
+Test SNR 1.5 with ber  0.011703001335263252 with bler 0.6492
+Test SNR 2.0 with ber  0.007832999341189861 with bler 0.5050000000000001
+Test SNR 2.5 with ber  0.00493700010702014 with bler 0.36569999999999997
+Test SNR 3.0 with ber  0.003017999930307269 with bler 0.24709999999999996
+Test SNR 3.5 with ber  0.00164899998344481 with bler 0.1467
+Test SNR 4.0 with ber  0.0009219999774359167 with bler 0.08539999999999999
+final results on SNRs  [-1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0]
+BER [0.06709899753332138, 0.05392099544405937, 0.04199599847197533, 0.03163500130176544, 0.024059999734163284, 0.01704299822449684, 0.011703001335263252, 0.007832999341189861, 0.00493700010702014, 0.003017999930307269, 0.00164899998344481, 0.0009219999774359167]
+BLER [0.9965999999999999, 0.9901, 0.9742000000000001, 0.9348000000000001, 0.8756, 0.7732, 0.6492, 0.5050000000000001, 0.36569999999999997, 0.24709999999999996, 0.1467, 0.08539999999999999]
+encoder power is 1.0
+adjusted SNR should be [-1.4999997446509226, -1.0000000166986343, -0.49999973308696327, -0.0, 0.5000001308463472, 1.0000002900227403, 1.5000000201403676, 2.0000002404171053, 2.5000000877622415, 3.0000002493010487, 3.500000207085638, 3.999999717024358]
