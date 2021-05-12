@@ -56,11 +56,11 @@ class DEC(torch.nn.Module):
         self.attention = Attention(args.enc_num_unit, args.dec_num_unit)
 
         self.dec1_rnns = RNN_MODEL(args.enc_num_unit + 3,  args.dec_num_unit,
-                                                    num_layers=2, bias=True, batch_first=True,
+                                                    num_layers=args.dec_num_layer, bias=True, batch_first=True,
                                                     dropout=args.dropout)
 
         self.dec2_rnns = RNN_MODEL(args.enc_num_unit + 3,  args.dec_num_unit,
-                                        num_layers=2, bias=True, batch_first=True,
+                                        num_layers=args.dec_num_layer, bias=True, batch_first=True,
                                         dropout=args.dropout)
 
         self.dec_outputs = torch.nn.Linear(2*args.dec_num_unit, 1)
@@ -96,8 +96,8 @@ class DEC(torch.nn.Module):
             dec_input = received[:,i,:].unsqueeze(1)
 
             # a = [batch_size, 1, src_len] 
-            a1 = self.attention(hidden1[1:2,:,:].squeeze(0), enc_output).unsqueeze(1)
-            a2 = self.attention(hidden2[1:2,:,:].squeeze(0), enc_output).unsqueeze(1)
+            a1 = self.attention(hidden1[-1,:,:].squeeze(0), enc_output).unsqueeze(1)
+            a2 = self.attention(hidden2[-1,:,:].squeeze(0), enc_output).unsqueeze(1)
 
             # c = [batch_size, 1, enc_hid_dim]
             c1 = torch.bmm(a1, enc_output)

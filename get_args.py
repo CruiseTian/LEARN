@@ -41,7 +41,7 @@ def get_args():
 
     # CNN/RNN related
     parser.add_argument('-enc_num_layer', type=int, default=2)
-    parser.add_argument('-dec_num_layer', type=int, default=5)
+    parser.add_argument('-dec_num_layer', type=int, default=2)
 
 
     parser.add_argument('-dec_num_unit', type=int, default=100, help = 'This is CNN number of filters, and RNN units')
