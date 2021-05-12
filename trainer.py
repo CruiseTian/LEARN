@@ -197,7 +197,7 @@ def test(model, args, block_len = 'default',use_cuda = False):
         for idx in range(num_test_batch):
             X_test     = torch.randint(0, 2, (args.batch_size, block_len, args.code_rate_k), dtype=torch.float)
             X_test     = X_test.to(device)
-            X_code     = model.enc(X_test)
+            X_code, _, _     = model.enc(X_test)
             enc_power +=  torch.std(X_code)
     enc_power /= float(num_test_batch)
     print('encoder power is',enc_power.item())
