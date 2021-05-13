@@ -25,7 +25,6 @@ class Attention(nn.Module):
         # s = [batch_size, src_len, dec_hid_dim]
         # enc_output = [batch_size, src_len, enc_hid_dim]
         s = s.unsqueeze(1).repeat(1, src_len, 1)
-        
         # energy = [batch_size, src_len, dec_hid_dim]
         energy = torch.tanh(self.attn(torch.cat((s, enc_output), dim = 2)))
         
@@ -88,11 +87,9 @@ class DEC(torch.nn.Module):
         received = received.type(torch.FloatTensor).to(self.this_device)
 
         enc_output = self.dec_act(self.fc(received))
-        print(enc_output.shape)
-        s = enc_output[:,-1,:]
 
-        hidden1 = s.unsqueeze(0).repeat(2, 1, 1)
-        hidden2 = s.unsqueeze(0).repeat(2, 1, 1)
+        hidden1 = torch.zeros([self.args.dec_num_layer,self.args.batch_size,self.args.dec_num_unit]).type(torch.FloatTensor).to(self.this_device)
+        hidden2 = torch.zeros([self.args.dec_num_layer,self.args.batch_size,self.args.dec_num_unit]).type(torch.FloatTensor).to(self.this_device)
 
         rnn_out1 = []
         rnn_out2 = []
