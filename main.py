@@ -31,14 +31,9 @@ if __name__ == '__main__':
     #################################################
     # load args & setup logger
     #################################################
+    start_time = time.time()
 
     args = get_args()
-
-    logfilename = './logs/log_'+str(args.channel)+'_lr_'+str(args.enc_lr)+'_D'+str(args.D)+'_'+str(args.num_block)+'.txt'
-    logfile = open(logfilename, 'a')
-    sys.stdout = Logger(logfilename, sys.stdout)
-
-    print(args)
 
     # put all printed things to log file
     if args.init_nw_weight == 'default':
@@ -46,9 +41,17 @@ if __name__ == '__main__':
         timestamp = time.strftime('%Y%m%d-%H%M%S', time.localtime())
     else:
         start_epoch = int(args.init_nw_weight.split('_')[1])+1
-        timestamp = args.init_nw_weight.split('_')[2].split('.')[0]
+        timestamp = args.init_nw_weight.split('_')[8].split('.')[0]
 
-    filename = './data/data_'+str(args.channel)+'_lr_'+str(args.enc_lr)+'_D'+str(args.D)+'_'+str(args.num_block)+'.txt'
+    logfilename = './logs/attention_log_'+str(args.channel)+'_lr_'+str(args.enc_lr)+'_D'+str(args.D)+'_'+str(args.num_block)+'_'+timestamp+'.txt'
+    # logfilename = './logs/log_'+str(args.channel)+'_lr_'+str(args.enc_lr)+'_D'+str(args.D)+'_'+str(args.num_block)+'.txt'
+    logfile = open(logfilename, 'a')
+    sys.stdout = Logger(logfilename, sys.stdout)
+
+    print(args)
+
+    filename = './data/attention_data_'+str(args.channel)+'_lr_'+str(args.enc_lr)+'_D'+str(args.D)+'_'+str(args.num_block)+'_'+timestamp+'.txt'
+    # filename = './data/data_'+str(args.channel)+'_lr_'+str(args.enc_lr)+'_D'+str(args.D)+'_'+str(args.num_block)+'.txt'
 
     use_cuda = not args.no_cuda and torch.cuda.is_available()
     print("use_cuda: ",use_cuda)
@@ -64,8 +67,6 @@ if __name__ == '__main__':
     # choose support channels
     from channel_ae import Channel_AE
     model = Channel_AE(args, encoder, decoder).to(device)
-
-    # model = Channel_ModAE(args, encoder, decoder).to(device)
 
     # weight loading
     if args.init_nw_weight == 'default':
@@ -105,6 +106,7 @@ if __name__ == '__main__':
     report_loss, report_ber, report_bler = [], [], []
 
     for epoch in range(start_epoch, args.num_epoch + 1):
+        epoch_start_time = time.time()
         if args.num_train_enc > 0:
             for idx in range(args.num_train_enc):
                 train(epoch, model, enc_optimizer, args, use_cuda = use_cuda, mode ='encoder')
@@ -124,14 +126,17 @@ if __name__ == '__main__':
         data_file.close()
 
         # save model per epoch
-        modelpath = './tmp/model_'+str(epoch)+'_'+str(args.channel)+'_lr_'+str(args.enc_lr)+'_D'+str(args.D)+'_'+str(args.num_block)+'.pt'
+        modelpath = './tmp/attention_model_'+str(epoch)+'_'+str(args.channel)+'_lr_'+str(args.enc_lr)+'_D'+str(args.D)+'_'+str(args.num_block)+'_'+timestamp+'.pt'
+        # modelpath = './tmp/model_'+str(epoch)+'_'+str(args.channel)+'_lr_'+str(args.enc_lr)+'_D'+str(args.D)+'_'+str(args.num_block)+'.pt'
         torch.save(model.state_dict(), modelpath)
-        try:
-            pre_modelpath = './tmp/model_'+str(epoch-1)+'_'+timestamp+'.pt'
-            os.system(r"rm -f {}".format(pre_modelpath))#调用系统命令行来创建文件
-        except:
-            pass
+        # try:
+        #     # pre_modelpath = './tmp/model_'+str(epoch-1)+'_'+str(args.channel)+'_lr_'+str(args.enc_lr)+'_D'+str(args.D)+'_'+str(args.num_block)+'_'+timestamp+'.pt'
+        #     pre_modelpath = './tmp/model_'+str(epoch-1)+'_'+str(args.channel)+'_lr_'+str(args.enc_lr)+'_D'+str(args.D)+'_'+str(args.num_block)+'.pt'
+        #     os.system(r"rm -f {}".format(pre_modelpath))#调用系统命令行来删除文件
+        # except:
+        #     pass
         print('saved model', modelpath)
+        print("each epoch training time: {}s".format(time.time()-epoch_start_time))
 
     if args.print_test_traj == True:
         print('test loss trajectory', report_loss)
@@ -143,7 +148,7 @@ if __name__ == '__main__':
     # Testing Processes
     #################################################
 
-    modelpath = './tmp/model_'+str(args.channel)+'_lr_'+str(args.enc_lr)+'_D'+str(args.D)+'_'+str(args.num_block)+'.pt'
+    modelpath = './tmp/attention_model_'+str(args.channel)+'_lr_'+str(args.enc_lr)+'_D'+str(args.D)+'_'+str(args.num_block)+'.pt'
     torch.save(model.state_dict(), modelpath)
     print('saved model', modelpath)
     # torch.save(model.state_dict(), './tmp/torch_model_'+identity+'.pt')
@@ -159,3 +164,5 @@ if __name__ == '__main__':
 
     else:
         test(model, args, use_cuda = use_cuda)
+
+    print("Training Time: {}s".format(time.time()-start_time))
