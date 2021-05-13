@@ -63,7 +63,7 @@ class DEC(torch.nn.Module):
                 rt_d = rnn_out2[:,i+self.args.D:i+self.args.D+1,:]
             rt = rnn_out1[:,i:i+1,:]
             rnn_out = torch.cat((rt, rt_d), dim=2)
-            dec_out = self.dec_outputs(rnn_out)
+            dec_out = self.dec_act(self.dec_outputs(rnn_out))
             if i==0:
                 final = dec_out
             else:
