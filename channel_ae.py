@@ -16,7 +16,7 @@ class Channel_AE(torch.nn.Module):
         self.dec = dec
 
     def forward(self, input, fwd_noise):
-        codes, s, output = self.enc(input)
+        codes = self.enc(input)
 
         if self.args.channel in ['awgn', 't-dist', 'radar']:
             received_codes = codes + fwd_noise
@@ -28,6 +28,6 @@ class Channel_AE(torch.nn.Module):
             myquantize = MyQuantize.apply
             received_codes = myquantize(received_codes, self.args)
 
-        x_dec = self.dec(received_codes, s, output)
+        x_dec = self.dec(received_codes)
 
         return x_dec, codes

@@ -32,7 +32,6 @@ class ENC(torch.nn.Module):
                                            dropout=0)
 
         self.enc_linear    = torch.nn.Linear(args.enc_num_unit, int(args.code_rate_n/args.code_rate_k))
-        self.fc = torch.nn.Linear(args.enc_num_unit, args.dec_num_unit)
 
     def set_precomp(self, mean_scalar, std_scalar):
         self.mean_scalar = mean_scalar.to(self.this_device)
@@ -87,7 +86,6 @@ class ENC(torch.nn.Module):
 
     def forward(self, inputs):
         output, hidden = self.enc_rnn(inputs)
-        s = torch.tanh(self.fc(hidden[-1,:,:]))
         code = self.enc_act(self.enc_linear(output))
         codes = self.power_constraint(code)
-        return codes, s, output
+        return codes

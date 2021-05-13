@@ -54,12 +54,13 @@ class DEC(torch.nn.Module):
 
         # attention机制实现
         self.attention = Attention(args.enc_num_unit, args.dec_num_unit)
+        self.fc = torch.nn.Linear(int(args.code_rate_n/args.code_rate_k), args.enc_num_unit)
 
-        self.dec1_rnns = RNN_MODEL(args.enc_num_unit + 3,  args.dec_num_unit,
+        self.dec1_rnns = RNN_MODEL(args.enc_num_unit,  args.dec_num_unit,
                                                     num_layers=args.dec_num_layer, bias=True, batch_first=True,
                                                     dropout=args.dropout)
 
-        self.dec2_rnns = RNN_MODEL(args.enc_num_unit + 3,  args.dec_num_unit,
+        self.dec2_rnns = RNN_MODEL(args.enc_num_unit,  args.dec_num_unit,
                                         num_layers=args.dec_num_layer, bias=True, batch_first=True,
                                         dropout=args.dropout)
 
@@ -82,9 +83,13 @@ class DEC(torch.nn.Module):
         else:
             return inputs
 
-    def forward(self, received, s, enc_output):
+    def forward(self, received):
         # enc_output = [batch_size, src_len, enc_hid_dim]
         received = received.type(torch.FloatTensor).to(self.this_device)
+
+        enc_output = self.dec_act(self.fc(received))
+        print(enc_output.shape)
+        s = enc_output[:,-1,:]
 
         hidden1 = s.unsqueeze(0).repeat(2, 1, 1)
         hidden2 = s.unsqueeze(0).repeat(2, 1, 1)
@@ -92,8 +97,6 @@ class DEC(torch.nn.Module):
         rnn_out1 = []
         rnn_out2 = []
         for i in range(self.args.block_len):
-            # dec_input = [batch_size,1,3]
-            dec_input = received[:,i,:].unsqueeze(1)
 
             # a = [batch_size, 1, src_len] 
             a1 = self.attention(hidden1[-1,:,:].squeeze(0), enc_output).unsqueeze(1)
@@ -103,14 +106,10 @@ class DEC(torch.nn.Module):
             c1 = torch.bmm(a1, enc_output)
             c2 = torch.bmm(a2, enc_output)
 
-            # rnn_input = [1, batch_size, (enc_hid_dim) + emb_dim]
-            rnn_input1 = torch.cat((dec_input, c1), dim = 2)
-            rnn_input2 = torch.cat((dec_input, c2), dim = 2)
-
             # dec_output = [src_len(=1), batch_size, dec_hid_dim]
             # dec_hidden = [n_layers * num_directions, batch_size, dec_hid_dim]
-            dec_output1, hidden1 = self.dec1_rnns(rnn_input1, hidden1)
-            dec_output2, hidden2 = self.dec2_rnns(rnn_input2, hidden2)
+            dec_output1, hidden1 = self.dec1_rnns(c1, hidden1)
+            dec_output2, hidden2 = self.dec2_rnns(c2, hidden2)
             if i==0:
                 rnn_out1 = dec_output1
                 rnn_out2 = dec_output2
@@ -126,7 +125,7 @@ class DEC(torch.nn.Module):
                 rt_d = rnn_out2[:,i+self.args.D:i+self.args.D+1,:]
             rt = rnn_out1[:,i:i+1,:]
             rnn_out = torch.cat((rt, rt_d), dim=2)
-            dec_out = self.dec_outputs(rnn_out)
+            dec_out = self.dec_act(self.dec_outputs(rnn_out))
             if i==0:
                 final = dec_out
             else:
