@@ -10,8 +10,7 @@ import numpy as np
 class Attention(nn.Module):
     def __init__(self, enc_hid_dim, dec_hid_dim):
         super().__init__()
-        self.attn = nn.Linear(2*dec_hid_dim, dec_hid_dim, bias=False)
-        self.v = nn.Linear(dec_hid_dim, 1, bias = False)
+        self.attn = nn.Linear(2*dec_hid_dim, 1, bias=False)
         
     def forward(self, s, enc_output):
         
@@ -25,11 +24,8 @@ class Attention(nn.Module):
         # s = [batch_size, src_len, dec_hid_dim]
         # enc_output = [batch_size, src_len, dec_hid_dim]
         s = s.repeat(1, src_len, 1)
-        # energy = [batch_size, src_len, dec_hid_dim]
-        energy = torch.tanh(self.attn(torch.cat((s, enc_output), dim = 2)))
-        
         # attention = [batch_size, 1, src_len]
-        attention = self.v(energy).transpose(1,2)
+        attention = self.attn(torch.cat((s, enc_output), dim = 2)).transpose(1,2)
         
         return F.softmax(attention, dim=2)
 
@@ -85,18 +81,34 @@ class DEC(torch.nn.Module):
         # received = [batch_size, src_len, rate]
         received = received.type(torch.FloatTensor).to(self.this_device)
         # rnn_out = [batch, block_len, dec_num_unit]
-        rnn_out1,_ = self.dec1_rnns(received)
-        rnn_out2,_ = self.dec2_rnns(received)
+        out1,_ = self.dec1_rnns(received)
+        out2,_ = self.dec2_rnns(received)
+
+        rnn_out1 = torch.zeros([out1.shape[0],out1.shape[1],out1.shape[2]]).type(torch.FloatTensor).to(self.this_device)
+        rnn_out2 = torch.zeros([out2.shape[0],out2.shape[1],out2.shape[2]]).type(torch.FloatTensor).to(self.this_device)
+        rnn_out1[:,0,:] = out1[:,0,:]
+        rnn_out2[:,0,:] = out2[:,0,:]
 
         for i in range(self.args.block_len):
-            if i>0:
+            if i>0 and i<4:
                 # a = [batch_size, 1, src_len]
-                a1 = self.attention(rnn_out1[:,i:i+1,:], rnn_out1[:,:i+1,:])
-                a2 = self.attention(rnn_out2[:,i:i+1,:], rnn_out2[:,:i+1,:])
+                a1 = self.attention(out1[:,i:i+1,:], out1[:,:i+1,:])
+                a2 = self.attention(out2[:,i:i+1,:], out2[:,:i+1,:])
 
                 # c = [batch_size, dec_hid_dim]
-                c1 = torch.bmm(a1, rnn_out1[:,:i+1,:]).squeeze(1)
-                c2 = torch.bmm(a2, rnn_out2[:,:i+1,:]).squeeze(1)
+                c1 = torch.bmm(a1, out1[:,:i+1,:]).squeeze(1)
+                c2 = torch.bmm(a2, out2[:,:i+1,:]).squeeze(1)
+
+                rnn_out1[:,i,:] = c1
+                rnn_out2[:,i,:] = c2
+            if i>=4:
+                # a = [batch_size, 1, src_len]
+                a1 = self.attention(out1[:,i:i+1,:], out1[:,i-4:i+1,:])
+                a2 = self.attention(out2[:,i:i+1,:], out2[:,i-4:i+1,:])
+
+                # c = [batch_size, dec_hid_dim]
+                c1 = torch.bmm(a1, out1[:,i-4:i+1,:]).squeeze(1)
+                c2 = torch.bmm(a2, out2[:,i-4:i+1,:]).squeeze(1)
 
                 rnn_out1[:,i,:] = c1
                 rnn_out2[:,i,:] = c2
