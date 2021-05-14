@@ -49,6 +49,7 @@ class DEC(torch.nn.Module):
 
         # attention机制实现
         self.attention = Attention(args.enc_num_unit, args.dec_num_unit)
+        self.fc = torch.nn.Linear(2*args.dec_num_unit, args.dec_num_unit)
 
         self.dec1_rnns = RNN_MODEL(int(args.code_rate_n/args.code_rate_k),  args.dec_num_unit,
                                                     num_layers=args.dec_num_layer, bias=True, batch_first=True,
@@ -90,28 +91,34 @@ class DEC(torch.nn.Module):
         rnn_out2[:,0,:] = out2[:,0,:]
 
         for i in range(self.args.block_len):
-            if i>0 and i<4:
+            if i>0 and i<5:
                 # a = [batch_size, 1, src_len]
-                a1 = self.attention(out1[:,i:i+1,:], out1[:,:i+1,:])
-                a2 = self.attention(out2[:,i:i+1,:], out2[:,:i+1,:])
+                a1 = self.attention(out1[:,i:i+1,:], out1[:,:i,:])
+                a2 = self.attention(out2[:,i:i+1,:], out2[:,:i,:])
 
                 # c = [batch_size, dec_hid_dim]
-                c1 = torch.bmm(a1, out1[:,:i+1,:]).squeeze(1)
-                c2 = torch.bmm(a2, out2[:,:i+1,:]).squeeze(1)
+                c1 = torch.bmm(a1, out1[:,:i,:])
+                c2 = torch.bmm(a2, out2[:,:i,:])
 
-                rnn_out1[:,i,:] = c1
-                rnn_out2[:,i,:] = c2
-            if i>=4:
+                ith_out1 = self.fc(torch.cat((c1,out1[:,i:i+1,:]),dim=2)).squeeze(1)
+                ith_out2 = self.fc(torch.cat((c2,out2[:,i:i+1,:]),dim=2)).squeeze(1)
+
+                rnn_out1[:,i,:] = ith_out1
+                rnn_out2[:,i,:] = ith_out2
+            if i>=5:
                 # a = [batch_size, 1, src_len]
-                a1 = self.attention(out1[:,i:i+1,:], out1[:,i-4:i+1,:])
-                a2 = self.attention(out2[:,i:i+1,:], out2[:,i-4:i+1,:])
+                a1 = self.attention(out1[:,i:i+1,:], out1[:,i-5:i,:])
+                a2 = self.attention(out2[:,i:i+1,:], out2[:,i-5:i,:])
 
                 # c = [batch_size, dec_hid_dim]
-                c1 = torch.bmm(a1, out1[:,i-4:i+1,:]).squeeze(1)
-                c2 = torch.bmm(a2, out2[:,i-4:i+1,:]).squeeze(1)
+                c1 = torch.bmm(a1, out1[:,i-5:i,:])
+                c2 = torch.bmm(a2, out2[:,i-5:i,:])
 
-                rnn_out1[:,i,:] = c1
-                rnn_out2[:,i,:] = c2
+                ith_out1 = self.fc(torch.cat((c1,out1[:,i:i+1,:]),dim=2)).squeeze(1)
+                ith_out2 = self.fc(torch.cat((c2,out2[:,i:i+1,:]),dim=2)).squeeze(1)
+
+                rnn_out1[:,i,:] = ith_out1
+                rnn_out2[:,i,:] = ith_out2
 
         for i in range(self.args.block_len):
             if (i>=self.args.block_len-self.args.D-1):
