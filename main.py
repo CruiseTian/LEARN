@@ -40,7 +40,7 @@ if __name__ == '__main__':
         start_epoch = 1
         timestamp = time.strftime('%Y%m%d-%H%M%S', time.localtime())
     else:
-        start_epoch = int(args.init_nw_weight.split('_')[1])+1
+        start_epoch = int(args.init_nw_weight.split('_')[2])+1
         timestamp = args.init_nw_weight.split('_')[8].split('.')[0]
 
     logfilename = './logs/attention_log_'+str(args.channel)+'_lr_'+str(args.enc_lr)+'_D'+str(args.D)+'_'+str(args.num_block)+'_'+timestamp+'.txt'
