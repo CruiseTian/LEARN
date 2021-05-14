@@ -92,19 +92,21 @@ class DEC(torch.nn.Module):
 
         for i in range(self.args.block_len):
             if i>0 and i<5:
-                # a = [batch_size, 1, src_len]
-                a1 = self.attention(out1[:,i:i+1,:], out1[:,:i,:])
-                a2 = self.attention(out2[:,i:i+1,:], out2[:,:i,:])
+                # # a = [batch_size, 1, src_len]
+                # a1 = self.attention(out1[:,i:i+1,:], out1[:,:i,:])
+                # a2 = self.attention(out2[:,i:i+1,:], out2[:,:i,:])
 
-                # c = [batch_size, dec_hid_dim]
-                c1 = torch.bmm(a1, out1[:,:i,:])
-                c2 = torch.bmm(a2, out2[:,:i,:])
+                # # c = [batch_size, dec_hid_dim]
+                # c1 = torch.bmm(a1, out1[:,:i,:])
+                # c2 = torch.bmm(a2, out2[:,:i,:])
 
-                ith_out1 = self.fc(torch.cat((c1,out1[:,i:i+1,:]),dim=2)).squeeze(1)
-                ith_out2 = self.fc(torch.cat((c2,out2[:,i:i+1,:]),dim=2)).squeeze(1)
+                # ith_out1 = self.fc(torch.cat((c1,out1[:,i:i+1,:]),dim=2)).squeeze(1)
+                # ith_out2 = self.fc(torch.cat((c2,out2[:,i:i+1,:]),dim=2)).squeeze(1)
 
-                rnn_out1[:,i,:] = ith_out1
-                rnn_out2[:,i,:] = ith_out2
+                # rnn_out1[:,i,:] = ith_out1
+                # rnn_out2[:,i,:] = ith_out2
+                rnn_out1[:,i,:] = out1[:,i,:]
+                rnn_out2[:,i,:] = out2[:,i,:]
             if i>=5:
                 # a = [batch_size, 1, src_len]
                 a1 = self.attention(out1[:,i:i+1,:], out1[:,i-5:i,:])
