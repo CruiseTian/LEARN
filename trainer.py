@@ -1,4 +1,3 @@
-__author__ = '606'
 import torch
 import time
 import torch.nn.functional as F
