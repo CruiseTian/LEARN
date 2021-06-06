@@ -1,4 +1,3 @@
-__author__ = '606'
 import torch
 import numpy as np
 import math
