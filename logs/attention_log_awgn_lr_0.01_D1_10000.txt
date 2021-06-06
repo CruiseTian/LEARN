@@ -1,0 +1,1115 @@
+Namespace(D=1, attn_num=1, batch_size=500, block_len=100, block_len_high=200, block_len_low=10, channel='awgn', code_rate_k=1, code_rate_n=3, dec_act='linear', dec_lr=0.01, dec_num_layer=5, dec_num_unit=100, dec_rnn='gru', dropout=0.0, enc_act='elu', enc_clipping='both', enc_grad_limit=0.01, enc_lr=0.01, enc_num_layer=2, enc_num_unit=25, enc_quantize_level=2, enc_rnn='gru', enc_truncate_limit=0, enc_value_limit=1.0, init_nw_weight='default', is_variable_block_len=False, no_code_norm=False, no_cuda=False, num_block=10000, num_epoch=120, num_train_dec=5, num_train_enc=1, optimizer='adam', precompute_norm_stats=False, print_pos_ber=False, print_pos_power=False, print_test_traj=False, radar_power=5.0, radar_prob=0.05, rec_quantize=False, snr_points=12, snr_test_end=4.0, snr_test_start=-1.5, test_ratio=1, train_channel_mode='block_norm', train_dec_channel_high=2.0, train_dec_channel_low=-1.5, train_enc_channel_high=1.0, train_enc_channel_low=1.0, vv=5)
+use_cuda:  True
+Channel_AE(
+  (enc): ENC(
+    (enc_rnn): GRU(1, 25, num_layers=2, batch_first=True)
+    (enc_linear): Linear(in_features=25, out_features=3, bias=True)
+  )
+  (dec): DEC(
+    (dec1_rnns): GRU(3, 100, num_layers=2, batch_first=True)
+    (dec2_rnns): GRU(3, 100, num_layers=2, batch_first=True)
+    (dec_outputs): Linear(in_features=200, out_features=1, bias=True)
+    (attn): Linear(in_features=200, out_features=1, bias=True)
+    (context): Linear(in_features=200, out_features=100, bias=True)
+  )
+)
+====> Epoch: 1 Average loss: 0.69130607  running time 10.955631256103516
+====> Epoch: 1 Average loss: 0.25860482  running time 10.957824230194092
+====> Epoch: 1 Average loss: 0.14537172  running time 10.957516431808472
+====> Epoch: 1 Average loss: 0.14125951  running time 11.053112506866455
+====> Epoch: 1 Average loss: 0.13985875  running time 10.984295129776001
+====> Epoch: 1 Average loss: 0.13837806  running time 10.967483043670654
+====> Test set BCE loss 0.09721191972494125 Custom Loss 0.09721191972494125 with ber  0.03550199791789055 with bler  0.9705999999999998
+saved model ./tmp/attention_model_1_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.14705967903137s
+====> Epoch: 2 Average loss: 0.08884315  running time 10.975344896316528
+====> Epoch: 2 Average loss: 0.12416476  running time 11.0228111743927
+====> Epoch: 2 Average loss: 0.12086683  running time 11.007429361343384
+====> Epoch: 2 Average loss: 0.11986135  running time 10.983806133270264
+====> Epoch: 2 Average loss: 0.11981904  running time 10.958940267562866
+====> Epoch: 2 Average loss: 0.12064160  running time 10.975788593292236
+====> Test set BCE loss 0.08149031549692154 Custom Loss 0.08149031549692154 with ber  0.03002999722957611 with bler  0.9491999999999999
+saved model ./tmp/attention_model_2_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.19948744773865s
+====> Epoch: 3 Average loss: 0.07790163  running time 10.997523069381714
+====> Epoch: 3 Average loss: 0.11509358  running time 11.02796745300293
+====> Epoch: 3 Average loss: 0.11345474  running time 10.987011909484863
+====> Epoch: 3 Average loss: 0.11425513  running time 11.007749795913696
+====> Epoch: 3 Average loss: 0.11247623  running time 11.035354375839233
+====> Epoch: 3 Average loss: 0.11383855  running time 11.023366212844849
+====> Test set BCE loss 0.07497163861989975 Custom Loss 0.07497163861989975 with ber  0.02757899835705757 with bler  0.9358000000000001
+saved model ./tmp/attention_model_3_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.37613105773926s
+====> Epoch: 4 Average loss: 0.07455605  running time 10.97371792793274
+====> Epoch: 4 Average loss: 0.11188533  running time 10.984768629074097
+====> Epoch: 4 Average loss: 0.11197491  running time 10.994543075561523
+====> Epoch: 4 Average loss: 0.11167032  running time 10.960795640945435
+====> Epoch: 4 Average loss: 0.11157034  running time 10.95604395866394
+====> Epoch: 4 Average loss: 0.11199922  running time 10.962468147277832
+====> Test set BCE loss 0.07707814872264862 Custom Loss 0.07707814872264862 with ber  0.027348998934030533 with bler  0.933
+saved model ./tmp/attention_model_4_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.10658121109009s
+====> Epoch: 5 Average loss: 0.07596675  running time 10.960230350494385
+====> Epoch: 5 Average loss: 0.11072369  running time 11.017315864562988
+====> Epoch: 5 Average loss: 0.10977850  running time 11.049772500991821
+====> Epoch: 5 Average loss: 0.11080144  running time 10.985136985778809
+====> Epoch: 5 Average loss: 0.11064232  running time 10.978852033615112
+====> Epoch: 5 Average loss: 0.11009432  running time 10.974645853042603
+====> Test set BCE loss 0.07277747243642807 Custom Loss 0.07277747243642807 with ber  0.02660600282251835 with bler  0.9286999999999999
+saved model ./tmp/attention_model_5_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.2371289730072s
+====> Epoch: 6 Average loss: 0.07262542  running time 10.950538873672485
+====> Epoch: 6 Average loss: 0.10866866  running time 10.974625825881958
+====> Epoch: 6 Average loss: 0.10940507  running time 11.015154361724854
+====> Epoch: 6 Average loss: 0.10843934  running time 11.02225923538208
+====> Epoch: 6 Average loss: 0.10776529  running time 11.014143943786621
+====> Epoch: 6 Average loss: 0.10921307  running time 10.993850231170654
+====> Test set BCE loss 0.07130078226327896 Custom Loss 0.07130078226327896 with ber  0.02615799568593502 with bler  0.9262
+saved model ./tmp/attention_model_6_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.29967713356018s
+====> Epoch: 7 Average loss: 0.07060821  running time 10.985090732574463
+====> Epoch: 7 Average loss: 0.10643670  running time 10.999788284301758
+====> Epoch: 7 Average loss: 0.10516551  running time 10.998628616333008
+====> Epoch: 7 Average loss: 0.10492195  running time 10.985876083374023
+====> Epoch: 7 Average loss: 0.10483001  running time 10.980923414230347
+====> Epoch: 7 Average loss: 0.10432170  running time 11.003684043884277
+====> Test set BCE loss 0.06862451136112213 Custom Loss 0.06862451136112213 with ber  0.0252159982919693 with bler  0.9169
+saved model ./tmp/attention_model_7_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.25241303443909s
+====> Epoch: 8 Average loss: 0.06584099  running time 10.98655104637146
+====> Epoch: 8 Average loss: 0.09727469  running time 10.968654870986938
+====> Epoch: 8 Average loss: 0.09642210  running time 10.986648797988892
+====> Epoch: 8 Average loss: 0.09663943  running time 11.003498554229736
+====> Epoch: 8 Average loss: 0.09649717  running time 11.035606861114502
+====> Epoch: 8 Average loss: 0.09678979  running time 11.022603750228882
+====> Test set BCE loss 0.061515867710113525 Custom Loss 0.061515867710113525 with ber  0.021908000111579895 with bler  0.8802
+saved model ./tmp/attention_model_8_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.32629776000977s
+====> Epoch: 9 Average loss: 0.05908787  running time 11.008850336074829
+====> Epoch: 9 Average loss: 0.09133392  running time 11.004468202590942
+====> Epoch: 9 Average loss: 0.09057270  running time 11.050012826919556
+====> Epoch: 9 Average loss: 0.09036490  running time 11.004645586013794
+====> Epoch: 9 Average loss: 0.09050890  running time 11.003154516220093
+====> Epoch: 9 Average loss: 0.09104850  running time 11.001393795013428
+====> Test set BCE loss 0.05693194270133972 Custom Loss 0.05693194270133972 with ber  0.02035200037062168 with bler  0.8570000000000002
+saved model ./tmp/attention_model_9_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.35790991783142s
+====> Epoch: 10 Average loss: 0.05479242  running time 10.985883951187134
+====> Epoch: 10 Average loss: 0.08643667  running time 11.055893182754517
+====> Epoch: 10 Average loss: 0.08691191  running time 10.992545127868652
+====> Epoch: 10 Average loss: 0.08549593  running time 10.985634565353394
+====> Epoch: 10 Average loss: 0.08701921  running time 11.05184006690979
+====> Epoch: 10 Average loss: 0.08633230  running time 11.017621517181396
+====> Test set BCE loss 0.05064638331532478 Custom Loss 0.05064638331532478 with ber  0.018046999350190163 with bler  0.8164999999999998
+saved model ./tmp/attention_model_10_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.42084097862244s
+====> Epoch: 11 Average loss: 0.04973504  running time 11.009397506713867
+====> Epoch: 11 Average loss: 0.08430555  running time 11.008524417877197
+====> Epoch: 11 Average loss: 0.08530946  running time 11.007904767990112
+====> Epoch: 11 Average loss: 0.08448604  running time 11.013400554656982
+====> Epoch: 11 Average loss: 0.08477946  running time 11.016566038131714
+====> Epoch: 11 Average loss: 0.08444640  running time 10.999802112579346
+====> Test set BCE loss 0.048729609698057175 Custom Loss 0.048729609698057175 with ber  0.017299002036452293 with bler  0.7916000000000001
+saved model ./tmp/attention_model_11_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.37854957580566s
+====> Epoch: 12 Average loss: 0.04820884  running time 11.012617349624634
+====> Epoch: 12 Average loss: 0.08410158  running time 10.970230340957642
+====> Epoch: 12 Average loss: 0.08449287  running time 10.98657774925232
+====> Epoch: 12 Average loss: 0.08362537  running time 10.975162506103516
+====> Epoch: 12 Average loss: 0.08338966  running time 10.976110458374023
+====> Epoch: 12 Average loss: 0.08403818  running time 11.030885457992554
+====> Test set BCE loss 0.04731694981455803 Custom Loss 0.04731694981455803 with ber  0.017031000927090645 with bler  0.7825
+saved model ./tmp/attention_model_12_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.26498556137085s
+====> Epoch: 13 Average loss: 0.04846236  running time 10.986761331558228
+====> Epoch: 13 Average loss: 0.08365491  running time 10.990133285522461
+====> Epoch: 13 Average loss: 0.08362314  running time 10.987887859344482
+====> Epoch: 13 Average loss: 0.08384880  running time 10.990735292434692
+====> Epoch: 13 Average loss: 0.08354540  running time 11.001445531845093
+====> Epoch: 13 Average loss: 0.08368792  running time 11.011892080307007
+====> Test set BCE loss 0.04742061719298363 Custom Loss 0.04742061719298363 with ber  0.01697000116109848 with bler  0.7826000000000002
+saved model ./tmp/attention_model_13_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.28261685371399s
+====> Epoch: 14 Average loss: 0.04751393  running time 10.983961582183838
+====> Epoch: 14 Average loss: 0.08346658  running time 11.001856565475464
+====> Epoch: 14 Average loss: 0.08513431  running time 11.005321741104126
+====> Epoch: 14 Average loss: 0.08418719  running time 10.978636264801025
+====> Epoch: 14 Average loss: 0.08399008  running time 10.980798959732056
+====> Epoch: 14 Average loss: 0.08510048  running time 10.978504657745361
+====> Test set BCE loss 0.049348048865795135 Custom Loss 0.049348048865795135 with ber  0.01761600188910961 with bler  0.7920000000000003
+saved model ./tmp/attention_model_14_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.23200535774231s
+====> Epoch: 15 Average loss: 0.04936301  running time 10.975375652313232
+====> Epoch: 15 Average loss: 0.08464262  running time 10.9920334815979
+====> Epoch: 15 Average loss: 0.08468747  running time 10.993551254272461
+====> Epoch: 15 Average loss: 0.08399171  running time 10.985438108444214
+====> Epoch: 15 Average loss: 0.08358848  running time 10.9613618850708
+====> Epoch: 15 Average loss: 0.08472278  running time 10.97346806526184
+====> Test set BCE loss 0.04813945293426514 Custom Loss 0.04813945293426514 with ber  0.017292996868491173 with bler  0.7847
+saved model ./tmp/attention_model_15_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.14935374259949s
+====> Epoch: 16 Average loss: 0.04790013  running time 10.98899531364441
+====> Epoch: 16 Average loss: 0.08449432  running time 11.005672454833984
+====> Epoch: 16 Average loss: 0.08337965  running time 10.971637725830078
+====> Epoch: 16 Average loss: 0.08394205  running time 10.96842908859253
+====> Epoch: 16 Average loss: 0.08455649  running time 10.967675924301147
+====> Epoch: 16 Average loss: 0.08426692  running time 11.007112264633179
+====> Test set BCE loss 0.04846681281924248 Custom Loss 0.04846681281924248 with ber  0.017176998779177666 with bler  0.7835000000000001
+saved model ./tmp/attention_model_16_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.21284937858582s
+====> Epoch: 17 Average loss: 0.04836014  running time 10.987010955810547
+====> Epoch: 17 Average loss: 0.08432569  running time 10.995259284973145
+====> Epoch: 17 Average loss: 0.08380353  running time 10.999762058258057
+====> Epoch: 17 Average loss: 0.08377239  running time 11.0131676197052
+====> Epoch: 17 Average loss: 0.08409822  running time 11.014063119888306
+====> Epoch: 17 Average loss: 0.08385274  running time 11.032514333724976
+====> Test set BCE loss 0.04805898666381836 Custom Loss 0.04805898666381836 with ber  0.01730399765074253 with bler  0.7871
+saved model ./tmp/attention_model_17_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.34329104423523s
+====> Epoch: 18 Average loss: 0.04786393  running time 11.047311067581177
+====> Epoch: 18 Average loss: 0.08455458  running time 10.998786926269531
+====> Epoch: 18 Average loss: 0.08387248  running time 11.011199712753296
+====> Epoch: 18 Average loss: 0.08398526  running time 11.003303050994873
+====> Epoch: 18 Average loss: 0.08424235  running time 10.994349718093872
+====> Epoch: 18 Average loss: 0.08399027  running time 10.98100209236145
+====> Test set BCE loss 0.04744379222393036 Custom Loss 0.04744379222393036 with ber  0.017115997150540352 with bler  0.783
+saved model ./tmp/attention_model_18_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.34217596054077s
+====> Epoch: 19 Average loss: 0.04774917  running time 10.967625856399536
+====> Epoch: 19 Average loss: 0.08451774  running time 10.99701189994812
+====> Epoch: 19 Average loss: 0.08388907  running time 11.020548105239868
+====> Epoch: 19 Average loss: 0.08367585  running time 11.023632287979126
+====> Epoch: 19 Average loss: 0.08511834  running time 11.024280309677124
+====> Epoch: 19 Average loss: 0.08363802  running time 11.020427942276001
+====> Test set BCE loss 0.04856479912996292 Custom Loss 0.04856479912996292 with ber  0.01747399941086769 with bler  0.7908000000000001
+saved model ./tmp/attention_model_19_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.37496900558472s
+====> Epoch: 20 Average loss: 0.04833266  running time 11.00856351852417
+====> Epoch: 20 Average loss: 0.08479811  running time 11.021600723266602
+====> Epoch: 20 Average loss: 0.08405707  running time 10.991539001464844
+====> Epoch: 20 Average loss: 0.08465433  running time 10.98444938659668
+====> Epoch: 20 Average loss: 0.08366149  running time 10.967487812042236
+====> Epoch: 20 Average loss: 0.08416148  running time 10.960559844970703
+====> Test set BCE loss 0.04835747554898262 Custom Loss 0.04835747554898262 with ber  0.017066998407244682 with bler  0.7771
+saved model ./tmp/attention_model_20_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.21172189712524s
+====> Epoch: 21 Average loss: 0.04795208  running time 10.94581127166748
+====> Epoch: 21 Average loss: 0.08499071  running time 11.011350154876709
+====> Epoch: 21 Average loss: 0.08463586  running time 11.012890338897705
+====> Epoch: 21 Average loss: 0.08448255  running time 11.013719320297241
+====> Epoch: 21 Average loss: 0.08417927  running time 10.996803522109985
+====> Epoch: 21 Average loss: 0.08409334  running time 10.990226984024048
+====> Test set BCE loss 0.04755619168281555 Custom Loss 0.04755619168281555 with ber  0.01704399846494198 with bler  0.7794000000000001
+saved model ./tmp/attention_model_21_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.24477314949036s
+====> Epoch: 22 Average loss: 0.04749517  running time 10.957240104675293
+====> Epoch: 22 Average loss: 0.08424175  running time 10.967759370803833
+====> Epoch: 22 Average loss: 0.08475424  running time 11.01196551322937
+====> Epoch: 22 Average loss: 0.08428881  running time 11.02229619026184
+====> Epoch: 22 Average loss: 0.08377144  running time 11.01999282836914
+====> Epoch: 22 Average loss: 0.08344648  running time 11.013223886489868
+====> Test set BCE loss 0.04783269390463829 Custom Loss 0.04783269390463829 with ber  0.017025001347064972 with bler  0.7870000000000001
+saved model ./tmp/attention_model_22_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.3185122013092s
+====> Epoch: 23 Average loss: 0.04837673  running time 10.993061780929565
+====> Epoch: 23 Average loss: 0.08354522  running time 10.996456146240234
+====> Epoch: 23 Average loss: 0.08327269  running time 10.958816051483154
+====> Epoch: 23 Average loss: 0.08418370  running time 10.96103549003601
+====> Epoch: 23 Average loss: 0.08377940  running time 10.962753534317017
+====> Epoch: 23 Average loss: 0.08358412  running time 10.95894980430603
+====> Test set BCE loss 0.04824906215071678 Custom Loss 0.04824906215071678 with ber  0.017136000096797943 with bler  0.7850000000000001
+saved model ./tmp/attention_model_23_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.10558772087097s
+====> Epoch: 24 Average loss: 0.04803709  running time 10.952387571334839
+====> Epoch: 24 Average loss: 0.08466502  running time 10.97896122932434
+====> Epoch: 24 Average loss: 0.08394223  running time 11.071620464324951
+====> Epoch: 24 Average loss: 0.08367149  running time 11.033975601196289
+====> Epoch: 24 Average loss: 0.08460511  running time 11.003366231918335
+====> Epoch: 24 Average loss: 0.08392323  running time 10.993192672729492
+====> Test set BCE loss 0.04786957427859306 Custom Loss 0.04786957427859306 with ber  0.017208000645041466 with bler  0.7898
+saved model ./tmp/attention_model_24_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.3424780368805s
+====> Epoch: 25 Average loss: 0.04773818  running time 10.986394882202148
+====> Epoch: 25 Average loss: 0.08376747  running time 10.959764003753662
+====> Epoch: 25 Average loss: 0.08429062  running time 10.980567693710327
+====> Epoch: 25 Average loss: 0.08445616  running time 10.977164030075073
+====> Epoch: 25 Average loss: 0.08348688  running time 10.985215425491333
+====> Epoch: 25 Average loss: 0.08362480  running time 10.992542743682861
+====> Test set BCE loss 0.048618871718645096 Custom Loss 0.048618871718645096 with ber  0.016939997673034668 with bler  0.7766000000000001
+saved model ./tmp/attention_model_25_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.19630217552185s
+====> Epoch: 26 Average loss: 0.04875475  running time 11.009628534317017
+====> Epoch: 26 Average loss: 0.08358360  running time 10.985411643981934
+====> Epoch: 26 Average loss: 0.08443272  running time 11.0212242603302
+====> Epoch: 26 Average loss: 0.08420772  running time 11.039371728897095
+====> Epoch: 26 Average loss: 0.08489636  running time 11.059594869613647
+====> Epoch: 26 Average loss: 0.08423796  running time 11.021860837936401
+====> Test set BCE loss 0.04949032887816429 Custom Loss 0.04949032887816429 with ber  0.017252996563911438 with bler  0.7837
+saved model ./tmp/attention_model_26_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.45385146141052s
+====> Epoch: 27 Average loss: 0.04883234  running time 11.001227855682373
+====> Epoch: 27 Average loss: 0.08432918  running time 10.997275114059448
+====> Epoch: 27 Average loss: 0.08374714  running time 10.99092435836792
+====> Epoch: 27 Average loss: 0.08516185  running time 10.992479801177979
+====> Epoch: 27 Average loss: 0.08380965  running time 10.98720645904541
+====> Epoch: 27 Average loss: 0.08434020  running time 10.982977867126465
+====> Test set BCE loss 0.04847119003534317 Custom Loss 0.04847119003534317 with ber  0.0174460019916296 with bler  0.7864000000000002
+saved model ./tmp/attention_model_27_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.25233197212219s
+====> Epoch: 28 Average loss: 0.04811403  running time 10.967612743377686
+====> Epoch: 28 Average loss: 0.08391075  running time 10.960000991821289
+====> Epoch: 28 Average loss: 0.08365314  running time 10.962814331054688
+====> Epoch: 28 Average loss: 0.08390057  running time 10.96451997756958
+====> Epoch: 28 Average loss: 0.08410690  running time 10.963094472885132
+====> Epoch: 28 Average loss: 0.08435733  running time 11.005719661712646
+====> Test set BCE loss 0.04834531992673874 Custom Loss 0.04834531992673874 with ber  0.017222000285983086 with bler  0.7883
+saved model ./tmp/attention_model_28_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.14767837524414s
+====> Epoch: 29 Average loss: 0.04845636  running time 11.000661849975586
+====> Epoch: 29 Average loss: 0.08462124  running time 10.99186086654663
+====> Epoch: 29 Average loss: 0.08346960  running time 10.991081476211548
+====> Epoch: 29 Average loss: 0.08268801  running time 10.994523048400879
+====> Epoch: 29 Average loss: 0.08326513  running time 10.979613065719604
+====> Epoch: 29 Average loss: 0.08403293  running time 10.96541452407837
+====> Test set BCE loss 0.04813159257173538 Custom Loss 0.04813159257173538 with ber  0.017396999523043633 with bler  0.7845000000000001
+saved model ./tmp/attention_model_29_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.18974232673645s
+====> Epoch: 30 Average loss: 0.04803679  running time 10.967713117599487
+====> Epoch: 30 Average loss: 0.08329812  running time 11.011264324188232
+====> Epoch: 30 Average loss: 0.08324421  running time 10.994287490844727
+====> Epoch: 30 Average loss: 0.08316603  running time 10.997073650360107
+====> Epoch: 30 Average loss: 0.08381848  running time 10.973022222518921
+====> Epoch: 30 Average loss: 0.08328892  running time 11.001462697982788
+====> Test set BCE loss 0.04824051260948181 Custom Loss 0.04824051260948181 with ber  0.017171001061797142 with bler  0.7816
+saved model ./tmp/attention_model_30_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.26431012153625s
+====> Epoch: 31 Average loss: 0.04781393  running time 10.99435043334961
+====> Epoch: 31 Average loss: 0.08353101  running time 11.009052991867065
+====> Epoch: 31 Average loss: 0.08369912  running time 11.005574464797974
+====> Epoch: 31 Average loss: 0.08474788  running time 10.996581554412842
+====> Epoch: 31 Average loss: 0.08316172  running time 10.965057373046875
+====> Epoch: 31 Average loss: 0.08349770  running time 10.96401071548462
+====> Test set BCE loss 0.04780755192041397 Custom Loss 0.04780755192041397 with ber  0.01691499911248684 with bler  0.7769
+saved model ./tmp/attention_model_31_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.21871066093445s
+====> Epoch: 32 Average loss: 0.04852210  running time 10.94603967666626
+====> Epoch: 32 Average loss: 0.08369966  running time 10.95966649055481
+====> Epoch: 32 Average loss: 0.08390952  running time 10.965889930725098
+====> Epoch: 32 Average loss: 0.08336792  running time 10.990660667419434
+====> Epoch: 32 Average loss: 0.08466548  running time 11.00279450416565
+====> Epoch: 32 Average loss: 0.08469506  running time 11.021971464157104
+====> Test set BCE loss 0.04837767407298088 Custom Loss 0.04837767407298088 with ber  0.01726599782705307 with bler  0.7875000000000002
+saved model ./tmp/attention_model_32_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.1905906200409s
+====> Epoch: 33 Average loss: 0.04874532  running time 11.00636339187622
+====> Epoch: 33 Average loss: 0.08423099  running time 10.971306800842285
+====> Epoch: 33 Average loss: 0.08331749  running time 10.984734773635864
+====> Epoch: 33 Average loss: 0.08363749  running time 11.035472869873047
+====> Epoch: 33 Average loss: 0.08407711  running time 11.019443273544312
+====> Epoch: 33 Average loss: 0.08413433  running time 11.01881217956543
+====> Test set BCE loss 0.04813995584845543 Custom Loss 0.04813995584845543 with ber  0.017198000103235245 with bler  0.7862
+saved model ./tmp/attention_model_33_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.3556923866272s
+====> Epoch: 34 Average loss: 0.04779905  running time 10.986583948135376
+====> Epoch: 34 Average loss: 0.08460084  running time 11.008953094482422
+====> Epoch: 34 Average loss: 0.08334716  running time 11.034859657287598
+====> Epoch: 34 Average loss: 0.08407727  running time 11.026074647903442
+====> Epoch: 34 Average loss: 0.08366031  running time 10.97565484046936
+====> Epoch: 34 Average loss: 0.08395265  running time 10.96591830253601
+====> Test set BCE loss 0.04758771136403084 Custom Loss 0.04758771136403084 with ber  0.017113998532295227 with bler  0.7795
+saved model ./tmp/attention_model_34_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.27377080917358s
+====> Epoch: 35 Average loss: 0.04788729  running time 10.946614027023315
+====> Epoch: 35 Average loss: 0.08364163  running time 10.957720279693604
+====> Epoch: 35 Average loss: 0.08362890  running time 10.974149465560913
+====> Epoch: 35 Average loss: 0.08448536  running time 10.971426010131836
+====> Epoch: 35 Average loss: 0.08286586  running time 10.955150365829468
+====> Epoch: 35 Average loss: 0.08465551  running time 10.956786394119263
+====> Test set BCE loss 0.04831177741289139 Custom Loss 0.04831177741289139 with ber  0.0171780027449131 with bler  0.7712000000000001
+saved model ./tmp/attention_model_35_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.03605127334595s
+====> Epoch: 36 Average loss: 0.04810268  running time 10.966382503509521
+====> Epoch: 36 Average loss: 0.08452055  running time 10.988188982009888
+====> Epoch: 36 Average loss: 0.08323342  running time 11.065500497817993
+====> Epoch: 36 Average loss: 0.08381763  running time 11.015928506851196
+====> Epoch: 36 Average loss: 0.08411341  running time 10.968288898468018
+====> Epoch: 36 Average loss: 0.08343652  running time 10.992422103881836
+====> Test set BCE loss 0.04862939938902855 Custom Loss 0.04862939938902855 with ber  0.01706399954855442 with bler  0.7842
+saved model ./tmp/attention_model_36_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.31647324562073s
+====> Epoch: 37 Average loss: 0.04886483  running time 11.012882232666016
+====> Epoch: 37 Average loss: 0.08494534  running time 10.964691400527954
+====> Epoch: 37 Average loss: 0.08449301  running time 10.983011484146118
+====> Epoch: 37 Average loss: 0.08333676  running time 11.02662706375122
+====> Epoch: 37 Average loss: 0.08427847  running time 11.051869869232178
+====> Epoch: 37 Average loss: 0.08514705  running time 10.96468186378479
+====> Test set BCE loss 0.047496434301137924 Custom Loss 0.047496434301137924 with ber  0.017018001526594162 with bler  0.7727999999999999
+saved model ./tmp/attention_model_37_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.2766170501709s
+====> Epoch: 38 Average loss: 0.04799912  running time 10.981440305709839
+====> Epoch: 38 Average loss: 0.08483044  running time 10.963528156280518
+====> Epoch: 38 Average loss: 0.08358453  running time 10.968765020370483
+====> Epoch: 38 Average loss: 0.08371692  running time 11.039446115493774
+====> Epoch: 38 Average loss: 0.08375405  running time 11.012824058532715
+====> Epoch: 38 Average loss: 0.08406539  running time 11.006747961044312
+====> Test set BCE loss 0.0483177974820137 Custom Loss 0.0483177974820137 with ber  0.017229000106453896 with bler  0.7792999999999999
+saved model ./tmp/attention_model_38_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.27435779571533s
+====> Epoch: 39 Average loss: 0.04811337  running time 10.977785110473633
+====> Epoch: 39 Average loss: 0.08369953  running time 10.962051153182983
+====> Epoch: 39 Average loss: 0.08398991  running time 10.958446264266968
+====> Epoch: 39 Average loss: 0.08397555  running time 10.959886312484741
+====> Epoch: 39 Average loss: 0.08418167  running time 11.00709080696106
+====> Epoch: 39 Average loss: 0.08257821  running time 10.995258092880249
+====> Test set BCE loss 0.047994691878557205 Custom Loss 0.047994691878557205 with ber  0.01727299951016903 with bler  0.7816000000000001
+saved model ./tmp/attention_model_39_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.16186141967773s
+====> Epoch: 40 Average loss: 0.04781488  running time 10.987043857574463
+====> Epoch: 40 Average loss: 0.08424275  running time 11.007506370544434
+====> Epoch: 40 Average loss: 0.08321552  running time 11.001951694488525
+====> Epoch: 40 Average loss: 0.08341115  running time 11.002675533294678
+====> Epoch: 40 Average loss: 0.08329132  running time 11.007037162780762
+====> Epoch: 40 Average loss: 0.08360480  running time 10.9828519821167
+====> Test set BCE loss 0.04798778519034386 Custom Loss 0.04798778519034386 with ber  0.01713699661195278 with bler  0.7773000000000001
+saved model ./tmp/attention_model_40_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.26066207885742s
+====> Epoch: 41 Average loss: 0.04805123  running time 10.974183082580566
+====> Epoch: 41 Average loss: 0.08362085  running time 11.014563083648682
+====> Epoch: 41 Average loss: 0.08391851  running time 10.991919994354248
+====> Epoch: 41 Average loss: 0.08313231  running time 11.07563328742981
+====> Epoch: 41 Average loss: 0.08321791  running time 11.005972862243652
+====> Epoch: 41 Average loss: 0.08385881  running time 11.009580850601196
+====> Test set BCE loss 0.04711208492517471 Custom Loss 0.04711208492517471 with ber  0.017007999122142792 with bler  0.7756
+saved model ./tmp/attention_model_41_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.39063692092896s
+====> Epoch: 42 Average loss: 0.04708268  running time 10.99718427658081
+====> Epoch: 42 Average loss: 0.08378059  running time 10.989911317825317
+====> Epoch: 42 Average loss: 0.08374152  running time 10.985905647277832
+====> Epoch: 42 Average loss: 0.08306192  running time 10.981543779373169
+====> Epoch: 42 Average loss: 0.08369707  running time 10.95598292350769
+====> Epoch: 42 Average loss: 0.08317873  running time 10.956074476242065
+====> Test set BCE loss 0.04741691052913666 Custom Loss 0.04741691052913666 with ber  0.016964001581072807 with bler  0.7800999999999999
+saved model ./tmp/attention_model_42_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.19247794151306s
+====> Epoch: 43 Average loss: 0.04779037  running time 11.005446910858154
+====> Epoch: 43 Average loss: 0.08310776  running time 11.025372743606567
+====> Epoch: 43 Average loss: 0.08328977  running time 11.049559116363525
+====> Epoch: 43 Average loss: 0.08415029  running time 10.996248006820679
+====> Epoch: 43 Average loss: 0.08393108  running time 10.992934465408325
+====> Epoch: 43 Average loss: 0.08396293  running time 10.999343633651733
+====> Test set BCE loss 0.04914448410272598 Custom Loss 0.04914448410272598 with ber  0.017231998965144157 with bler  0.7875000000000001
+saved model ./tmp/attention_model_43_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.36490654945374s
+====> Epoch: 44 Average loss: 0.04825445  running time 10.971843481063843
+====> Epoch: 44 Average loss: 0.08443702  running time 10.964200019836426
+====> Epoch: 44 Average loss: 0.08467601  running time 10.958930969238281
+====> Epoch: 44 Average loss: 0.08380795  running time 10.986148118972778
+====> Epoch: 44 Average loss: 0.08366186  running time 11.033849716186523
+====> Epoch: 44 Average loss: 0.08404642  running time 10.961359024047852
+====> Test set BCE loss 0.04731646180152893 Custom Loss 0.04731646180152893 with ber  0.01702900044620037 with bler  0.7788
+saved model ./tmp/attention_model_44_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.14931035041809s
+====> Epoch: 45 Average loss: 0.04744046  running time 10.955829620361328
+====> Epoch: 45 Average loss: 0.08308778  running time 11.015235662460327
+====> Epoch: 45 Average loss: 0.08332181  running time 11.075347900390625
+====> Epoch: 45 Average loss: 0.08410947  running time 11.033002376556396
+====> Epoch: 45 Average loss: 0.08339947  running time 10.991836071014404
+====> Epoch: 45 Average loss: 0.08422998  running time 10.994912385940552
+====> Test set BCE loss 0.047794513404369354 Custom Loss 0.047794513404369354 with ber  0.01709200069308281 with bler  0.7799
+saved model ./tmp/attention_model_45_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.36941456794739s
+====> Epoch: 46 Average loss: 0.04770945  running time 10.977803468704224
+====> Epoch: 46 Average loss: 0.08342288  running time 10.989850997924805
+====> Epoch: 46 Average loss: 0.08413642  running time 11.0278000831604
+====> Epoch: 46 Average loss: 0.08320344  running time 11.020960807800293
+====> Epoch: 46 Average loss: 0.08434014  running time 11.012930393218994
+====> Epoch: 46 Average loss: 0.08280382  running time 11.011912107467651
+====> Test set BCE loss 0.04839656502008438 Custom Loss 0.04839656502008438 with ber  0.017176998779177666 with bler  0.7865
+saved model ./tmp/attention_model_46_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.34380602836609s
+====> Epoch: 47 Average loss: 0.04844080  running time 10.981075048446655
+====> Epoch: 47 Average loss: 0.08396233  running time 10.984405279159546
+====> Epoch: 47 Average loss: 0.08413961  running time 10.990002393722534
+====> Epoch: 47 Average loss: 0.08389054  running time 11.02471137046814
+====> Epoch: 47 Average loss: 0.08312267  running time 11.026253700256348
+====> Epoch: 47 Average loss: 0.08422923  running time 10.97995114326477
+====> Test set BCE loss 0.04777838662266731 Custom Loss 0.04777838662266731 with ber  0.016983000561594963 with bler  0.7781000000000001
+saved model ./tmp/attention_model_47_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.26966643333435s
+====> Epoch: 48 Average loss: 0.04808967  running time 10.941242218017578
+====> Epoch: 48 Average loss: 0.08377437  running time 10.96068787574768
+====> Epoch: 48 Average loss: 0.08433112  running time 10.965492963790894
+====> Epoch: 48 Average loss: 0.08433086  running time 10.998212575912476
+====> Epoch: 48 Average loss: 0.08383848  running time 11.019853353500366
+====> Epoch: 48 Average loss: 0.08457370  running time 11.02493143081665
+====> Test set BCE loss 0.04722115769982338 Custom Loss 0.04722115769982338 with ber  0.016878003254532814 with bler  0.7736000000000001
+saved model ./tmp/attention_model_48_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.24033784866333s
+====> Epoch: 49 Average loss: 0.04766605  running time 10.99181079864502
+====> Epoch: 49 Average loss: 0.08366199  running time 10.960500717163086
+====> Epoch: 49 Average loss: 0.08401526  running time 10.970850944519043
+====> Epoch: 49 Average loss: 0.08429865  running time 11.053343772888184
+====> Epoch: 49 Average loss: 0.08368524  running time 10.98648476600647
+====> Epoch: 49 Average loss: 0.08419620  running time 10.985704898834229
+====> Test set BCE loss 0.04792548716068268 Custom Loss 0.04792548716068268 with ber  0.017090998589992523 with bler  0.7738
+saved model ./tmp/attention_model_49_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.24630904197693s
+====> Epoch: 50 Average loss: 0.04829635  running time 10.980254650115967
+====> Epoch: 50 Average loss: 0.08419972  running time 10.973775625228882
+====> Epoch: 50 Average loss: 0.08433949  running time 11.034994125366211
+====> Epoch: 50 Average loss: 0.08260201  running time 10.970989227294922
+====> Epoch: 50 Average loss: 0.08405930  running time 10.966002225875854
+====> Epoch: 50 Average loss: 0.08396223  running time 11.030118465423584
+====> Test set BCE loss 0.04751722514629364 Custom Loss 0.04751722514629364 with ber  0.0170539990067482 with bler  0.7798
+saved model ./tmp/attention_model_50_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.25607514381409s
+====> Epoch: 51 Average loss: 0.04801630  running time 11.015790462493896
+====> Epoch: 51 Average loss: 0.08467905  running time 10.985526323318481
+====> Epoch: 51 Average loss: 0.08519862  running time 10.987215042114258
+====> Epoch: 51 Average loss: 0.08423498  running time 10.986290216445923
+====> Epoch: 51 Average loss: 0.08347518  running time 10.985122442245483
+====> Epoch: 51 Average loss: 0.08386509  running time 10.984023809432983
+====> Test set BCE loss 0.04839771240949631 Custom Loss 0.04839771240949631 with ber  0.01700800284743309 with bler  0.7821000000000001
+saved model ./tmp/attention_model_51_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.25213670730591s
+====> Epoch: 52 Average loss: 0.04805353  running time 10.97862982749939
+====> Epoch: 52 Average loss: 0.08423137  running time 10.990453481674194
+====> Epoch: 52 Average loss: 0.08414584  running time 10.989051580429077
+====> Epoch: 52 Average loss: 0.08328698  running time 10.988871812820435
+====> Epoch: 52 Average loss: 0.08328015  running time 10.990309715270996
+====> Epoch: 52 Average loss: 0.08336855  running time 10.990305423736572
+====> Test set BCE loss 0.04848485812544823 Custom Loss 0.04848485812544823 with ber  0.01740100048482418 with bler  0.7861
+saved model ./tmp/attention_model_52_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.23081803321838s
+====> Epoch: 53 Average loss: 0.04790864  running time 10.980368852615356
+====> Epoch: 53 Average loss: 0.08451219  running time 10.958447217941284
+====> Epoch: 53 Average loss: 0.08458169  running time 10.958248615264893
+====> Epoch: 53 Average loss: 0.08442456  running time 10.9852454662323
+====> Epoch: 53 Average loss: 0.08354343  running time 10.988523483276367
+====> Epoch: 53 Average loss: 0.08455943  running time 10.957736253738403
+====> Test set BCE loss 0.04812774434685707 Custom Loss 0.04812774434685707 with ber  0.01715799979865551 with bler  0.7811000000000001
+saved model ./tmp/attention_model_53_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.10910487174988s
+====> Epoch: 54 Average loss: 0.04830435  running time 10.978194952011108
+====> Epoch: 54 Average loss: 0.08351327  running time 10.973523378372192
+====> Epoch: 54 Average loss: 0.08399285  running time 10.998810291290283
+====> Epoch: 54 Average loss: 0.08367807  running time 10.973519086837769
+====> Epoch: 54 Average loss: 0.08321941  running time 10.968055486679077
+====> Epoch: 54 Average loss: 0.08372018  running time 10.980753421783447
+====> Test set BCE loss 0.049344636499881744 Custom Loss 0.049344636499881744 with ber  0.017193002626299858 with bler  0.779
+saved model ./tmp/attention_model_54_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.1907639503479s
+====> Epoch: 55 Average loss: 0.04876783  running time 10.992997407913208
+====> Epoch: 55 Average loss: 0.08405124  running time 11.01430869102478
+====> Epoch: 55 Average loss: 0.08369144  running time 11.018418788909912
+====> Epoch: 55 Average loss: 0.08464603  running time 11.012964248657227
+====> Epoch: 55 Average loss: 0.08291980  running time 11.055293798446655
+====> Epoch: 55 Average loss: 0.08413329  running time 11.024477243423462
+====> Test set BCE loss 0.04713325574994087 Custom Loss 0.04713325574994087 with ber  0.016800999641418457 with bler  0.7797000000000002
+saved model ./tmp/attention_model_55_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.43843960762024s
+====> Epoch: 56 Average loss: 0.04740447  running time 10.987042903900146
+====> Epoch: 56 Average loss: 0.08357220  running time 11.001474380493164
+====> Epoch: 56 Average loss: 0.08390352  running time 10.998832702636719
+====> Epoch: 56 Average loss: 0.08369287  running time 11.025530815124512
+====> Epoch: 56 Average loss: 0.08311867  running time 10.961013793945312
+====> Epoch: 56 Average loss: 0.08395856  running time 10.958640575408936
+====> Test set BCE loss 0.0484757274389267 Custom Loss 0.0484757274389267 with ber  0.017035000026226044 with bler  0.7777999999999999
+saved model ./tmp/attention_model_56_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.2001965045929s
+====> Epoch: 57 Average loss: 0.04817781  running time 11.045887470245361
+====> Epoch: 57 Average loss: 0.08400691  running time 11.016262292861938
+====> Epoch: 57 Average loss: 0.08336470  running time 11.025697231292725
+====> Epoch: 57 Average loss: 0.08297142  running time 10.986915588378906
+====> Epoch: 57 Average loss: 0.08362658  running time 10.992452383041382
+====> Epoch: 57 Average loss: 0.08361956  running time 11.004767656326294
+====> Test set BCE loss 0.04775688424706459 Custom Loss 0.04775688424706459 with ber  0.01716800034046173 with bler  0.7809999999999999
+saved model ./tmp/attention_model_57_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.37038969993591s
+====> Epoch: 58 Average loss: 0.04781402  running time 10.995255470275879
+====> Epoch: 58 Average loss: 0.08372628  running time 11.010471105575562
+====> Epoch: 58 Average loss: 0.08433101  running time 11.014147758483887
+====> Epoch: 58 Average loss: 0.08427691  running time 10.99378252029419
+====> Epoch: 58 Average loss: 0.08372015  running time 10.966793298721313
+====> Epoch: 58 Average loss: 0.08459656  running time 10.960658550262451
+====> Test set BCE loss 0.048254650086164474 Custom Loss 0.048254650086164474 with ber  0.017055999487638474 with bler  0.7797000000000001
+saved model ./tmp/attention_model_58_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.2171401977539s
+====> Epoch: 59 Average loss: 0.04838414  running time 10.94907808303833
+====> Epoch: 59 Average loss: 0.08396851  running time 10.958790063858032
+====> Epoch: 59 Average loss: 0.08457934  running time 10.961941003799438
+====> Epoch: 59 Average loss: 0.08343097  running time 10.976370334625244
+====> Epoch: 59 Average loss: 0.08387212  running time 10.964887380599976
+====> Epoch: 59 Average loss: 0.08335678  running time 11.036142349243164
+====> Test set BCE loss 0.04744619131088257 Custom Loss 0.04744619131088257 with ber  0.016913000494241714 with bler  0.7743
+saved model ./tmp/attention_model_59_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.17087984085083s
+====> Epoch: 60 Average loss: 0.04820411  running time 11.001191139221191
+====> Epoch: 60 Average loss: 0.08304005  running time 11.015098571777344
+====> Epoch: 60 Average loss: 0.08329635  running time 11.012158393859863
+====> Epoch: 60 Average loss: 0.08430644  running time 10.98677659034729
+====> Epoch: 60 Average loss: 0.08423575  running time 10.981784105300903
+====> Epoch: 60 Average loss: 0.08306381  running time 11.011418104171753
+====> Test set BCE loss 0.048103850334882736 Custom Loss 0.048103850334882736 with ber  0.01713000051677227 with bler  0.778
+saved model ./tmp/attention_model_60_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.32538557052612s
+====> Epoch: 61 Average loss: 0.04800275  running time 10.994788885116577
+====> Epoch: 61 Average loss: 0.08348791  running time 11.000322341918945
+====> Epoch: 61 Average loss: 0.08378256  running time 10.995436191558838
+====> Epoch: 61 Average loss: 0.08383384  running time 10.972884893417358
+====> Epoch: 61 Average loss: 0.08329052  running time 10.972110033035278
+====> Epoch: 61 Average loss: 0.08326190  running time 10.97223448753357
+====> Test set BCE loss 0.047417785972356796 Custom Loss 0.047417785972356796 with ber  0.017131997272372246 with bler  0.7768
+saved model ./tmp/attention_model_61_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.17644619941711s
+====> Epoch: 62 Average loss: 0.04745805  running time 10.939547777175903
+====> Epoch: 62 Average loss: 0.08350114  running time 10.954888105392456
+====> Epoch: 62 Average loss: 0.08442448  running time 10.95532512664795
+====> Epoch: 62 Average loss: 0.08413796  running time 10.9579176902771
+====> Epoch: 62 Average loss: 0.08398941  running time 11.045236110687256
+====> Epoch: 62 Average loss: 0.08373376  running time 11.01041316986084
+====> Test set BCE loss 0.04751536622643471 Custom Loss 0.04751536622643471 with ber  0.016983000561594963 with bler  0.7777
+saved model ./tmp/attention_model_62_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.18024158477783s
+====> Epoch: 63 Average loss: 0.04823400  running time 11.017565965652466
+====> Epoch: 63 Average loss: 0.08335599  running time 10.992642164230347
+====> Epoch: 63 Average loss: 0.08424733  running time 11.070235013961792
+====> Epoch: 63 Average loss: 0.08325303  running time 11.091344594955444
+====> Epoch: 63 Average loss: 0.08302403  running time 11.020769357681274
+====> Epoch: 63 Average loss: 0.08370143  running time 10.985116720199585
+====> Test set BCE loss 0.048629965633153915 Custom Loss 0.048629965633153915 with ber  0.016993997618556023 with bler  0.7802
+saved model ./tmp/attention_model_63_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.47710871696472s
+====> Epoch: 64 Average loss: 0.04906186  running time 11.009124755859375
+====> Epoch: 64 Average loss: 0.08298515  running time 11.014033079147339
+====> Epoch: 64 Average loss: 0.08359758  running time 11.022314071655273
+====> Epoch: 64 Average loss: 0.08384990  running time 11.018009901046753
+====> Epoch: 64 Average loss: 0.08351556  running time 10.975717544555664
+====> Epoch: 64 Average loss: 0.08328782  running time 10.981545448303223
+====> Test set BCE loss 0.04778021574020386 Custom Loss 0.04778021574020386 with ber  0.017056001350283623 with bler  0.7770000000000001
+saved model ./tmp/attention_model_64_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.33983826637268s
+====> Epoch: 65 Average loss: 0.04750232  running time 10.97530722618103
+====> Epoch: 65 Average loss: 0.08414806  running time 10.956855058670044
+====> Epoch: 65 Average loss: 0.08434369  running time 11.008831262588501
+====> Epoch: 65 Average loss: 0.08385352  running time 11.019352674484253
+====> Epoch: 65 Average loss: 0.08405904  running time 11.020864725112915
+====> Epoch: 65 Average loss: 0.08358448  running time 11.01343584060669
+====> Test set BCE loss 0.047480855137109756 Custom Loss 0.047480855137109756 with ber  0.01689699850976467 with bler  0.7761000000000002
+saved model ./tmp/attention_model_65_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.292795419693s
+====> Epoch: 66 Average loss: 0.04798225  running time 11.014701843261719
+====> Epoch: 66 Average loss: 0.08370468  running time 11.020548343658447
+====> Epoch: 66 Average loss: 0.08463961  running time 11.126614570617676
+====> Epoch: 66 Average loss: 0.08382381  running time 11.027090549468994
+====> Epoch: 66 Average loss: 0.08402719  running time 11.053864002227783
+====> Epoch: 66 Average loss: 0.08267791  running time 10.975448369979858
+====> Test set BCE loss 0.04763353243470192 Custom Loss 0.04763353243470192 with ber  0.0170579981058836 with bler  0.7783
+saved model ./tmp/attention_model_66_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.49136519432068s
+====> Epoch: 67 Average loss: 0.04813245  running time 10.983980178833008
+====> Epoch: 67 Average loss: 0.08302243  running time 11.006788730621338
+====> Epoch: 67 Average loss: 0.08309390  running time 11.002255201339722
+====> Epoch: 67 Average loss: 0.08346039  running time 10.986111164093018
+====> Epoch: 67 Average loss: 0.08327304  running time 10.97637677192688
+====> Epoch: 67 Average loss: 0.08347237  running time 10.96339464187622
+====> Test set BCE loss 0.047410812228918076 Custom Loss 0.047410812228918076 with ber  0.016969000920653343 with bler  0.7807000000000001
+saved model ./tmp/attention_model_67_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.18587899208069s
+====> Epoch: 68 Average loss: 0.04809964  running time 11.002782821655273
+====> Epoch: 68 Average loss: 0.08320711  running time 11.018875360488892
+====> Epoch: 68 Average loss: 0.08282431  running time 10.977028131484985
+====> Epoch: 68 Average loss: 0.08335373  running time 10.971834421157837
+====> Epoch: 68 Average loss: 0.08403532  running time 10.976418733596802
+====> Epoch: 68 Average loss: 0.08390911  running time 10.997454643249512
+====> Test set BCE loss 0.04819117486476898 Custom Loss 0.04819117486476898 with ber  0.017256001010537148 with bler  0.7813000000000001
+saved model ./tmp/attention_model_68_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.26371741294861s
+====> Epoch: 69 Average loss: 0.04770823  running time 11.028110265731812
+====> Epoch: 69 Average loss: 0.08443392  running time 11.013527154922485
+====> Epoch: 69 Average loss: 0.08394920  running time 10.988200187683105
+====> Epoch: 69 Average loss: 0.08391497  running time 10.986629009246826
+====> Epoch: 69 Average loss: 0.08363189  running time 10.987821817398071
+====> Epoch: 69 Average loss: 0.08427100  running time 10.98562479019165
+====> Test set BCE loss 0.04853199049830437 Custom Loss 0.04853199049830437 with ber  0.017253002151846886 with bler  0.7821
+saved model ./tmp/attention_model_69_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.29160690307617s
+====> Epoch: 70 Average loss: 0.04809390  running time 10.96029782295227
+====> Epoch: 70 Average loss: 0.08465948  running time 10.954993963241577
+====> Epoch: 70 Average loss: 0.08421801  running time 10.956660747528076
+====> Epoch: 70 Average loss: 0.08485517  running time 10.970128059387207
+====> Epoch: 70 Average loss: 0.08320419  running time 10.963903188705444
+====> Epoch: 70 Average loss: 0.08411464  running time 10.960210084915161
+====> Test set BCE loss 0.04832841828465462 Custom Loss 0.04832841828465462 with ber  0.01706399954855442 with bler  0.7731999999999999
+saved model ./tmp/attention_model_70_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.03420400619507s
+====> Epoch: 71 Average loss: 0.04780752  running time 10.965444803237915
+====> Epoch: 71 Average loss: 0.08311086  running time 11.01045823097229
+====> Epoch: 71 Average loss: 0.08322748  running time 11.009487390518188
+====> Epoch: 71 Average loss: 0.08336482  running time 11.006560802459717
+====> Epoch: 71 Average loss: 0.08352772  running time 11.00822138786316
+====> Epoch: 71 Average loss: 0.08330907  running time 11.01643419265747
+====> Test set BCE loss 0.04853115230798721 Custom Loss 0.04853115230798721 with ber  0.017240000888705254 with bler  0.7857999999999999
+saved model ./tmp/attention_model_71_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.3370451927185s
+====> Epoch: 72 Average loss: 0.04819394  running time 10.997257232666016
+====> Epoch: 72 Average loss: 0.08298085  running time 11.01291275024414
+====> Epoch: 72 Average loss: 0.08368255  running time 10.998462677001953
+====> Epoch: 72 Average loss: 0.08344426  running time 10.967632055282593
+====> Epoch: 72 Average loss: 0.08329563  running time 10.969552993774414
+====> Epoch: 72 Average loss: 0.08305950  running time 10.959592342376709
+====> Test set BCE loss 0.04756522923707962 Custom Loss 0.04756522923707962 with ber  0.016909999772906303 with bler  0.7797000000000002
+saved model ./tmp/attention_model_72_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.18126702308655s
+====> Epoch: 73 Average loss: 0.04809301  running time 10.952422857284546
+====> Epoch: 73 Average loss: 0.08405805  running time 10.964649677276611
+====> Epoch: 73 Average loss: 0.08414925  running time 10.970754861831665
+====> Epoch: 73 Average loss: 0.08399683  running time 10.98188829421997
+====> Epoch: 73 Average loss: 0.08413639  running time 11.032325029373169
+====> Epoch: 73 Average loss: 0.08439293  running time 11.019968032836914
+====> Test set BCE loss 0.048847757279872894 Custom Loss 0.048847757279872894 with ber  0.017260998487472534 with bler  0.7823999999999999
+saved model ./tmp/attention_model_73_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.2424623966217s
+====> Epoch: 74 Average loss: 0.04883342  running time 11.00047492980957
+====> Epoch: 74 Average loss: 0.08428586  running time 11.008273601531982
+====> Epoch: 74 Average loss: 0.08338680  running time 10.988481998443604
+====> Epoch: 74 Average loss: 0.08394375  running time 10.984903573989868
+====> Epoch: 74 Average loss: 0.08403480  running time 10.969529628753662
+====> Epoch: 74 Average loss: 0.08399743  running time 10.996455907821655
+====> Test set BCE loss 0.047764986753463745 Custom Loss 0.047764986753463745 with ber  0.016968000680208206 with bler  0.7774
+saved model ./tmp/attention_model_74_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.2708511352539s
+====> Epoch: 75 Average loss: 0.04767043  running time 11.017019271850586
+====> Epoch: 75 Average loss: 0.08315127  running time 11.029589891433716
+====> Epoch: 75 Average loss: 0.08450747  running time 11.06291389465332
+====> Epoch: 75 Average loss: 0.08401582  running time 11.020822286605835
+====> Epoch: 75 Average loss: 0.08442073  running time 11.017522096633911
+====> Epoch: 75 Average loss: 0.08451852  running time 11.016212940216064
+====> Test set BCE loss 0.04789987951517105 Custom Loss 0.04789987951517105 with ber  0.0169569980353117 with bler  0.7758
+saved model ./tmp/attention_model_75_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.46198439598083s
+====> Epoch: 76 Average loss: 0.04787808  running time 10.978869915008545
+====> Epoch: 76 Average loss: 0.08463472  running time 10.991159439086914
+====> Epoch: 76 Average loss: 0.08369628  running time 10.99023962020874
+====> Epoch: 76 Average loss: 0.08326138  running time 10.995429754257202
+====> Epoch: 76 Average loss: 0.08371781  running time 10.959521532058716
+====> Epoch: 76 Average loss: 0.08359873  running time 10.999095678329468
+====> Test set BCE loss 0.04823977127671242 Custom Loss 0.04823977127671242 with ber  0.017274999991059303 with bler  0.7757
+saved model ./tmp/attention_model_76_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.2279121875763s
+====> Epoch: 77 Average loss: 0.04808514  running time 10.980375289916992
+====> Epoch: 77 Average loss: 0.08417071  running time 11.002799272537231
+====> Epoch: 77 Average loss: 0.08396818  running time 11.013170003890991
+====> Epoch: 77 Average loss: 0.08467331  running time 11.0165114402771
+====> Epoch: 77 Average loss: 0.08386516  running time 11.008093357086182
+====> Epoch: 77 Average loss: 0.08357038  running time 11.013450384140015
+====> Test set BCE loss 0.0485968254506588 Custom Loss 0.0485968254506588 with ber  0.01720699854195118 with bler  0.7825000000000001
+saved model ./tmp/attention_model_77_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.35456371307373s
+====> Epoch: 78 Average loss: 0.04854646  running time 11.006760120391846
+====> Epoch: 78 Average loss: 0.08323363  running time 11.029353141784668
+====> Epoch: 78 Average loss: 0.08419166  running time 11.026280164718628
+====> Epoch: 78 Average loss: 0.08401092  running time 11.029553651809692
+====> Epoch: 78 Average loss: 0.08388930  running time 11.036587476730347
+====> Epoch: 78 Average loss: 0.08340470  running time 11.011116981506348
+====> Test set BCE loss 0.04789873585104942 Custom Loss 0.04789873585104942 with ber  0.017054999247193336 with bler  0.7754999999999999
+saved model ./tmp/attention_model_78_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.41309070587158s
+====> Epoch: 79 Average loss: 0.04784270  running time 10.988044738769531
+====> Epoch: 79 Average loss: 0.08378741  running time 11.069937467575073
+====> Epoch: 79 Average loss: 0.08345395  running time 11.045217514038086
+====> Epoch: 79 Average loss: 0.08318911  running time 11.008766174316406
+====> Epoch: 79 Average loss: 0.08342168  running time 11.01417589187622
+====> Epoch: 79 Average loss: 0.08403949  running time 11.013115644454956
+====> Test set BCE loss 0.047894399613142014 Custom Loss 0.047894399613142014 with ber  0.017235999926924706 with bler  0.7803
+saved model ./tmp/attention_model_79_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.4195568561554s
+====> Epoch: 80 Average loss: 0.04776717  running time 11.003312349319458
+====> Epoch: 80 Average loss: 0.08403360  running time 11.009880304336548
+====> Epoch: 80 Average loss: 0.08376632  running time 10.99508023262024
+====> Epoch: 80 Average loss: 0.08329246  running time 10.96641755104065
+====> Epoch: 80 Average loss: 0.08345518  running time 11.003970384597778
+====> Epoch: 80 Average loss: 0.08330647  running time 11.02405333518982
+====> Test set BCE loss 0.048033080995082855 Custom Loss 0.048033080995082855 with ber  0.01712999865412712 with bler  0.7752000000000001
+saved model ./tmp/attention_model_80_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.32133078575134s
+====> Epoch: 81 Average loss: 0.04824789  running time 11.002161264419556
+====> Epoch: 81 Average loss: 0.08383014  running time 11.017353296279907
+====> Epoch: 81 Average loss: 0.08339890  running time 11.013319253921509
+====> Epoch: 81 Average loss: 0.08323936  running time 11.060174226760864
+====> Epoch: 81 Average loss: 0.08417076  running time 11.017377614974976
+====> Epoch: 81 Average loss: 0.08358342  running time 11.004364252090454
+====> Test set BCE loss 0.04834654927253723 Custom Loss 0.04834654927253723 with ber  0.017194999381899834 with bler  0.7860000000000001
+saved model ./tmp/attention_model_81_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.41506767272949s
+====> Epoch: 82 Average loss: 0.04815292  running time 10.972842693328857
+====> Epoch: 82 Average loss: 0.08339970  running time 11.02545690536499
+====> Epoch: 82 Average loss: 0.08303278  running time 11.010704755783081
+====> Epoch: 82 Average loss: 0.08372117  running time 10.97982144355774
+====> Epoch: 82 Average loss: 0.08326201  running time 10.996587991714478
+====> Epoch: 82 Average loss: 0.08478584  running time 11.021658182144165
+====> Test set BCE loss 0.047641322016716 Custom Loss 0.047641322016716 with ber  0.017089998349547386 with bler  0.7791
+saved model ./tmp/attention_model_82_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.32788014411926s
+====> Epoch: 83 Average loss: 0.04800819  running time 10.985403776168823
+====> Epoch: 83 Average loss: 0.08392993  running time 10.973989725112915
+====> Epoch: 83 Average loss: 0.08385208  running time 11.074087381362915
+====> Epoch: 83 Average loss: 0.08407505  running time 10.962118864059448
+====> Epoch: 83 Average loss: 0.08319259  running time 11.033989667892456
+====> Epoch: 83 Average loss: 0.08337077  running time 11.027917861938477
+====> Test set BCE loss 0.047969549894332886 Custom Loss 0.047969549894332886 with ber  0.017223000526428223 with bler  0.7819
+saved model ./tmp/attention_model_83_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.38333201408386s
+====> Epoch: 84 Average loss: 0.04797721  running time 10.97019338607788
+====> Epoch: 84 Average loss: 0.08281842  running time 10.984426021575928
+====> Epoch: 84 Average loss: 0.08329088  running time 10.962835550308228
+====> Epoch: 84 Average loss: 0.08408729  running time 10.959932565689087
+====> Epoch: 84 Average loss: 0.08320206  running time 10.970515012741089
+====> Epoch: 84 Average loss: 0.08436719  running time 11.015967845916748
+====> Test set BCE loss 0.04772749915719032 Custom Loss 0.04772749915719032 with ber  0.017130998894572258 with bler  0.78
+saved model ./tmp/attention_model_84_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.1910662651062s
+====> Epoch: 85 Average loss: 0.04749676  running time 11.008336544036865
+====> Epoch: 85 Average loss: 0.08347471  running time 11.02387547492981
+====> Epoch: 85 Average loss: 0.08437790  running time 11.022099018096924
+====> Epoch: 85 Average loss: 0.08346492  running time 11.020862340927124
+====> Epoch: 85 Average loss: 0.08369951  running time 11.026108026504517
+====> Epoch: 85 Average loss: 0.08399637  running time 11.000073909759521
+====> Test set BCE loss 0.04731864109635353 Custom Loss 0.04731864109635353 with ber  0.016790000721812248 with bler  0.7801000000000001
+saved model ./tmp/attention_model_85_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.40412664413452s
+====> Epoch: 86 Average loss: 0.04825981  running time 10.975889921188354
+====> Epoch: 86 Average loss: 0.08185018  running time 10.987556457519531
+====> Epoch: 86 Average loss: 0.08300980  running time 10.986589908599854
+====> Epoch: 86 Average loss: 0.08381083  running time 10.974829912185669
+====> Epoch: 86 Average loss: 0.08350852  running time 10.959460258483887
+====> Epoch: 86 Average loss: 0.08378920  running time 10.98675274848938
+====> Test set BCE loss 0.04855233430862427 Custom Loss 0.04855233430862427 with ber  0.017388999462127686 with bler  0.7878000000000001
+saved model ./tmp/attention_model_86_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.15442299842834s
+====> Epoch: 87 Average loss: 0.04838513  running time 10.949525117874146
+====> Epoch: 87 Average loss: 0.08404601  running time 11.000739336013794
+====> Epoch: 87 Average loss: 0.08345611  running time 11.025826454162598
+====> Epoch: 87 Average loss: 0.08374988  running time 11.01909875869751
+====> Epoch: 87 Average loss: 0.08291330  running time 11.013845443725586
+====> Epoch: 87 Average loss: 0.08366520  running time 10.995991230010986
+====> Test set BCE loss 0.04874863848090172 Custom Loss 0.04874863848090172 with ber  0.017148001119494438 with bler  0.7809
+saved model ./tmp/attention_model_87_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.30288100242615s
+====> Epoch: 88 Average loss: 0.04881206  running time 10.972652912139893
+====> Epoch: 88 Average loss: 0.08335923  running time 10.99431562423706
+====> Epoch: 88 Average loss: 0.08265387  running time 11.001200675964355
+====> Epoch: 88 Average loss: 0.08386869  running time 11.074392318725586
+====> Epoch: 88 Average loss: 0.08388099  running time 11.0127272605896
+====> Epoch: 88 Average loss: 0.08368997  running time 11.006742238998413
+====> Test set BCE loss 0.047955844551324844 Custom Loss 0.047955844551324844 with ber  0.017196999862790108 with bler  0.782
+saved model ./tmp/attention_model_88_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.38138389587402s
+====> Epoch: 89 Average loss: 0.04820860  running time 11.003331661224365
+====> Epoch: 89 Average loss: 0.08309387  running time 10.99848461151123
+====> Epoch: 89 Average loss: 0.08347812  running time 10.998794555664062
+====> Epoch: 89 Average loss: 0.08392390  running time 10.98850703239441
+====> Epoch: 89 Average loss: 0.08297287  running time 10.97273325920105
+====> Epoch: 89 Average loss: 0.08349001  running time 10.971259593963623
+====> Test set BCE loss 0.04886646196246147 Custom Loss 0.04886646196246147 with ber  0.017340002581477165 with bler  0.7808
+saved model ./tmp/attention_model_89_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.20639085769653s
+====> Epoch: 90 Average loss: 0.04788789  running time 10.956441879272461
+====> Epoch: 90 Average loss: 0.08353283  running time 10.9632728099823
+====> Epoch: 90 Average loss: 0.08423361  running time 10.965672731399536
+====> Epoch: 90 Average loss: 0.08347520  running time 10.959478855133057
+====> Epoch: 90 Average loss: 0.08313541  running time 10.96358871459961
+====> Epoch: 90 Average loss: 0.08333745  running time 11.008631229400635
+====> Test set BCE loss 0.047827739268541336 Custom Loss 0.047827739268541336 with ber  0.017291000112891197 with bler  0.7842
+saved model ./tmp/attention_model_90_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.13317704200745s
+====> Epoch: 91 Average loss: 0.04774129  running time 10.980090856552124
+====> Epoch: 91 Average loss: 0.08397862  running time 11.000057697296143
+====> Epoch: 91 Average loss: 0.08335918  running time 10.956098079681396
+====> Epoch: 91 Average loss: 0.08379934  running time 11.000232934951782
+====> Epoch: 91 Average loss: 0.08356207  running time 10.956002473831177
+====> Epoch: 91 Average loss: 0.08337662  running time 10.97787594795227
+====> Test set BCE loss 0.04800122603774071 Custom Loss 0.04800122603774071 with ber  0.017047999426722527 with bler  0.7741999999999999
+saved model ./tmp/attention_model_91_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.13933372497559s
+====> Epoch: 92 Average loss: 0.04878377  running time 10.95401644706726
+====> Epoch: 92 Average loss: 0.08358002  running time 10.98393726348877
+====> Epoch: 92 Average loss: 0.08404706  running time 11.032740116119385
+====> Epoch: 92 Average loss: 0.08357313  running time 10.99807620048523
+====> Epoch: 92 Average loss: 0.08326619  running time 10.995735883712769
+====> Epoch: 92 Average loss: 0.08448616  running time 11.000959873199463
+====> Test set BCE loss 0.047698281705379486 Custom Loss 0.047698281705379486 with ber  0.0169569980353117 with bler  0.777
+saved model ./tmp/attention_model_92_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.26999092102051s
+====> Epoch: 93 Average loss: 0.04832990  running time 11.012028932571411
+====> Epoch: 93 Average loss: 0.08275197  running time 10.977877140045166
+====> Epoch: 93 Average loss: 0.08395957  running time 10.970282077789307
+====> Epoch: 93 Average loss: 0.08296891  running time 10.960320711135864
+====> Epoch: 93 Average loss: 0.08362892  running time 10.965933322906494
+====> Epoch: 93 Average loss: 0.08325713  running time 10.99570083618164
+====> Test set BCE loss 0.04814475402235985 Custom Loss 0.04814475402235985 with ber  0.01708499900996685 with bler  0.7846
+saved model ./tmp/attention_model_93_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.15445923805237s
+====> Epoch: 94 Average loss: 0.04810819  running time 11.062469959259033
+====> Epoch: 94 Average loss: 0.08372220  running time 11.030211925506592
+====> Epoch: 94 Average loss: 0.08389862  running time 11.007867097854614
+====> Epoch: 94 Average loss: 0.08294242  running time 10.994396448135376
+====> Epoch: 94 Average loss: 0.08338728  running time 10.990081071853638
+====> Epoch: 94 Average loss: 0.08278115  running time 10.995223999023438
+====> Test set BCE loss 0.048510532826185226 Custom Loss 0.048510532826185226 with ber  0.01762699894607067 with bler  0.7908000000000001
+saved model ./tmp/attention_model_94_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.38205766677856s
+====> Epoch: 95 Average loss: 0.04765648  running time 10.9716956615448
+====> Epoch: 95 Average loss: 0.08221549  running time 10.98716950416565
+====> Epoch: 95 Average loss: 0.08253188  running time 10.99095892906189
+====> Epoch: 95 Average loss: 0.08391710  running time 10.996328830718994
+====> Epoch: 95 Average loss: 0.08373621  running time 10.986790895462036
+====> Epoch: 95 Average loss: 0.08341577  running time 10.962275505065918
+====> Test set BCE loss 0.04818292334675789 Custom Loss 0.04818292334675789 with ber  0.017277000471949577 with bler  0.7874999999999999
+saved model ./tmp/attention_model_95_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.22075867652893s
+====> Epoch: 96 Average loss: 0.04752549  running time 11.009467601776123
+====> Epoch: 96 Average loss: 0.08306806  running time 10.980544567108154
+====> Epoch: 96 Average loss: 0.08336763  running time 10.973358154296875
+====> Epoch: 96 Average loss: 0.08443206  running time 10.999166011810303
+====> Epoch: 96 Average loss: 0.08397545  running time 11.02743411064148
+====> Epoch: 96 Average loss: 0.08324240  running time 11.027905225753784
+====> Test set BCE loss 0.04770993813872337 Custom Loss 0.04770993813872337 with ber  0.016961999237537384 with bler  0.7759
+saved model ./tmp/attention_model_96_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.2980306148529s
+====> Epoch: 97 Average loss: 0.04807738  running time 10.943819761276245
+====> Epoch: 97 Average loss: 0.08459928  running time 10.960914611816406
+====> Epoch: 97 Average loss: 0.08281082  running time 10.961069822311401
+====> Epoch: 97 Average loss: 0.08308834  running time 10.964115619659424
+====> Epoch: 97 Average loss: 0.08352321  running time 10.979081869125366
+====> Epoch: 97 Average loss: 0.08413465  running time 11.037902593612671
+====> Test set BCE loss 0.047708991914987564 Custom Loss 0.047708991914987564 with ber  0.01683799922466278 with bler  0.7809999999999999
+saved model ./tmp/attention_model_97_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.16594457626343s
+====> Epoch: 98 Average loss: 0.04757319  running time 11.005989074707031
+====> Epoch: 98 Average loss: 0.08342686  running time 11.072754859924316
+====> Epoch: 98 Average loss: 0.08328110  running time 10.982677221298218
+====> Epoch: 98 Average loss: 0.08301184  running time 10.991446018218994
+====> Epoch: 98 Average loss: 0.08416996  running time 10.978663682937622
+====> Epoch: 98 Average loss: 0.08366423  running time 10.966060876846313
+====> Test set BCE loss 0.048249512910842896 Custom Loss 0.048249512910842896 with ber  0.01716499775648117 with bler  0.7792000000000001
+saved model ./tmp/attention_model_98_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.27295446395874s
+====> Epoch: 99 Average loss: 0.04799527  running time 10.994016647338867
+====> Epoch: 99 Average loss: 0.08288240  running time 11.073694944381714
+====> Epoch: 99 Average loss: 0.08405490  running time 11.017392873764038
+====> Epoch: 99 Average loss: 0.08343237  running time 10.99285101890564
+====> Epoch: 99 Average loss: 0.08413142  running time 10.990729570388794
+====> Epoch: 99 Average loss: 0.08449246  running time 10.996049165725708
+====> Test set BCE loss 0.04870828241109848 Custom Loss 0.04870828241109848 with ber  0.017232000827789307 with bler  0.7807999999999999
+saved model ./tmp/attention_model_99_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.33556652069092s
+====> Epoch: 100 Average loss: 0.04857868  running time 10.94447922706604
+====> Epoch: 100 Average loss: 0.08423425  running time 10.986289978027344
+====> Epoch: 100 Average loss: 0.08312286  running time 11.00768756866455
+====> Epoch: 100 Average loss: 0.08359615  running time 10.993957996368408
+====> Epoch: 100 Average loss: 0.08359484  running time 11.01119065284729
+====> Epoch: 100 Average loss: 0.08400452  running time 11.02859115600586
+====> Test set BCE loss 0.048204950988292694 Custom Loss 0.048204950988292694 with ber  0.017058001831173897 with bler  0.7797
+saved model ./tmp/attention_model_100_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.27430725097656s
+====> Epoch: 101 Average loss: 0.04862010  running time 10.983699560165405
+====> Epoch: 101 Average loss: 0.08394623  running time 11.114511013031006
+====> Epoch: 101 Average loss: 0.08427894  running time 11.01302719116211
+====> Epoch: 101 Average loss: 0.08355468  running time 10.994231224060059
+====> Epoch: 101 Average loss: 0.08362044  running time 11.014993667602539
+====> Epoch: 101 Average loss: 0.08350452  running time 11.011583805084229
+====> Test set BCE loss 0.04811026528477669 Custom Loss 0.04811026528477669 with ber  0.017121000215411186 with bler  0.7835000000000001
+saved model ./tmp/attention_model_101_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.40230321884155s
+====> Epoch: 102 Average loss: 0.04789912  running time 10.966672658920288
+====> Epoch: 102 Average loss: 0.08349218  running time 10.9958815574646
+====> Epoch: 102 Average loss: 0.08344860  running time 10.997557878494263
+====> Epoch: 102 Average loss: 0.08402083  running time 10.994566202163696
+====> Epoch: 102 Average loss: 0.08365819  running time 11.042252540588379
+====> Epoch: 102 Average loss: 0.08417482  running time 11.020592451095581
+====> Test set BCE loss 0.04808836802840233 Custom Loss 0.04808836802840233 with ber  0.01705699972808361 with bler  0.7798
+saved model ./tmp/attention_model_102_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.33085656166077s
+====> Epoch: 103 Average loss: 0.04759317  running time 11.027109861373901
+====> Epoch: 103 Average loss: 0.08330549  running time 11.035597085952759
+====> Epoch: 103 Average loss: 0.08346306  running time 11.070780754089355
+====> Epoch: 103 Average loss: 0.08351293  running time 11.025417566299438
+====> Epoch: 103 Average loss: 0.08352572  running time 10.996227502822876
+====> Epoch: 103 Average loss: 0.08349979  running time 10.996907711029053
+====> Test set BCE loss 0.048192400485277176 Custom Loss 0.048192400485277176 with ber  0.017052000388503075 with bler  0.7757999999999999
+saved model ./tmp/attention_model_103_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.45004343986511s
+====> Epoch: 104 Average loss: 0.04829983  running time 10.971476554870605
+====> Epoch: 104 Average loss: 0.08455952  running time 10.979298830032349
+====> Epoch: 104 Average loss: 0.08303127  running time 10.963474750518799
+====> Epoch: 104 Average loss: 0.08332690  running time 10.96471881866455
+====> Epoch: 104 Average loss: 0.08350411  running time 10.962181806564331
+====> Epoch: 104 Average loss: 0.08340782  running time 10.954761505126953
+====> Test set BCE loss 0.04852757975459099 Custom Loss 0.04852757975459099 with ber  0.017266999930143356 with bler  0.7878999999999999
+saved model ./tmp/attention_model_104_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.0661416053772s
+====> Epoch: 105 Average loss: 0.04810919  running time 10.93764615058899
+====> Epoch: 105 Average loss: 0.08303026  running time 10.953020334243774
+====> Epoch: 105 Average loss: 0.08202202  running time 10.95924425125122
+====> Epoch: 105 Average loss: 0.08335334  running time 10.957766056060791
+====> Epoch: 105 Average loss: 0.08282507  running time 10.953524827957153
+====> Epoch: 105 Average loss: 0.08386795  running time 11.026746273040771
+====> Test set BCE loss 0.047903917729854584 Custom Loss 0.047903917729854584 with ber  0.016992000862956047 with bler  0.7767
+saved model ./tmp/attention_model_105_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.1070818901062s
+====> Epoch: 106 Average loss: 0.04786709  running time 11.00589108467102
+====> Epoch: 106 Average loss: 0.08388190  running time 11.020174980163574
+====> Epoch: 106 Average loss: 0.08238889  running time 11.021236896514893
+====> Epoch: 106 Average loss: 0.08352410  running time 11.04823112487793
+====> Epoch: 106 Average loss: 0.08365593  running time 10.981446027755737
+====> Epoch: 106 Average loss: 0.08287562  running time 10.970640897750854
+====> Test set BCE loss 0.04764772951602936 Custom Loss 0.04764772951602936 with ber  0.017002999782562256 with bler  0.7780999999999999
+saved model ./tmp/attention_model_106_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.31774067878723s
+====> Epoch: 107 Average loss: 0.04759711  running time 11.00396990776062
+====> Epoch: 107 Average loss: 0.08280320  running time 11.037317037582397
+====> Epoch: 107 Average loss: 0.08318437  running time 11.00446081161499
+====> Epoch: 107 Average loss: 0.08386839  running time 10.982972383499146
+====> Epoch: 107 Average loss: 0.08378984  running time 11.019019842147827
+====> Epoch: 107 Average loss: 0.08313802  running time 11.00992727279663
+====> Test set BCE loss 0.04796355590224266 Custom Loss 0.04796355590224266 with ber  0.017038000747561455 with bler  0.7756000000000001
+saved model ./tmp/attention_model_107_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.32540702819824s
+====> Epoch: 108 Average loss: 0.04834040  running time 10.95505142211914
+====> Epoch: 108 Average loss: 0.08340957  running time 10.995139837265015
+====> Epoch: 108 Average loss: 0.08290277  running time 11.033644437789917
+====> Epoch: 108 Average loss: 0.08340388  running time 11.024990558624268
+====> Epoch: 108 Average loss: 0.08319047  running time 11.015662431716919
+====> Epoch: 108 Average loss: 0.08354206  running time 11.024197816848755
+====> Test set BCE loss 0.047515418380498886 Custom Loss 0.047515418380498886 with ber  0.016763998195528984 with bler  0.7708
+saved model ./tmp/attention_model_108_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.37038159370422s
+====> Epoch: 109 Average loss: 0.04808958  running time 10.991743326187134
+====> Epoch: 109 Average loss: 0.08214072  running time 11.024314641952515
+====> Epoch: 109 Average loss: 0.08242603  running time 10.996609926223755
+====> Epoch: 109 Average loss: 0.08368632  running time 10.962770223617554
+====> Epoch: 109 Average loss: 0.08328184  running time 10.985747575759888
+====> Epoch: 109 Average loss: 0.08327098  running time 11.011472702026367
+====> Test set BCE loss 0.04835840314626694 Custom Loss 0.04835840314626694 with ber  0.01724099926650524 with bler  0.7841999999999999
+saved model ./tmp/attention_model_109_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.28966689109802s
+====> Epoch: 110 Average loss: 0.04791710  running time 11.005096673965454
+====> Epoch: 110 Average loss: 0.08370421  running time 11.003886699676514
+====> Epoch: 110 Average loss: 0.08340848  running time 11.09694528579712
+====> Epoch: 110 Average loss: 0.08345313  running time 11.030007362365723
+====> Epoch: 110 Average loss: 0.08332806  running time 11.064859628677368
+====> Epoch: 110 Average loss: 0.08296606  running time 11.00112247467041
+====> Test set BCE loss 0.048663850873708725 Custom Loss 0.048663850873708725 with ber  0.017110001295804977 with bler  0.7790000000000001
+saved model ./tmp/attention_model_110_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.49598932266235s
+====> Epoch: 111 Average loss: 0.04842739  running time 10.969803094863892
+====> Epoch: 111 Average loss: 0.08406117  running time 10.959753274917603
+====> Epoch: 111 Average loss: 0.08373156  running time 10.989623308181763
+====> Epoch: 111 Average loss: 0.08374214  running time 11.043179750442505
+====> Epoch: 111 Average loss: 0.08409629  running time 11.004690170288086
+====> Epoch: 111 Average loss: 0.08385588  running time 11.045846462249756
+====> Test set BCE loss 0.04778851941227913 Custom Loss 0.04778851941227913 with ber  0.017006000503897667 with bler  0.7827999999999999
+saved model ./tmp/attention_model_111_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.30632781982422s
+====> Epoch: 112 Average loss: 0.04782455  running time 10.965491533279419
+====> Epoch: 112 Average loss: 0.08310625  running time 10.957762241363525
+====> Epoch: 112 Average loss: 0.08323111  running time 10.956400156021118
+====> Epoch: 112 Average loss: 0.08377953  running time 10.956483840942383
+====> Epoch: 112 Average loss: 0.08305781  running time 10.994111776351929
+====> Epoch: 112 Average loss: 0.08296597  running time 11.012771844863892
+====> Test set BCE loss 0.047838158905506134 Custom Loss 0.047838158905506134 with ber  0.01696399785578251 with bler  0.7752000000000001
+saved model ./tmp/attention_model_112_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.14055442810059s
+====> Epoch: 113 Average loss: 0.04824902  running time 11.011216402053833
+====> Epoch: 113 Average loss: 0.08307722  running time 11.013325929641724
+====> Epoch: 113 Average loss: 0.08331893  running time 11.014782190322876
+====> Epoch: 113 Average loss: 0.08362769  running time 11.023642301559448
+====> Epoch: 113 Average loss: 0.08425827  running time 11.024174451828003
+====> Epoch: 113 Average loss: 0.08277333  running time 11.020917415618896
+====> Test set BCE loss 0.04738669842481613 Custom Loss 0.04738669842481613 with ber  0.01693500019609928 with bler  0.7816000000000001
+saved model ./tmp/attention_model_113_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.42749047279358s
+====> Epoch: 114 Average loss: 0.04781569  running time 10.994812250137329
+====> Epoch: 114 Average loss: 0.08307461  running time 11.0065016746521
+====> Epoch: 114 Average loss: 0.08326900  running time 10.98192310333252
+====> Epoch: 114 Average loss: 0.08378112  running time 11.028920412063599
+====> Epoch: 114 Average loss: 0.08377938  running time 11.015728235244751
+====> Epoch: 114 Average loss: 0.08299724  running time 11.009859561920166
+====> Test set BCE loss 0.04818497225642204 Custom Loss 0.04818497225642204 with ber  0.01714099943637848 with bler  0.7757
+saved model ./tmp/attention_model_114_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.36550092697144s
+====> Epoch: 115 Average loss: 0.04835063  running time 11.003955125808716
+====> Epoch: 115 Average loss: 0.08300766  running time 11.01261281967163
+====> Epoch: 115 Average loss: 0.08358987  running time 10.970322847366333
+====> Epoch: 115 Average loss: 0.08303587  running time 10.968562364578247
+====> Epoch: 115 Average loss: 0.08352543  running time 10.968113660812378
+====> Epoch: 115 Average loss: 0.08318539  running time 11.035861253738403
+====> Test set BCE loss 0.04825683310627937 Custom Loss 0.04825683310627937 with ber  0.017124999314546585 with bler  0.7734000000000001
+saved model ./tmp/attention_model_115_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.28161573410034s
+====> Epoch: 116 Average loss: 0.04783921  running time 11.001595258712769
+====> Epoch: 116 Average loss: 0.08294691  running time 11.018245935440063
+====> Epoch: 116 Average loss: 0.08286333  running time 11.040369272232056
+====> Epoch: 116 Average loss: 0.08268410  running time 11.012400388717651
+====> Epoch: 116 Average loss: 0.08380369  running time 10.99949336051941
+====> Epoch: 116 Average loss: 0.08383923  running time 10.970759868621826
+====> Test set BCE loss 0.047277115285396576 Custom Loss 0.047277115285396576 with ber  0.016864998266100883 with bler  0.7746000000000001
+saved model ./tmp/attention_model_116_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.31742072105408s
+====> Epoch: 117 Average loss: 0.04740675  running time 10.958924770355225
+====> Epoch: 117 Average loss: 0.08362438  running time 11.000198125839233
+====> Epoch: 117 Average loss: 0.08378973  running time 10.987239360809326
+====> Epoch: 117 Average loss: 0.08308076  running time 11.001668930053711
+====> Epoch: 117 Average loss: 0.08374477  running time 11.026423931121826
+====> Epoch: 117 Average loss: 0.08343731  running time 11.025708436965942
+====> Test set BCE loss 0.04760852828621864 Custom Loss 0.04760852828621864 with ber  0.01695599965751171 with bler  0.7735000000000001
+saved model ./tmp/attention_model_117_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.30206203460693s
+====> Epoch: 118 Average loss: 0.04800971  running time 11.001697063446045
+====> Epoch: 118 Average loss: 0.08366122  running time 11.002074718475342
+====> Epoch: 118 Average loss: 0.08337185  running time 10.989321947097778
+====> Epoch: 118 Average loss: 0.08260857  running time 10.972755432128906
+====> Epoch: 118 Average loss: 0.08350413  running time 10.968880891799927
+====> Epoch: 118 Average loss: 0.08374667  running time 11.046475410461426
+====> Test set BCE loss 0.04862666875123978 Custom Loss 0.04862666875123978 with ber  0.017468998208642006 with bler  0.782
+saved model ./tmp/attention_model_118_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.26072478294373s
+====> Epoch: 119 Average loss: 0.04798948  running time 10.954223394393921
+====> Epoch: 119 Average loss: 0.08365451  running time 10.962260484695435
+====> Epoch: 119 Average loss: 0.08343216  running time 10.967267513275146
+====> Epoch: 119 Average loss: 0.08315719  running time 11.019814252853394
+====> Epoch: 119 Average loss: 0.08276451  running time 10.986833810806274
+====> Epoch: 119 Average loss: 0.08413677  running time 10.991912841796875
+====> Test set BCE loss 0.04837850481271744 Custom Loss 0.04837850481271744 with ber  0.017193999141454697 with bler  0.7784000000000001
+saved model ./tmp/attention_model_119_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.19201064109802s
+====> Epoch: 120 Average loss: 0.04793144  running time 10.993949174880981
+====> Epoch: 120 Average loss: 0.08304240  running time 10.974968194961548
+====> Epoch: 120 Average loss: 0.08362361  running time 11.021862745285034
+====> Epoch: 120 Average loss: 0.08328460  running time 10.974574089050293
+====> Epoch: 120 Average loss: 0.08247670  running time 11.05557131767273
+====> Epoch: 120 Average loss: 0.08276615  running time 10.9952871799469
+====> Test set BCE loss 0.04712783545255661 Custom Loss 0.04712783545255661 with ber  0.016969000920653343 with bler  0.7773000000000001
+saved model ./tmp/attention_model_120_awgn_lr_0.01_D1_10000_20210515-121038.pt
+each epoch training time: 67.31604552268982s
+saved model ./tmp/attention_model_awgn_lr_0.01_D1_10000.pt
+SNRS [-1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0]
+Test SNR -1.5 with ber  0.06668700277805328 with bler 0.9963
+Test SNR -1.0 with ber  0.05386099964380264 with bler 0.9907
+Test SNR -0.5 with ber  0.04225499927997589 with bler 0.976
+Test SNR 0.0 with ber  0.03220899775624275 with bler 0.9396000000000001
+Test SNR 0.5 with ber  0.023691998794674873 with bler 0.8700999999999999
+Test SNR 1.0 with ber  0.016896000131964684 with bler 0.7794999999999999
+Test SNR 1.5 with ber  0.01190900057554245 with bler 0.6569999999999999
+Test SNR 2.0 with ber  0.007814000360667706 with bler 0.5147
+Test SNR 2.5 with ber  0.004997000098228455 with bler 0.36810000000000004
+Test SNR 3.0 with ber  0.0028959999326616526 with bler 0.238
+Test SNR 3.5 with ber  0.001639000023715198 with bler 0.1451
+Test SNR 4.0 with ber  0.0009190000710077584 with bler 0.08390000000000003
+final results on SNRs  [-1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0]
+BER [0.06668700277805328, 0.05386099964380264, 0.04225499927997589, 0.03220899775624275, 0.023691998794674873, 0.016896000131964684, 0.01190900057554245, 0.007814000360667706, 0.004997000098228455, 0.0028959999326616526, 0.001639000023715198, 0.0009190000710077584]
+BLER [0.9963, 0.9907, 0.976, 0.9396000000000001, 0.8700999999999999, 0.7794999999999999, 0.6569999999999999, 0.5147, 0.36810000000000004, 0.238, 0.1451, 0.08390000000000003]
+encoder power is 1.0
+adjusted SNR should be [-1.4999997446509226, -1.0000000166986343, -0.49999973308696327, -0.0, 0.5000001308463472, 1.0000002900227403, 1.5000000201403676, 2.0000002404171053, 2.5000000877622415, 3.0000002493010487, 3.500000207085638, 3.999999717024358]
+Training Time: 8090.204391717911s

@@ -1,4 +1,3 @@
-__author__ = '606'
 import argparse
 
 def get_args():
